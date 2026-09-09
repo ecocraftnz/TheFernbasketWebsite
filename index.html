@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Fern Basket — Every recipe, one shopping list.</title>
+<meta name="description" content="The Fern Basket turns any recipe — a link, a photo, even a video — into one tidy, aisle-sorted shopping list. Built for New Zealand.">
+<meta name="theme-color" content="#F6F1E8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1713" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Fern Basket">
+<meta property="og:description" content="Every recipe, one shopping list.">
+<meta property="og:image" content="assets/logo-mark.png">
+
+<!-- Plus Jakarta Sans is the app's typeface (src/theme/tokens.ts `font`),
+     at weights 500 / 600 / 700 / 800. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <img src="assets/logo-mark.png" alt="" width="32" height="32">
+      <span>The Fern Basket</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#premium">Premium</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#get">Get the app</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <img class="hero-logo" src="assets/logo-mark.png" alt="The Fern Basket logo: a woven basket with a fern frond.">
+      <p class="hero-region">Made for Aotearoa New Zealand</p>
+      <h1>Every recipe, one shopping list.</h1>
+      <p class="hero-sub">
+        Paste a link, snap a cookbook page, or share a video. The Fern Basket
+        reads the recipe, merges everything you're cooking into one tidy list,
+        and sorts it by aisle for the shop.
+      </p>
+
+      <!--
+        ============================================================
+        STORE LINK PLACEHOLDERS — nothing here points anywhere yet.
+
+        To switch a badge on, do all three:
+          1. Replace href="#"  with the real store listing URL.
+          2. Delete  class="store-badge is-placeholder"  →  class="store-badge"
+          3. Delete the  aria-disabled="true"  attribute.
+        Then update the .store-note line below, which currently says the app
+        is not published yet.
+
+        App identifiers, for building the URLs when the listings exist
+        (from the app's app.json):
+          iOS bundle id      nz.co.ecocraft.baskettranstasman
+          Android package    nz.co.ecocraft.baskettranstasman
+        ============================================================
+      -->
+      <div class="store-links">
+        <a class="store-badge is-placeholder" href="#" aria-disabled="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.42 2.2-1.12 3.01-.85.98-2.24 1.74-3.37 1.65a3.78 3.78 0 0 1 1.13-2.94c.79-.86 2.15-1.5 3.36-1.72Zm3.98 16.06c-.58 1.34-.86 1.94-1.6 3.12-1.04 1.65-2.5 3.7-4.31 3.72-1.61.01-2.02-1.05-4.2-1.04-2.18.01-2.64 1.06-4.25 1.04-1.81-.02-3.2-1.87-4.23-3.51-2.9-4.62-3.2-10.04-1.42-12.92 1.27-2.05 3.27-3.25 5.15-3.25 1.92 0 3.12 1.05 4.7 1.05 1.54 0 2.48-1.05 4.7-1.05 1.68 0 3.45.91 4.72 2.49-4.15 2.27-3.48 8.2.74 10.35Z"/></svg>
+          <span class="badge-lines">
+            <span class="badge-kicker">Coming soon to</span>
+            <span class="badge-name">the App Store</span>
+          </span>
+        </a>
+
+        <a class="store-badge is-placeholder" href="#" aria-disabled="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.6 1.84a1.5 1.5 0 0 0-.6 1.2v17.92c0 .48.22.92.6 1.2l9.42-10.16L3.6 1.84Zm10.63 11.42 2.9 3.13-10.5 5.95 7.6-9.08Zm0-2.52L6.63 1.66l10.5 5.95-2.9 3.13Zm3.98 1.26 3.03-1.72c.63-.36.63-1.28 0-1.64l-3.03-1.72-3.2 3.45 3.2 3.45-.01-1.82Z"/></svg>
+          <span class="badge-lines">
+            <span class="badge-kicker">Coming soon to</span>
+            <span class="badge-name">Google Play</span>
+          </span>
+        </a>
+      </div>
+
+      <!-- Update this line when the listings go live. -->
+      <p class="store-note caption">
+        The Fern Basket isn't published to the app stores yet. Links will appear here when it is.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= PERKS ================= -->
+  <!-- These three cards are the app's own welcome-screen perks, kept word for
+       word in step with src/app/onboarding.tsx (HERO_PERKS). If that list
+       changes in the app, change it here too. -->
+  <section id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="overline">What it does</p>
+        <h2>From a recipe you found to a basket you've ticked off</h2>
+      </div>
+
+      <div class="grid grid-3">
+        <article class="card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.6 13.4a1 1 0 0 1 0-1.4l1.4-1.4a1 1 0 0 1 1.4 1.4l-1.4 1.4a1 1 0 0 1-1.4 0Zm-3.4 4.8a4 4 0 0 1 0-5.66l2.83-2.83 1.41 1.42-2.83 2.82a2 2 0 1 0 2.83 2.83l2.83-2.83 1.41 1.41-2.83 2.83a4 4 0 0 1-5.65 0Zm9.6-9.6-1.41-1.41 2.83-2.83a2 2 0 1 1 2.82 2.83l-2.82 2.83-1.42-1.42 2.83-2.82a.99.99 0 1 0-1.41-1.41L16.8 8.6Z"/></svg>
+          </div>
+          <h3>Add a recipe from anywhere</h3>
+          <p class="muted">A link, a photo of a cookbook, even a YouTube video.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 8V7a5 5 0 0 0-10 0v1H3.8a1 1 0 0 0-.98 1.2l1.8 9A2 2 0 0 0 6.58 20h10.84a2 2 0 0 0 1.96-1.6l1.8-9A1 1 0 0 0 20.2 8H17ZM9 7a3 3 0 0 1 6 0v1H9V7Zm3 5a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1Z"/></svg>
+          </div>
+          <h3>One tidy list, duplicates merged</h3>
+          <p class="muted">Three recipes needing butter become one line.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.55 15.15 5.4 11l-1.4 1.4 5.55 5.55 10-10L18.15 6.6l-8.6 8.55ZM3 5h9v2H3V5Zm0 12h5v2H3v-2Z"/></svg>
+          </div>
+          <h3>Tick it off in the aisle</h3>
+          <p class="muted">Sorted by aisle, works without signal · prices estimated.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HOW IT WORKS ================= -->
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="overline">How it works</p>
+        <h2>Capture, basket, shop</h2>
+        <p class="muted">
+          The same three steps the app is built around — nothing to set up
+          beyond choosing your usual supermarket.
+        </p>
+      </div>
+
+      <div class="grid grid-3 steps">
+        <article class="card step">
+          <span class="step-no">1</span>
+          <h3>Capture the recipe</h3>
+          <p class="muted">
+            Paste a link or the recipe text, pick a photo or take one of a
+            cookbook page, or send a video link. You can also share a page
+            straight from another app into The Fern Basket. It comes back as a
+            structured ingredient list you can check and edit.
+          </p>
+        </article>
+
+        <article class="card step">
+          <span class="step-no">2</span>
+          <h3>Build the basket</h3>
+          <p class="muted">
+            Add as many recipes as you're cooking. Ingredients that repeat are
+            merged into a single line, quantities scale with the number of
+            serves, and you can add anything else you need by hand.
+          </p>
+        </article>
+
+        <article class="card step">
+          <span class="step-no">3</span>
+          <h3>Shop it</h3>
+          <p class="muted">
+            Shop mode sorts the list by aisle and works entirely on your phone,
+            so a supermarket basement with no signal doesn't stop you. Tick the
+            last item and you're done.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MORE FEATURES ================= -->
+  <section>
+    <div class="wrap">
+      <div class="grid grid-2">
+        <div class="card">
+          <p class="overline">In the app</p>
+          <h3 style="font-size:23px;line-height:28px;">Everything else it does</h3>
+          <ul class="feature-list">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.55 15.15 5.4 11l-1.4 1.4 5.55 5.55 10-10L18.15 6.6l-8.6 8.55Z"/></svg><span>Compare an estimated basket cost across Pak'nSave, New World and Woolworths</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.55 15.15 5.4 11l-1.4 1.4 5.55 5.55 10-10L18.15 6.6l-8.6 8.55Z"/></svg><span>Find your nearest branches by GPS, or just type your suburb</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.55 15.15 5.4 11l-1.4 1.4 5.55 5.55 10-10L18.15 6.6l-8.6 8.55Z"/></svg><span>Set dietary preferences once — vegetarian, vegan, gluten-free, dairy-free, halal, low-FODMAP and more</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.55 15.15 5.4 11l-1.4 1.4 5.55 5.55 10-10L18.15 6.6l-8.6 8.55Z"/></svg><span>Save recipes to your library and reuse your last basket in a tap</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.55 15.15 5.4 11l-1.4 1.4 5.55 5.55 10-10L18.15 6.6l-8.6 8.55Z"/></svg><span>Sign in to sync your recipes, baskets and settings across devices — optional, not required</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.55 15.15 5.4 11l-1.4 1.4 5.55 5.55 10-10L18.15 6.6l-8.6 8.55Z"/></svg><span>Light and dark themes, following your phone or set by hand</span></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <p class="overline">Honest about pricing</p>
+          <h3 style="font-size:23px;line-height:28px;">Prices are estimates</h3>
+          <p class="muted">
+            No New Zealand supermarket offers a public price feed, so the cost
+            comparison is an estimate to help you choose where to shop — not a
+            quote. What you pay at the shelf can differ.
+          </p>
+          <div class="callout">
+            The Fern Basket will always tell you when a number is an estimate
+            rather than a price we can stand behind.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PREMIUM ================= -->
+  <section id="premium">
+    <div class="wrap">
+      <div class="premium">
+        <span class="premium-tag">Premium</span>
+        <div class="section-head" style="margin:0;">
+          <h2>Change a recipe, not just list it</h2>
+          <p class="muted">
+            Everything above is part of the app. Premium adds the recipe
+            rewriting — the app asks for a healthier or lower-calorie version,
+            or adapts a dish to a diet, and shows you exactly what changed and why.
+          </p>
+        </div>
+
+        <div class="grid grid-3">
+          <article class="card">
+            <h3>Healthier &amp; lower-calorie versions</h3>
+            <p class="muted">Swaps you can accept or skip one at a time, each with its impact shown.</p>
+          </article>
+          <article class="card">
+            <h3>Vegetarian, vegan &amp; gluten-free versions</h3>
+            <p class="muted">And an honest warning when a dish changes so much it's really a different meal.</p>
+          </article>
+          <article class="card">
+            <h3>Unlimited recipes, saved versions &amp; swaps</h3>
+            <p class="muted">Keep every version you make alongside the original.</p>
+          </article>
+        </div>
+
+        <p class="caption">
+          Premium starts with a 7-day free trial, on a monthly or annual plan.
+          Cancel anytime in Settings. Prices are shown in the app in your own
+          currency, straight from the App Store or Google Play.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRIVACY ================= -->
+  <section id="privacy">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="overline">Privacy</p>
+        <h2>Deliberately boring about your data</h2>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>What we don't collect</h3>
+          <p class="muted">
+            No analytics, no advertising identifiers, no contacts, no device
+            identifiers, and no background or continuous location.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Two permissions, asked in context</h3>
+          <p class="muted">
+            Location and photo library / camera — and only at the moment you
+            use the feature that needs them. Decline either and the rest of the
+            app still works: type a suburb instead of using GPS, and add
+            recipes by link or text instead of by photo.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Some things never leave your phone</h3>
+          <p class="muted">
+            Dietary and allergy tags stay on the device even when you're signed
+            in, because they can reveal a religion or a medical condition.
+          </p>
+        </div>
+        <div class="card">
+          <h3>The shopping half works offline</h3>
+          <p class="muted">
+            Browsing your library, building and editing baskets, Shop mode and
+            sharing a list are all local to your phone by design.
+          </p>
+        </div>
+      </div>
+
+      <p class="caption" style="margin-top:var(--sp-xl);">
+        <!-- PLACEHOLDER: point this at the published policy once it lives in
+             this repo (e.g. privacy.html). Until then it is marked as such. -->
+        The full privacy policy will be published here.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= GET THE APP ================= -->
+  <section id="get">
+    <div class="wrap" style="text-align:center;">
+      <div class="section-head" style="margin-left:auto;margin-right:auto;text-align:center;">
+        <h2>Get The Fern Basket</h2>
+        <p class="muted">Coming to iPhone and Android.</p>
+      </div>
+
+      <!-- Same placeholder rules as the hero badges above. Switch both sets on
+           together so the page never offers a link in one place and not the
+           other. -->
+      <div class="store-links">
+        <a class="store-badge is-placeholder" href="#" aria-disabled="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.42 2.2-1.12 3.01-.85.98-2.24 1.74-3.37 1.65a3.78 3.78 0 0 1 1.13-2.94c.79-.86 2.15-1.5 3.36-1.72Zm3.98 16.06c-.58 1.34-.86 1.94-1.6 3.12-1.04 1.65-2.5 3.7-4.31 3.72-1.61.01-2.02-1.05-4.2-1.04-2.18.01-2.64 1.06-4.25 1.04-1.81-.02-3.2-1.87-4.23-3.51-2.9-4.62-3.2-10.04-1.42-12.92 1.27-2.05 3.27-3.25 5.15-3.25 1.92 0 3.12 1.05 4.7 1.05 1.54 0 2.48-1.05 4.7-1.05 1.68 0 3.45.91 4.72 2.49-4.15 2.27-3.48 8.2.74 10.35Z"/></svg>
+          <span class="badge-lines">
+            <span class="badge-kicker">Coming soon to</span>
+            <span class="badge-name">the App Store</span>
+          </span>
+        </a>
+        <a class="store-badge is-placeholder" href="#" aria-disabled="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.6 1.84a1.5 1.5 0 0 0-.6 1.2v17.92c0 .48.22.92.6 1.2l9.42-10.16L3.6 1.84Zm10.63 11.42 2.9 3.13-10.5 5.95 7.6-9.08Zm0-2.52L6.63 1.66l10.5 5.95-2.9 3.13Zm3.98 1.26 3.03-1.72c.63-.36.63-1.28 0-1.64l-3.03-1.72-3.2 3.45 3.2 3.45-.01-1.82Z"/></svg>
+          <span class="badge-lines">
+            <span class="badge-kicker">Coming soon to</span>
+            <span class="badge-name">Google Play</span>
+          </span>
+        </a>
+      </div>
+      <p class="store-note caption">Links will be added when the app is published.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#top">
+        <img src="assets/logo-mark.png" alt="" width="32" height="32">
+        <span>The Fern Basket</span>
+      </a>
+      <p class="caption" style="margin-top:var(--sp-md);">
+        <!-- PLACEHOLDER: the app's own privacy policy still carries
+             [LEGAL ENTITY NAME] and [ADDRESS] placeholders. Fill both in the
+             same pass, so the site and the policy agree. -->
+        © <span id="year">2026</span> [LEGAL ENTITY NAME]. Aotearoa New Zealand.
+      </p>
+    </div>
+
+    <nav class="footer-links" aria-label="Footer">
+      <!-- PLACEHOLDER: replace href and drop the is-placeholder-link class
+           once each page exists. -->
+      <a class="is-placeholder-link" href="#" aria-disabled="true">Privacy policy</a>
+      <a class="is-placeholder-link" href="#" aria-disabled="true">Terms</a>
+      <a class="is-placeholder-link" href="#" aria-disabled="true">Support</a>
+      <!-- PLACEHOLDER: the contact address is unset in the app's privacy
+           policy too ([CONTACT EMAIL]) — set both together. -->
+      <a class="is-placeholder-link" href="#" aria-disabled="true">[CONTACT EMAIL]</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Keep the copyright year current without hardcoding it into the markup.
+  document.getElementById('year').textContent = String(new Date().getFullYear());
+
+  // The store badges and footer links are placeholders until real URLs exist.
+  // Swallow the click so a visitor never lands back at the top of the page
+  // thinking something is broken. Remove an element's placeholder class (and
+  // its aria-disabled) when you give it a real href, and this stops applying.
+  document.querySelectorAll('.is-placeholder, .is-placeholder-link').forEach(function (el) {
+    el.addEventListener('click', function (e) { e.preventDefault(); });
+  });
+</script>
+</body>
+</html>

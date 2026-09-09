@@ -1,0 +1,578 @@
+/*
+ * The Fern Basket — website styles.
+ *
+ * Every colour below is copied verbatim from the app's single source of
+ * truth: src/theme/tokens.ts in ecocraftnz/basket-trans-tasman (which is
+ * itself generated from design_handoff_basket_app/design-tokens.json).
+ * Never invent a hex value here — if a colour is needed that the app does
+ * not define, add it to the app's tokens first.
+ *
+ * Spacing follows the same 8pt grid the app uses (4 and 12 allowed as
+ * micro-steps), and the type scale mirrors src/theme/tokens.ts `type`.
+ */
+
+/* ---- Tokens: light (tokens.ts → color.light) ---------------------------- */
+:root {
+  --primary: #17513B;
+  --primary-pressed: #123F2E;
+  --on-primary: #F3F8F2;
+  --ocean: #2C6E8F;
+  --accent: #17513B;
+  --bg: #F6F1E8;
+  --surface: #FFFDF9;
+  --surface-border: #EAE1CF;
+  --surface-nav: #FFFDF9;
+  --text: #17251E;
+  --text-muted: #5C6B62;
+  --text-faint: #647268;
+  --success-bg: #E6F0E6;
+  --success-border: #CFE3CF;
+  --success-text: #2E6B4C;
+  --warn: #8F5E10;
+  --warn-bg: #FBF4E4;
+  --warn-border: #F0E4C6;
+  --premium-gold: #F3D98A;
+
+  /* 8pt grid (tokens.ts `spacing`) */
+  --sp-xs: 4px;
+  --sp-sm: 8px;
+  --sp-md: 12px;
+  --sp-lg: 16px;
+  --sp-xl: 24px;
+  --sp-xxl: 32px;
+  --gutter: 24px;
+  --section-gap: 32px;
+
+  /* tokens.ts `radius` and `size` */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+  --button-height: 56px;
+  --min-touch: 44px;
+
+  --maxw: 1080px;
+  --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ---- Tokens: dark (tokens.ts → color.dark) ------------------------------
+   The app's userInterfaceStyle is "automatic", so the site follows the OS
+   the same way. Only the values that differ are restated.                  */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: #2E7D5B;
+    --primary-pressed: #256A4C;
+    --on-primary: #F3F8F2;
+    --ocean: #6FC79B;
+    --accent: #6FC79B;
+    --bg: #0E1713;
+    --surface: #17211C;
+    --surface-border: #26332B;
+    --surface-nav: #12201A;
+    --text: #EAF0EC;
+    --text-muted: #8A968F;
+    --text-faint: #828E86;
+    --success-bg: #152A20;
+    --success-border: #1F3A2C;
+    --success-text: #8FB49F;
+    --warn: #E9C572;
+    --warn-bg: #241E12;
+    --warn-border: #40361E;
+    --premium-gold: #F3D98A;
+  }
+}
+
+/* ---- Base --------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-weight: 500;
+  /* tokens.ts type.body — 15/24 */
+  font-size: 15px;
+  line-height: 24px;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--ocean);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+}
+
+.skip-link:focus {
+  left: var(--gutter);
+  top: var(--sp-lg);
+  z-index: 10;
+  background: var(--surface);
+  color: var(--text);
+  padding: var(--sp-md) var(--sp-lg);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--r-md);
+}
+
+/* ---- Type scale (tokens.ts `type`) -------------------------------------- */
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 800;
+  color: var(--text);
+}
+
+h1 {
+  /* display: 27/32, -0.54 — scaled up for the desktop hero */
+  font-size: clamp(32px, 6vw, 52px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  /* title: 23/28, -0.46 */
+  font-size: clamp(23px, 3.4vw, 30px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  /* heading: 16/20 */
+  font-size: 16px;
+  line-height: 20px;
+}
+
+p {
+  margin: 0;
+}
+
+.muted {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.overline {
+  /* tokens.ts type.overline */
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 800;
+  letter-spacing: 0.72px;
+  text-transform: uppercase;
+  color: var(--success-text);
+}
+
+.caption {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-faint);
+}
+
+/* ---- Header ------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: color-mix(in srgb, var(--surface-nav) 88%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--surface-border);
+}
+
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-lg);
+  min-height: 64px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+  color: var(--text);
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.brand:hover {
+  text-decoration: none;
+}
+
+.brand img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-xl);
+}
+
+.site-nav a {
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--min-touch);
+}
+
+.site-nav a:hover {
+  color: var(--text);
+  text-decoration: none;
+}
+
+@media (max-width: 720px) {
+  .site-nav {
+    display: none;
+  }
+}
+
+/* ---- Sections ----------------------------------------------------------- */
+section {
+  padding: clamp(48px, 9vw, 96px) 0;
+}
+
+.section-head {
+  max-width: 680px;
+  margin-bottom: var(--sp-xxl);
+  display: grid;
+  gap: var(--sp-md);
+}
+
+/* ---- Hero --------------------------------------------------------------- */
+.hero {
+  text-align: center;
+  padding-top: clamp(40px, 8vw, 80px);
+}
+
+.hero-logo {
+  width: clamp(96px, 18vw, 132px);
+  height: auto;
+  margin: 0 auto var(--sp-xl);
+}
+
+.hero-sub {
+  margin: var(--sp-lg) auto 0;
+  max-width: 46ch;
+  font-size: clamp(16px, 2.2vw, 19px);
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.hero-region {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-lg);
+  padding: 6px var(--sp-md);
+  border-radius: 999px;
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+  color: var(--success-text);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 800;
+  letter-spacing: 0.72px;
+  text-transform: uppercase;
+}
+
+/* ---- Store badges (PLACEHOLDERS) ---------------------------------------
+   These are deliberately inert until the real listing URLs exist. See the
+   comments in index.html for exactly what to change to switch one on.     */
+.store-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-md);
+  justify-content: center;
+  margin-top: var(--sp-xxl);
+}
+
+.store-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-md);
+  min-height: var(--button-height);
+  padding: var(--sp-md) var(--sp-xl);
+  border-radius: var(--r-lg);
+  background: var(--primary);
+  color: var(--on-primary);
+  border: 1px solid var(--primary);
+  text-align: left;
+  font-family: inherit;
+  text-decoration: none;
+}
+
+.store-badge:hover {
+  background: var(--primary-pressed);
+  border-color: var(--primary-pressed);
+  text-decoration: none;
+}
+
+.store-badge svg {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  fill: currentColor;
+}
+
+.store-badge .badge-lines {
+  display: grid;
+}
+
+.store-badge .badge-kicker {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.store-badge .badge-name {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 800;
+}
+
+/* The "not published yet" state. Remove `is-placeholder` (and the
+   aria-disabled attribute) once a real href is in place. */
+.store-badge.is-placeholder {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px dashed var(--surface-border);
+  cursor: not-allowed;
+}
+
+.store-badge.is-placeholder:hover {
+  background: transparent;
+  border-color: var(--surface-border);
+}
+
+.store-note {
+  margin-top: var(--sp-md);
+  text-align: center;
+}
+
+/* ---- Cards -------------------------------------------------------------- */
+.grid {
+  display: grid;
+  gap: var(--sp-lg);
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 880px) {
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Cards use 1px borders, not shadows — the app's rule (tokens.ts). */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--r-xl);
+  padding: var(--sp-xl);
+  display: grid;
+  gap: var(--sp-md);
+  align-content: start;
+}
+
+.card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-md);
+  background: var(--success-bg);
+  color: var(--success-text);
+  display: grid;
+  place-items: center;
+  margin-bottom: var(--sp-xs);
+}
+
+.card-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/* ---- Steps -------------------------------------------------------------- */
+.steps {
+  counter-reset: step;
+}
+
+.step {
+  position: relative;
+}
+
+.step .step-no {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 800;
+  font-size: 13px;
+  line-height: 16px;
+  margin-bottom: var(--sp-xs);
+}
+
+/* ---- Feature list ------------------------------------------------------- */
+.feature-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--sp-md);
+}
+
+.feature-list li {
+  display: flex;
+  gap: var(--sp-md);
+  align-items: flex-start;
+}
+
+.feature-list svg {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  margin-top: 2px;
+  fill: var(--success-text);
+}
+
+/* ---- Premium ------------------------------------------------------------ */
+.premium {
+  border-radius: var(--r-xl);
+  border: 1px solid var(--surface-border);
+  background: var(--surface);
+  padding: clamp(24px, 4vw, 40px);
+  display: grid;
+  gap: var(--sp-xl);
+}
+
+.premium-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  align-self: start;
+  /* .premium is a grid, so without this the pill stretches the full row. */
+  justify-self: start;
+  padding: 6px var(--sp-md);
+  border-radius: 999px;
+  background: var(--premium-gold);
+  color: #17251E; /* tokens.ts light.text — premiumGold is identical in both
+                     themes, so the label keeps its dark ink in dark mode. */
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 800;
+  letter-spacing: 0.72px;
+  text-transform: uppercase;
+}
+
+/* ---- Callout ------------------------------------------------------------ */
+.callout {
+  border-radius: var(--r-lg);
+  border: 1px solid var(--warn-border);
+  background: var(--warn-bg);
+  color: var(--warn);
+  padding: var(--sp-lg);
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 700;
+}
+
+/* ---- Footer ------------------------------------------------------------- */
+.site-footer {
+  border-top: 1px solid var(--surface-border);
+  background: var(--surface-nav);
+  padding: var(--sp-xxl) 0;
+}
+
+.site-footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-xl);
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-xl);
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--min-touch);
+}
+
+.footer-links a:hover {
+  color: var(--text);
+}
+
+/* A placeholder link that has no destination yet. */
+.is-placeholder-link {
+  color: var(--text-faint);
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.is-placeholder-link:hover {
+  color: var(--text-faint);
+  text-decoration: line-through;
+}
