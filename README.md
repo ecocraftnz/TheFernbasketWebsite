@@ -2,20 +2,46 @@
 
 The public website for **The Fern Basket** — and the home of its privacy policy.
 
-Static HTML/CSS, no build step. Open `index.html` directly, or serve the folder:
+Static HTML/CSS, no build step. Serve it locally with:
 
 ```bash
-python3 -m http.server 8000
+cd public && python3 -m http.server 8000
 ```
 
 ## Files
 
+Everything that gets published lives in `public/`. Nothing else does.
+
 | Path | What it is |
 | --- | --- |
-| `index.html` | The whole marketing page |
-| `styles.css` | Design tokens + layout |
-| `assets/logo-mark.png` | The app's logo mark, copied from the app repo |
-| `assets/favicon.png` | The app's favicon, copied from the app repo |
+| `public/index.html` | The whole marketing page |
+| `public/styles.css` | Design tokens + layout |
+| `public/assets/logo-mark.png` | The app's logo mark, copied from the app repo |
+| `public/assets/favicon.png` | The app's favicon, copied from the app repo |
+| `wrangler.jsonc` | Cloudflare Workers deployment config (not published) |
+
+## Deployment
+
+Deployed to Cloudflare **Workers** (not Pages) as a static-assets Worker named
+`thefernbasketwebsite` — it must keep that name, or a deploy creates a second
+Worker instead of updating the site. There is no `main` in `wrangler.jsonc`, so
+no Worker script runs: Cloudflare serves `public/` directly and returns a plain
+404 for anything that doesn't match a file.
+
+**Keep non-site files out of `public/`.** Workers uploads the entire assets
+directory and, unlike Pages, does not skip `.git` — so the directory is the
+security boundary. That is the whole reason the site sits in `public/` rather
+than at the repo root: a directory holding only the site cannot publish the git
+history, this config, or a stray notes file by accident.
+
+Builds run from `main`. Validate a config change without deploying:
+
+```bash
+npx wrangler@latest deploy --dry-run
+```
+
+It reports the assets directory it read and errors on an invalid config. The
+file count it prints includes directories, so the four site files read as five.
 
 ## Colours come from the app, not from here
 

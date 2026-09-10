@@ -1,0 +1,39 @@
+{
+  "$schema": "https://unpkg.com/wrangler/config-schema.json",
+
+  // Must match the Worker that already exists in the Cloudflare account,
+  // or a deploy creates a second one instead of updating this site.
+  "name": "thefernbasketwebsite",
+  "compatibility_date": "2026-09-10",
+
+  // A static site: there is no `main`, so no Worker script runs. Cloudflare
+  // serves the files in `directory` directly, and returns a plain 404 for
+  // anything that doesn't match a file.
+  //
+  // Everything published lives in ./public, and nothing else does. Workers
+  // uploads the whole directory and does NOT skip .git the way Pages did, so
+  // pointing this at the repo root would publish the git history, this config,
+  // and any future note file added to the root. An .assetsignore could list
+  // those exclusions, but a directory holding only the site cannot leak one by
+  // omission. Keep non-site files out of ./public.
+  //
+  // No `binding` is set: that is only useful alongside a Worker script.
+  "assets": {
+    "directory": "./public"
+  },
+
+  // Supplied as-is; every field here is valid wrangler observability config.
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "invocation_logs": true,
+      "persist": true
+    },
+    "traces": {
+      "enabled": false,
+      "head_sampling_rate": 1,
+      "persist": true
+    }
+  }
+}
