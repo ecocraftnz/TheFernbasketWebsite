@@ -576,3 +576,62 @@ section {
   color: var(--text-faint);
   text-decoration: line-through;
 }
+
+/* ---- Policy page (long-form legal text, e.g. Privacy Policy) ------------ */
+.policy {
+  padding: var(--sp-xxl) 0 calc(var(--sp-xxl) * 2);
+}
+
+.policy .wrap {
+  max-width: 760px;
+}
+
+.policy h2 {
+  margin-top: var(--sp-xxl);
+  margin-bottom: var(--sp-md);
+}
+
+.policy h3 {
+  margin-top: var(--sp-xl);
+  margin-bottom: var(--sp-sm);
+}
+
+.policy p,
+.policy ul,
+.policy ol {
+  margin: var(--sp-md) 0 0;
+}
+
+.policy ul,
+.policy ol {
+  padding-left: var(--sp-xl);
+}
+
+.policy li + li {
+  margin-top: var(--sp-xs);
+}
+
+.policy table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--sp-lg) 0 0;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.policy th,
+.policy td {
+  border: 1px solid var(--surface-border);
+  padding: var(--sp-sm) var(--sp-md);
+  text-align: left;
+  vertical-align: top;
+}
+
+.policy th {
+  background: var(--surface);
+  font-weight: 700;
+}
+
+.policy-meta {
+  margin-top: var(--sp-sm) !important;
+}

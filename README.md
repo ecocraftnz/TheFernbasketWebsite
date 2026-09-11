@@ -81,16 +81,27 @@ The identifiers for building those URLs, from the app's `app.json`:
 | iOS bundle id | `nz.co.ecocraft.baskettranstasman` |
 | Android package | `nz.co.ecocraft.baskettranstasman` |
 
-**Footer links** — Privacy policy, Terms, Support, and the contact email all
-carry `is-placeholder-link`. Give each a real `href` and drop that class.
+**Footer links** — Terms and Support still carry `is-placeholder-link`; give
+each a real `href` and drop that class once those pages exist. Privacy policy
+and the contact email are done.
 
-**Legal entity and contact email** — the footer says `[LEGAL ENTITY NAME]` and
-`[CONTACT EMAIL]`. The app's own `PRIVACY_POLICY.md` still carries the same
-placeholders, plus `[ADDRESS]`. Fill them in the same pass so the site and the
-policy agree.
+**Legal entity and contact email** — done. The footer, and the privacy
+policy at `public/PrivacyPolicy/index.html`, both name Hyosun Kim trading as
+"The Fern Basket", 4B Halberg Street, Auckland 0629, New Zealand, and
+`support@thefernbasket.com`.
 
-**The privacy policy page itself** — the Privacy section links nowhere yet.
-`PRIVACY_POLICY.md` lives in the app repo; publishing it here is the next job.
+**The privacy policy page itself** — done. `public/PrivacyPolicy/index.html`
+publishes the app's `PRIVACY_POLICY.md` (from `ecocraftnz/basket-trans-tasman`)
+with its placeholders filled in. Two things from that source doc were
+resolved as part of publishing it, and should stay in sync if the app repo's
+copy is ever updated to match:
+- Children's minimum age: stated as 13 (the draft offered "16 / the age of
+  digital consent where you are").
+- Dormant/never-verified account retention: stated as not yet enforced,
+  since that deletion job is switched off in the code.
+
+The EU representative paragraph was dropped (the draft said to delete it if
+not applicable — the app isn't offered to EU/EEA users specifically).
 
 ## Keeping copy in step with the app
 
