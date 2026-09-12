@@ -7,368 +7,387 @@
 <meta name="description" content="The Fern Basket turns any recipe — a link, a photo, even a video — into one tidy, aisle-sorted shopping list. Built for New Zealand.">
 <meta name="theme-color" content="#F6F1E8" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0E1713" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="icon" href="/assets/favicon.png" type="image/png">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Fern Basket">
 <meta property="og:description" content="Every recipe, one shopping list.">
-<meta property="og:image" content="assets/logo-mark.png">
+<meta property="og:image" content="/assets/logo-mark.png">
 
-<!-- Plus Jakarta Sans is the app's typeface (src/theme/tokens.ts `font`),
-     at weights 500 / 600 / 700 / 800. -->
+<!-- Applies a saved theme before first paint, so a returning visitor never
+     sees the other theme flash first. Must stay inline and in <head>. -->
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('fb-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) { /* storage blocked - fall through to the OS preference */ }
+  })();
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css">
+<!--
+  This page is built from the Claude Design artboard "Fern Basket Landing v2".
+  It is deliberately self-contained: /styles.css belongs to the privacy policy
+  page and must not be reshaped around this one.
+
+  The artboard is a fixed 940x430 canvas that its runtime scales to fit, so its
+  raw px values are not final sizes — at a 1440px viewport the whole board
+  renders at about 1.4x. Reproducing that with transform:scale would freeze the
+  type against browser zoom and user font settings, so the sizes below are
+  fluid instead, tuned to land on the artboard's rendered size at both ends:
+  the 50px heading resolves to ~69px at 1440 and ~49px at 1024, and the compact
+  stack bottoms out near the 38px the artboard's small variant uses.
+-->
+<style>
+  /* Tokens copied from the artboard. --bg/--surface/--primary/--accent/--text
+     match the app's src/theme/tokens.ts; --muted/--line/--hair are this
+     design's own, and have no counterpart in the app. */
+  :root {
+    --bg:#F6F1E8; --surface:#FFFDF9; --primary:#17513B; --accent:#17513B;
+    --text:#17251E; --muted:#5A6B62;
+    --line:rgba(23,81,59,.18); --hair:rgba(23,37,30,.12);
+    --logo-filter:none;
+    --shadow:0 18px 40px -28px rgba(23,37,30,.4);
+  }
+  html[data-theme="dark"] {
+    --bg:#0E1713; --surface:#17211C; --primary:#2E7D5B; --accent:#6FC79B;
+    --text:#EAF0EC; --muted:#9DB0A6;
+    --line:rgba(111,199,155,.26); --hair:rgba(234,240,236,.14);
+    --logo-filter:brightness(0) invert(1) sepia(1) saturate(4) hue-rotate(95deg) brightness(1.1);
+    --shadow:0 18px 40px -28px rgba(0,0,0,.6);
+  }
+  @media (prefers-color-scheme: dark) {
+    html:not([data-theme="light"]) {
+      --bg:#0E1713; --surface:#17211C; --primary:#2E7D5B; --accent:#6FC79B;
+      --text:#EAF0EC; --muted:#9DB0A6;
+      --line:rgba(111,199,155,.26); --hair:rgba(234,240,236,.14);
+      --logo-filter:brightness(0) invert(1) sepia(1) saturate(4) hue-rotate(95deg) brightness(1.1);
+      --shadow:0 18px 40px -28px rgba(0,0,0,.6);
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin:0; padding:0; background:var(--bg); }
+  img { display:block; max-width:100%; }
+  a { color:var(--primary); text-decoration:none; }
+  a:hover { color:var(--accent); }
+  :focus-visible { outline:2px solid var(--primary); outline-offset:3px; border-radius:6px; }
+
+  @keyframes fb-in   { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+  @keyframes fb-sway { 0%,100% { transform:rotate(-1.6deg) translateY(-3px); } 50% { transform:rotate(1.6deg) translateY(3px); } }
+  @keyframes fb-ring { 0% { transform:scale(.8); opacity:0; } 20% { opacity:.6; } 100% { transform:scale(1.45); opacity:0; } }
+  @keyframes fb-tick { 0%,8% { opacity:0; transform:scale(.4); } 16%,88% { opacity:1; transform:scale(1); } 100% { opacity:0; transform:scale(.4); } }
+
+  .skip-link { position:absolute; left:-9999px; }
+  .skip-link:focus {
+    left:16px; top:16px; z-index:10; background:var(--surface); color:var(--text);
+    padding:12px 16px; border:1px solid var(--hair); border-radius:10px;
+  }
+
+  /* The artboard locks to 100dvh and clips. A real page must not strand
+     content on a short viewport (landscape phones), so this is a minimum
+     height and the page scrolls if it has to. */
+  .stage {
+    position:relative; min-height:100dvh; width:100%; overflow:hidden;
+    background:var(--bg); color:var(--text);
+    font-family:'Plus Jakarta Sans', Helvetica, Arial, sans-serif; font-weight:500;
+    display:flex; flex-direction:column;
+    padding:clamp(12px,2.4vh,30px) clamp(16px,3.4vw,44px);
+  }
+
+  .watermarks { position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0; }
+  .watermarks img { position:absolute; max-width:none; filter:var(--logo-filter) blur(.5px); }
+  .watermarks .wm-a { left:-22%; bottom:-30%; width:96vh; opacity:.055; transform:rotate(-14deg); }
+  .watermarks .wm-b { right:-12%; top:-26%;   width:62vh; opacity:.05;  transform:rotate(26deg); }
+
+  .topbar {
+    position:relative; z-index:1; display:flex; align-items:baseline;
+    justify-content:space-between; gap:16px;
+    padding-bottom:clamp(8px,1.4vh,14px); border-bottom:1px solid var(--hair);
+    font-size:clamp(10px,.95vw,13px); font-weight:700; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--muted);
+  }
+  .theme-toggle {
+    font:inherit; letter-spacing:.18em; text-transform:uppercase; color:var(--muted);
+    background:none; border:none; padding:0; cursor:pointer;
+    border-bottom:1px solid var(--line);
+  }
+  .theme-toggle:hover { color:var(--primary); }
+
+  .main {
+    position:relative; z-index:1; flex:1 1 auto; min-height:0;
+    display:flex; align-items:center; justify-content:center;
+    padding:clamp(20px,3vh,32px) 0;
+  }
+  .board {
+    display:flex; align-items:center; gap:clamp(28px,4.4vw,66px);
+    width:100%; max-width:1320px; /* the artboard's 940 at its 1.4x cap */
+  }
+
+  .lede { flex:1 1 0; min-width:0; display:flex; flex-direction:column; align-items:flex-start; }
+
+  .mark { position:relative; width:clamp(96px,12vw,176px); aspect-ratio:1; display:grid; place-items:center; flex:0 0 auto; }
+  .mark .ring { position:absolute; inset:-6%; border-radius:50%; border:1px solid var(--line); animation:fb-ring 5s ease-out infinite; }
+  .mark .ring:nth-child(2) { animation-delay:1.7s; }
+  .mark .ring:nth-child(3) { animation-delay:3.4s; }
+  .mark img { position:relative; width:100%; height:100%; object-fit:contain; filter:var(--logo-filter); animation:fb-sway 8s ease-in-out infinite; }
+
+  h1 {
+    margin:clamp(16px,2vh,24px) 0 0; font-weight:800;
+    font-size:clamp(37px,4.8vw,70px); line-height:1.02; letter-spacing:-.035em;
+    animation:fb-in .7s ease-out both;
+  }
+  h1 .accent { color:var(--primary); }
+
+  .lede p {
+    margin:clamp(12px,1.6vh,18px) 0 0; max-width:42ch;
+    font-size:clamp(15px,1.55vw,23px); line-height:1.5; color:var(--muted);
+    text-wrap:pretty; animation:fb-in .7s ease-out .1s both;
+  }
+
+  .stores { display:flex; flex-wrap:wrap; gap:10px; margin:clamp(18px,2.6vh,28px) 0 0; animation:fb-in .7s ease-out .2s both; }
+  .badge {
+    display:flex; align-items:center; gap:11px;
+    padding:clamp(12px,1.4vh,16px) clamp(18px,1.8vw,26px); border-radius:14px;
+    transition:transform .18s ease, opacity .18s ease, border-color .18s ease;
+  }
+  .badge svg { flex:none; width:clamp(19px,1.5vw,23px); height:clamp(19px,1.5vw,23px); }
+  .badge .lines { display:flex; flex-direction:column; gap:1px; text-align:left; }
+  .badge .kicker { font-size:clamp(10px,.95vw,14px); font-weight:600; letter-spacing:.12em; text-transform:uppercase; line-height:1.1; }
+  .badge .name   { font-size:clamp(16px,1.5vw,22px); font-weight:800; letter-spacing:-.015em; }
+  .badge-primary { background:var(--primary); color:#FFFDF9; }
+  .badge-primary .kicker { opacity:.75; }
+  .badge-primary:hover { transform:translateY(-2px); opacity:.92; color:#FFFDF9; }
+  .badge-ghost { background:transparent; color:var(--text); border:1px solid var(--line); }
+  .badge-ghost svg { color:var(--primary); }
+  .badge-ghost .kicker { color:var(--muted); }
+  .badge-ghost:hover { transform:translateY(-2px); border-color:var(--primary); color:var(--text); }
+  /* Inert until the listings exist — see the markup comment. */
+  .badge.is-placeholder { cursor:not-allowed; }
+
+  /* The receipt. 4px radius, hairline border, torn bottom edge. */
+  .receipt {
+    position:relative; flex:0 0 clamp(300px,36vw,540px); align-self:center;
+    background:var(--surface); border:1px solid var(--hair); border-radius:4px;
+    box-shadow:var(--shadow);
+    padding:clamp(20px,2.4vw,32px) clamp(20px,2.4vw,32px) clamp(24px,2.8vw,38px);
+    animation:fb-in .8s ease-out .28s both;
+  }
+  .receipt-head {
+    display:flex; align-items:baseline; justify-content:space-between; gap:10px;
+    font-size:clamp(10px,.98vw,14.5px); font-weight:700; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--muted);
+  }
+  .steps { margin-top:clamp(14px,1.7vw,23px); display:flex; flex-direction:column; gap:clamp(12px,1.5vw,20px); }
+  .step { display:flex; gap:12px; align-items:flex-start; }
+  .step .box {
+    flex:0 0 auto; width:clamp(20px,1.9vw,28px); height:clamp(20px,1.9vw,28px);
+    border:1.5px solid var(--primary); border-radius:5px; display:grid; place-items:center; margin-top:2px;
+  }
+  .step .box svg { width:65%; height:65%; animation:fb-tick 9s ease-in-out infinite; }
+  .step:nth-child(2) .box svg { animation-delay:.9s; }
+  .step:nth-child(3) .box svg { animation-delay:1.8s; }
+  .step .title { display:block; font-size:clamp(16px,1.55vw,23px); font-weight:700; letter-spacing:-.015em; }
+  .step .desc  { display:block; margin-top:2px; font-size:clamp(13px,1.26vw,19px); line-height:1.4; color:var(--muted); }
+
+  .receipt-total {
+    margin-top:clamp(14px,1.7vw,23px); padding-top:13px; border-top:1px dashed var(--line);
+    font-size:clamp(10px,.98vw,14.5px); font-weight:700; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--muted);
+  }
+  .receipt-total .est { color:var(--primary); }
+  .receipt .tear {
+    position:absolute; left:0; right:0; bottom:-9px; height:10px; background:var(--surface);
+    -webkit-mask-image:repeating-conic-gradient(from -45deg at 50% 0, #000 0deg 90deg, transparent 90deg 180deg);
+            mask-image:repeating-conic-gradient(from -45deg at 50% 0, #000 0deg 90deg, transparent 90deg 180deg);
+    -webkit-mask-size:16px 20px;         mask-size:16px 20px;
+    -webkit-mask-repeat:repeat-x;        mask-repeat:repeat-x;
+  }
+
+  .footer {
+    position:relative; z-index:1; display:flex; flex-wrap:wrap; align-items:center;
+    justify-content:space-between; gap:10px;
+    padding-top:clamp(8px,1.4vh,14px); border-top:1px solid var(--hair);
+    font-size:clamp(10px,.95vw,13px); font-weight:600; letter-spacing:.04em; color:var(--muted);
+  }
+  .footer-links { display:flex; gap:clamp(12px,1.6vw,22px); }
+
+  /* Stacked. The artboard swaps to a 360x600 variant at the same point. */
+  @media (max-width: 900px) {
+    .board { flex-direction:column; align-items:stretch; gap:24px; }
+    .receipt { flex:none; width:100%; }
+    .main { padding:24px 0; }
+    .lede { align-items:flex-start; }
+  }
+  @media (max-width: 560px) {
+    /* The brand line stays — the artboard keeps it in its compact variant too.
+       It is allowed to wrap rather than be hidden or force a sideways scroll. */
+    .topbar { gap:10px; }
+    .topbar .region { min-width:0; }
+    .footer { justify-content:flex-start; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation:none !important; transition:none !important; }
+  }
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 
-<header class="site-header">
-  <div class="wrap">
-    <a class="brand" href="#top">
-      <img src="assets/logo-mark.png" alt="" width="32" height="32">
-      <span>The Fern Basket</span>
-    </a>
-    <nav class="site-nav" aria-label="Primary">
-      <a href="#how">How it works</a>
-      <a href="#features">Features</a>
-      <a href="#premium">Premium</a>
-      <a href="#privacy">Privacy</a>
-      <a href="#get">Get the app</a>
-    </nav>
+<div class="stage">
+
+  <div class="watermarks" aria-hidden="true">
+    <img class="wm-a" src="/assets/logo-mark.png" alt="">
+    <img class="wm-b" src="/assets/logo-mark.png" alt="">
   </div>
-</header>
 
-<main id="main">
+  <header class="topbar">
+    <span class="region">The Fern Basket · Aotearoa New Zealand</span>
+    <button type="button" class="theme-toggle" id="theme-toggle">Dark</button>
+  </header>
 
-  <!-- ================= HERO ================= -->
-  <section class="hero" id="top">
-    <div class="wrap">
-      <img class="hero-logo" src="assets/logo-mark.png" alt="The Fern Basket logo: a woven basket with a fern frond.">
-      <p class="hero-region">Made for Aotearoa New Zealand</p>
-      <h1>Every recipe, one shopping list.</h1>
-      <p class="hero-sub">
-        Paste a link, snap a cookbook page, or share a video. The Fern Basket
+  <main class="main" id="main">
+    <div class="board">
+
+      <div class="lede">
+        <div class="mark">
+          <span class="ring" aria-hidden="true"></span>
+          <span class="ring" aria-hidden="true"></span>
+          <span class="ring" aria-hidden="true"></span>
+          <img src="/assets/logo-mark.png" alt="The Fern Basket logo: a woven basket with a fern frond.">
+        </div>
+
+        <h1>Every recipe,<br><span class="accent">one shopping list.</span></h1>
+
+        <p>Paste a link, snap a cookbook page, or share a video. The Fern Basket
         reads the recipe, merges everything you're cooking into one tidy list,
-        and sorts it by aisle for the shop.
-      </p>
+        and sorts it by aisle for the shop.</p>
 
-      <!--
-        ============================================================
-        STORE LINK PLACEHOLDERS — nothing here points anywhere yet.
-
-        To switch a badge on, do all three:
-          1. Replace href="#"  with the real store listing URL.
-          2. Delete  class="store-badge is-placeholder"  →  class="store-badge"
-          3. Delete the  aria-disabled="true"  attribute.
-        Then update the .store-note line below, which currently says the app
-        is not published yet.
-
-        App identifiers, for building the URLs when the listings exist
-        (from the app's app.json):
-          iOS bundle id      nz.co.ecocraft.baskettranstasman
-          Android package    nz.co.ecocraft.baskettranstasman
-        ============================================================
-      -->
-      <div class="store-links">
-        <a class="store-badge is-placeholder" href="#" aria-disabled="true">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.42 2.2-1.12 3.01-.85.98-2.24 1.74-3.37 1.65a3.78 3.78 0 0 1 1.13-2.94c.79-.86 2.15-1.5 3.36-1.72Zm3.98 16.06c-.58 1.34-.86 1.94-1.6 3.12-1.04 1.65-2.5 3.7-4.31 3.72-1.61.01-2.02-1.05-4.2-1.04-2.18.01-2.64 1.06-4.25 1.04-1.81-.02-3.2-1.87-4.23-3.51-2.9-4.62-3.2-10.04-1.42-12.92 1.27-2.05 3.27-3.25 5.15-3.25 1.92 0 3.12 1.05 4.7 1.05 1.54 0 2.48-1.05 4.7-1.05 1.68 0 3.45.91 4.72 2.49-4.15 2.27-3.48 8.2.74 10.35Z"/></svg>
-          <span class="badge-lines">
-            <span class="badge-kicker">Coming soon to</span>
-            <span class="badge-name">the App Store</span>
-          </span>
-        </a>
-
-        <a class="store-badge is-placeholder" href="#" aria-disabled="true">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.6 1.84a1.5 1.5 0 0 0-.6 1.2v17.92c0 .48.22.92.6 1.2l9.42-10.16L3.6 1.84Zm10.63 11.42 2.9 3.13-10.5 5.95 7.6-9.08Zm0-2.52L6.63 1.66l10.5 5.95-2.9 3.13Zm3.98 1.26 3.03-1.72c.63-.36.63-1.28 0-1.64l-3.03-1.72-3.2 3.45 3.2 3.45-.01-1.82Z"/></svg>
-          <span class="badge-lines">
-            <span class="badge-kicker">Coming soon to</span>
-            <span class="badge-name">Google Play</span>
-          </span>
-        </a>
+        <!--
+          STORE LINK PLACEHOLDERS — both are inert. To switch one on:
+            1. Replace href="#" with the real listing URL.
+            2. Drop `is-placeholder` from the class.
+            3. Delete aria-disabled="true".
+          Then update the footer note, which says the app isn't published yet,
+          and change the "Coming soon to" kicker. Switch both on together.
+          Identifiers for building the URLs, from the app's app.json:
+            iOS bundle id   nz.co.ecocraft.baskettranstasman
+            Android package nz.co.ecocraft.baskettranstasman
+        -->
+        <div class="stores">
+          <a class="badge badge-primary is-placeholder" href="#" aria-disabled="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"></path><path d="M6 11l6 6 6-6"></path><path d="M4 21h16"></path></svg>
+            <span class="lines">
+              <span class="kicker">Coming soon to</span>
+              <span class="name">the App Store</span>
+            </span>
+          </a>
+          <a class="badge badge-ghost is-placeholder" href="#" aria-disabled="true">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 3.5v17a1 1 0 0 0 1.5.87l13-8.5a1 1 0 0 0 0-1.74l-13-8.5A1 1 0 0 0 5 3.5z"></path></svg>
+            <span class="lines">
+              <span class="kicker">Coming soon to</span>
+              <span class="name">Google Play</span>
+            </span>
+          </a>
+        </div>
       </div>
 
-      <!-- Update this line when the listings go live. -->
-      <p class="store-note caption">
-        The Fern Basket isn't published to the app stores yet. Links will appear here when it is.
-      </p>
-    </div>
-  </section>
-
-  <!-- ================= PERKS ================= -->
-  <!-- These three cards are the app's own welcome-screen perks, kept word for
-       word in step with src/app/onboarding.tsx (HERO_PERKS). If that list
-       changes in the app, change it here too. -->
-  <section id="features">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="overline">What it does</p>
-        <h2>From a recipe you found to a basket you've ticked off</h2>
-      </div>
-
-      <div class="grid grid-3">
-        <article class="card">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.6 13.4a1 1 0 0 1 0-1.4l1.4-1.4a1 1 0 0 1 1.4 1.4l-1.4 1.4a1 1 0 0 1-1.4 0Zm-3.4 4.8a4 4 0 0 1 0-5.66l2.83-2.83 1.41 1.42-2.83 2.82a2 2 0 1 0 2.83 2.83l2.83-2.83 1.41 1.41-2.83 2.83a4 4 0 0 1-5.65 0Zm9.6-9.6-1.41-1.41 2.83-2.83a2 2 0 1 1 2.82 2.83l-2.82 2.83-1.42-1.42 2.83-2.82a.99.99 0 1 0-1.41-1.41L16.8 8.6Z"/></svg>
-          </div>
-          <h3>Add a recipe from anywhere</h3>
-          <p class="muted">A link, a photo of a cookbook, even a YouTube video.</p>
-        </article>
-
-        <article class="card">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 8V7a5 5 0 0 0-10 0v1H3.8a1 1 0 0 0-.98 1.2l1.8 9A2 2 0 0 0 6.58 20h10.84a2 2 0 0 0 1.96-1.6l1.8-9A1 1 0 0 0 20.2 8H17ZM9 7a3 3 0 0 1 6 0v1H9V7Zm3 5a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1Z"/></svg>
-          </div>
-          <h3>One tidy list, duplicates merged</h3>
-          <p class="muted">Three recipes needing butter become one line.</p>
-        </article>
-
-        <article class="card">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.55 15.15 5.4 11l-1.4 1.4 5.55 5.55 10-10L18.15 6.6l-8.6 8.55ZM3 5h9v2H3V5Zm0 12h5v2H3v-2Z"/></svg>
-          </div>
-          <h3>Tick it off in the aisle</h3>
-          <p class="muted">Sorted by aisle, works without signal · prices estimated.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= HOW IT WORKS ================= -->
-  <section id="how">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="overline">How it works</p>
-        <h2>Capture, basket, shop</h2>
-        <p class="muted">
-          The same three steps the app is built around — nothing to set up
-          beyond choosing your usual supermarket.
-        </p>
-      </div>
-
-      <div class="grid grid-3 steps">
-        <article class="card step">
-          <span class="step-no">1</span>
-          <h3>Capture the recipe</h3>
-          <p class="muted">
-            Paste a link or the recipe text, pick a photo or take one of a
-            cookbook page, or send a video link. You can also share a page
-            straight from another app into The Fern Basket. It comes back as a
-            structured ingredient list you can check and edit.
-          </p>
-        </article>
-
-        <article class="card step">
-          <span class="step-no">2</span>
-          <h3>Build the basket</h3>
-          <p class="muted">
-            Add as many recipes as you're cooking. Ingredients that repeat are
-            merged into a single line, quantities scale with the number of
-            serves, and you can add anything else you need by hand.
-          </p>
-        </article>
-
-        <article class="card step">
-          <span class="step-no">3</span>
-          <h3>Shop it</h3>
-          <p class="muted">
-            Shop mode sorts the list by aisle and works entirely on your phone,
-            so a supermarket basement with no signal doesn't stop you. Tick the
-            last item and you're done.
-          </p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= MORE FEATURES ================= -->
-  <section>
-    <div class="wrap">
-      <div class="grid grid-2">
-        <div class="card">
-          <p class="overline">In the app</p>
-          <h3 style="font-size:23px;line-height:28px;">Everything else it does</h3>
-          <ul class="feature-list">
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.55 15.15 5.4 11l-1.4 1.4 5.55 5.55 10-10L18.15 6.6l-8.6 8.55Z"/></svg><span>Compare an estimated basket cost across Pak'nSave, New World and Woolworths</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.55 15.15 5.4 11l-1.4 1.4 5.55 5.55 10-10L18.15 6.6l-8.6 8.55Z"/></svg><span>Find your nearest branches by GPS, or just type your suburb</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.55 15.15 5.4 11l-1.4 1.4 5.55 5.55 10-10L18.15 6.6l-8.6 8.55Z"/></svg><span>Set dietary preferences once — vegetarian, vegan, gluten-free, dairy-free, halal, low-FODMAP and more</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.55 15.15 5.4 11l-1.4 1.4 5.55 5.55 10-10L18.15 6.6l-8.6 8.55Z"/></svg><span>Save recipes to your library and reuse your last basket in a tap</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.55 15.15 5.4 11l-1.4 1.4 5.55 5.55 10-10L18.15 6.6l-8.6 8.55Z"/></svg><span>Sign in to sync your recipes, baskets and settings across devices — optional, not required</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.55 15.15 5.4 11l-1.4 1.4 5.55 5.55 10-10L18.15 6.6l-8.6 8.55Z"/></svg><span>Light and dark themes, following your phone or set by hand</span></li>
-          </ul>
+      <div class="receipt">
+        <div class="receipt-head">
+          <span>How it works</span>
+          <span>No. 01–03</span>
         </div>
 
-        <div class="card">
-          <p class="overline">Honest about pricing</p>
-          <h3 style="font-size:23px;line-height:28px;">Prices are estimates</h3>
-          <p class="muted">
-            No New Zealand supermarket offers a public price feed, so the cost
-            comparison is an estimate to help you choose where to shop — not a
-            quote. What you pay at the shelf can differ.
-          </p>
-          <div class="callout">
-            The Fern Basket will always tell you when a number is an estimate
-            rather than a price we can stand behind.
+        <div class="steps">
+          <div class="step">
+            <span class="box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"></path></svg>
+            </span>
+            <span>
+              <span class="title">Capture the recipe</span>
+              <span class="desc">A link, a photo of a cookbook page, or a video.</span>
+            </span>
+          </div>
+          <div class="step">
+            <span class="box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"></path></svg>
+            </span>
+            <span>
+              <span class="title">Build the basket</span>
+              <span class="desc">Repeats merge into one line; quantities scale with serves.</span>
+            </span>
+          </div>
+          <div class="step">
+            <span class="box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"></path></svg>
+            </span>
+            <span>
+              <span class="title">Shop it</span>
+              <span class="desc">Sorted by aisle, ticked off on your phone — no signal needed.</span>
+            </span>
           </div>
         </div>
+
+        <div class="receipt-total">Basket total · <span class="est">estimate only</span></div>
+        <div class="tear" aria-hidden="true"></div>
       </div>
+
     </div>
-  </section>
+  </main>
 
-  <!-- ================= PREMIUM ================= -->
-  <section id="premium">
-    <div class="wrap">
-      <div class="premium">
-        <span class="premium-tag">Premium</span>
-        <div class="section-head" style="margin:0;">
-          <h2>Change a recipe, not just list it</h2>
-          <p class="muted">
-            Everything above is part of the app. Premium adds the recipe
-            rewriting — the app asks for a healthier or lower-calorie version,
-            or adapts a dish to a diet, and shows you exactly what changed and why.
-          </p>
-        </div>
-
-        <div class="grid grid-3">
-          <article class="card">
-            <h3>Healthier &amp; lower-calorie versions</h3>
-            <p class="muted">Swaps you can accept or skip one at a time, each with its impact shown.</p>
-          </article>
-          <article class="card">
-            <h3>Vegetarian, vegan &amp; gluten-free versions</h3>
-            <p class="muted">And an honest warning when a dish changes so much it's really a different meal.</p>
-          </article>
-          <article class="card">
-            <h3>Unlimited recipes, saved versions &amp; swaps</h3>
-            <p class="muted">Keep every version you make alongside the original.</p>
-          </article>
-        </div>
-
-        <p class="caption">
-          Premium starts with a 7-day free trial, on a monthly or annual plan.
-          Cancel anytime in Settings. Prices are shown in the app in your own
-          currency, straight from the App Store or Google Play.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= PRIVACY ================= -->
-  <section id="privacy">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="overline">Privacy</p>
-        <h2>Deliberately boring about your data</h2>
-      </div>
-
-      <div class="grid grid-2">
-        <div class="card">
-          <h3>What we don't collect</h3>
-          <p class="muted">
-            No analytics, no advertising identifiers, no contacts, no device
-            identifiers, and no background or continuous location.
-          </p>
-        </div>
-        <div class="card">
-          <h3>Two permissions, asked in context</h3>
-          <p class="muted">
-            Location and photo library / camera — and only at the moment you
-            use the feature that needs them. Decline either and the rest of the
-            app still works: type a suburb instead of using GPS, and add
-            recipes by link or text instead of by photo.
-          </p>
-        </div>
-        <div class="card">
-          <h3>Some things never leave your phone</h3>
-          <p class="muted">
-            Dietary and allergy tags stay on the device even when you're signed
-            in, because they can reveal a religion or a medical condition.
-          </p>
-        </div>
-        <div class="card">
-          <h3>The shopping half works offline</h3>
-          <p class="muted">
-            Browsing your library, building and editing baskets, Shop mode and
-            sharing a list are all local to your phone by design.
-          </p>
-        </div>
-      </div>
-
-      <p class="caption" style="margin-top:var(--sp-xl);">
-        Read the <a href="/PrivacyPolicy/">full privacy policy</a>.
-      </p>
-    </div>
-  </section>
-
-  <!-- ================= GET THE APP ================= -->
-  <section id="get">
-    <div class="wrap" style="text-align:center;">
-      <div class="section-head" style="margin-left:auto;margin-right:auto;text-align:center;">
-        <h2>Get The Fern Basket</h2>
-        <p class="muted">Coming to iPhone and Android.</p>
-      </div>
-
-      <!-- Same placeholder rules as the hero badges above. Switch both sets on
-           together so the page never offers a link in one place and not the
-           other. -->
-      <div class="store-links">
-        <a class="store-badge is-placeholder" href="#" aria-disabled="true">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.42 2.2-1.12 3.01-.85.98-2.24 1.74-3.37 1.65a3.78 3.78 0 0 1 1.13-2.94c.79-.86 2.15-1.5 3.36-1.72Zm3.98 16.06c-.58 1.34-.86 1.94-1.6 3.12-1.04 1.65-2.5 3.7-4.31 3.72-1.61.01-2.02-1.05-4.2-1.04-2.18.01-2.64 1.06-4.25 1.04-1.81-.02-3.2-1.87-4.23-3.51-2.9-4.62-3.2-10.04-1.42-12.92 1.27-2.05 3.27-3.25 5.15-3.25 1.92 0 3.12 1.05 4.7 1.05 1.54 0 2.48-1.05 4.7-1.05 1.68 0 3.45.91 4.72 2.49-4.15 2.27-3.48 8.2.74 10.35Z"/></svg>
-          <span class="badge-lines">
-            <span class="badge-kicker">Coming soon to</span>
-            <span class="badge-name">the App Store</span>
-          </span>
-        </a>
-        <a class="store-badge is-placeholder" href="#" aria-disabled="true">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.6 1.84a1.5 1.5 0 0 0-.6 1.2v17.92c0 .48.22.92.6 1.2l9.42-10.16L3.6 1.84Zm10.63 11.42 2.9 3.13-10.5 5.95 7.6-9.08Zm0-2.52L6.63 1.66l10.5 5.95-2.9 3.13Zm3.98 1.26 3.03-1.72c.63-.36.63-1.28 0-1.64l-3.03-1.72-3.2 3.45 3.2 3.45-.01-1.82Z"/></svg>
-          <span class="badge-lines">
-            <span class="badge-kicker">Coming soon to</span>
-            <span class="badge-name">Google Play</span>
-          </span>
-        </a>
-      </div>
-      <p class="store-note caption">Links will be added when the app is published.</p>
-    </div>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="wrap">
-    <div>
-      <a class="brand" href="#top">
-        <img src="assets/logo-mark.png" alt="" width="32" height="32">
-        <span>The Fern Basket</span>
-      </a>
-      <p class="caption" style="margin-top:var(--sp-md);">
-        © <span id="year">2026</span> Hyosun Kim, trading as The Fern Basket. Aotearoa New Zealand.
-      </p>
-    </div>
-
-    <nav class="footer-links" aria-label="Footer">
-      <a href="/PrivacyPolicy/">Privacy policy</a>
-      <!-- PLACEHOLDER: replace href and drop the is-placeholder-link class
-           once each page exists. -->
-      <a class="is-placeholder-link" href="#" aria-disabled="true">Terms</a>
-      <a class="is-placeholder-link" href="#" aria-disabled="true">Support</a>
-      <a href="mailto:support@thefernbasket.com">support@thefernbasket.com</a>
-    </nav>
-  </div>
-</footer>
+  <footer class="footer">
+    <span>Not on the app stores yet — links land here when it ships. Prices are estimates, not quotes.</span>
+    <span class="footer-links">
+      <a href="/PrivacyPolicy/">Privacy</a>
+      <a href="mailto:support@thefernbasket.com">Support</a>
+    </span>
+  </footer>
+</div>
 
 <script>
-  // Keep the copyright year current without hardcoding it into the markup.
-  document.getElementById('year').textContent = String(new Date().getFullYear());
+  // Theme. The artboard toggles in memory only; a real page has to remember,
+  // so the choice is stored here and re-applied before paint by the inline
+  // script in <head>. No stored choice means follow the OS, as the app does.
+  (function () {
+    var btn = document.getElementById('theme-toggle');
 
-  // The store badges and footer links are placeholders until real URLs exist.
-  // Swallow the click so a visitor never lands back at the top of the page
-  // thinking something is broken. Remove an element's placeholder class (and
-  // its aria-disabled) when you give it a real href, and this stops applying.
-  document.querySelectorAll('.is-placeholder, .is-placeholder-link').forEach(function (el) {
-    el.addEventListener('click', function (e) { e.preventDefault(); });
-  });
+    function current() {
+      var set = document.documentElement.dataset.theme;
+      if (set) return set;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function paint() {
+      // The button offers the theme you'd switch TO, matching the artboard.
+      var next = current() === 'dark' ? 'light' : 'dark';
+      btn.textContent = next === 'dark' ? 'Dark' : 'Light';
+      btn.setAttribute('aria-label', 'Switch to ' + next + ' theme');
+    }
+
+    btn.addEventListener('click', function () {
+      var next = current() === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      try { localStorage.setItem('fb-theme', next); } catch (e) { /* private mode */ }
+      paint();
+    });
+
+    // Follow the OS while the visitor hasn't chosen for themselves.
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
+      if (!document.documentElement.dataset.theme) paint();
+    });
+
+    paint();
+
+    // The store badges go nowhere yet; swallow the click so the page doesn't
+    // jump to the top and read as broken.
+    document.querySelectorAll('.is-placeholder').forEach(function (el) {
+      el.addEventListener('click', function (e) { e.preventDefault(); });
+    });
+  })();
 </script>
 </body>
 </html>
