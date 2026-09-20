@@ -1,0 +1,7 @@
+# The Fern Basket — https://thefernbasket.com
+# Everything here is public; nothing is disallowed.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://thefernbasket.com/sitemap.xml

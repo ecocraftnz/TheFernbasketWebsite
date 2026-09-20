@@ -9,10 +9,63 @@
 <meta name="theme-color" content="#0E1713" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="/assets/favicon.png" type="image/png">
 
+<link rel="canonical" href="https://thefernbasket.com/">
+
+<!-- Open Graph needs ABSOLUTE urls. These were root-relative, which meant
+     shared links previewed with no image on most platforms. -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="The Fern Basket">
-<meta property="og:description" content="Every recipe, one shopping list.">
-<meta property="og:image" content="/assets/logo-mark.png">
+<meta property="og:site_name" content="The Fern Basket">
+<meta property="og:locale" content="en_NZ">
+<meta property="og:url" content="https://thefernbasket.com/">
+<meta property="og:title" content="The Fern Basket — Every recipe, one shopping list.">
+<meta property="og:description" content="Paste a link, snap a cookbook page, or share a video. The Fern Basket reads the recipe, merges everything you're cooking into one tidy list, and sorts it by aisle for the shop.">
+<meta property="og:image" content="https://thefernbasket.com/assets/logo-mark.png">
+<meta property="og:image:alt" content="The Fern Basket logo: a woven basket with a fern frond.">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Fern Basket — Every recipe, one shopping list.">
+<meta name="twitter:description" content="Turn any recipe into one tidy, aisle-sorted shopping list. Built for Aotearoa New Zealand.">
+<meta name="twitter:image" content="https://thefernbasket.com/assets/logo-mark.png">
+
+<!--
+  Structured data. Deliberately claims nothing that isn't true yet: no
+  aggregateRating (nobody has rated it), no offers/price (the app reads prices
+  from the store at runtime and hard-codes none), and no downloadUrl (there are
+  no listings). When the app ships, add `offers` and `downloadUrl` here — those
+  are also what Google needs before it will show an app rich result.
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://thefernbasket.com/#org",
+      "name": "The Fern Basket",
+      "url": "https://thefernbasket.com/",
+      "logo": "https://thefernbasket.com/assets/logo-mark.png"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://thefernbasket.com/#website",
+      "name": "The Fern Basket",
+      "url": "https://thefernbasket.com/",
+      "inLanguage": "en-NZ",
+      "publisher": { "@id": "https://thefernbasket.com/#org" }
+    },
+    {
+      "@type": "MobileApplication",
+      "@id": "https://thefernbasket.com/#app",
+      "name": "The Fern Basket",
+      "applicationCategory": "ShoppingApplication",
+      "operatingSystem": "iOS, Android",
+      "inLanguage": "en-NZ",
+      "description": "Turns a recipe link, a photo of a cookbook page, or a video into one tidy shopping list, merging repeated ingredients and sorting the list by aisle.",
+      "publisher": { "@id": "https://thefernbasket.com/#org" }
+    }
+  ]
+}
+</script>
 
 <!-- Applies a saved theme before first paint, so a returning visitor never
      sees the other theme flash first. Must stay inline and in <head>. -->
