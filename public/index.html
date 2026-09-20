@@ -165,11 +165,18 @@
     text-transform:uppercase; color:var(--muted);
   }
   .theme-toggle {
-    font:inherit; letter-spacing:.18em; text-transform:uppercase; color:var(--muted);
+    position:relative; font:inherit; letter-spacing:.18em; text-transform:uppercase; color:var(--muted);
     background:none; border:none; padding:0; cursor:pointer;
     border-bottom:1px solid var(--line);
   }
   .theme-toggle:hover { color:var(--primary); }
+  /* The label is small by design; widen the hit area to the 44px minimum with
+     an overlay rather than padding, so the target is compliant without the
+     topbar growing taller. */
+  .theme-toggle::before {
+    content:""; position:absolute; left:-8px; right:-8px; top:50%;
+    transform:translateY(-50%); height:44px;
+  }
 
   .main {
     position:relative; z-index:1; flex:1 1 auto; min-height:0;

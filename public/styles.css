@@ -203,379 +203,109 @@ p {
   color: var(--text-faint);
 }
 
-/* ---- Header ------------------------------------------------------------- */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  background: color-mix(in srgb, var(--surface-nav) 88%, transparent);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--surface-border);
+/* ---- Page chrome -------------------------------------------------------
+   Mirrors the topbar and footer on index.html so the two pages read as one
+   site. Values are copied from there deliberately: index.html is
+   self-contained by design, so this is the one place they have to be kept in
+   step. Everything the old v1 landing page needed (hero, store badges, cards,
+   grids, steps, feature list, premium, callout) was removed — the current
+   landing page carries its own styles and nothing here referenced them. */
+
+/* --muted/--line/--hair exist on index.html but not in tokens.ts; defined
+   here with the same values so the chrome matches exactly. */
+:root { --muted:#5A6B62; --line:rgba(23,81,59,.18); --hair:rgba(23,37,30,.12); }
+html[data-theme="dark"] { --muted:#9DB0A6; --line:rgba(111,199,155,.26); --hair:rgba(234,240,236,.14); }
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) { --muted:#9DB0A6; --line:rgba(111,199,155,.26); --hair:rgba(234,240,236,.14); }
 }
 
-.site-header .wrap {
+.topbar {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
-  gap: var(--sp-lg);
-  min-height: 64px;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-md);
-  color: var(--text);
-  font-weight: 800;
-  font-size: 16px;
-  line-height: 20px;
-}
-
-.brand:hover {
-  text-decoration: none;
-}
-
-.brand img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-}
-
-.site-nav {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-xl);
-}
-
-.site-nav a {
-  color: var(--text-muted);
-  font-size: 13px;
-  line-height: 16px;
+  gap: 16px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 24px var(--gutter) clamp(8px, 1.4vh, 14px);
+  border-bottom: 1px solid var(--hair);
+  font-size: clamp(10px, .95vw, 13px);
   font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--min-touch);
-}
-
-.site-nav a:hover {
-  color: var(--text);
-  text-decoration: none;
-}
-
-@media (max-width: 720px) {
-  .site-nav {
-    display: none;
-  }
-}
-
-/* ---- Sections ----------------------------------------------------------- */
-section {
-  padding: clamp(48px, 9vw, 96px) 0;
-}
-
-.section-head {
-  max-width: 680px;
-  margin-bottom: var(--sp-xxl);
-  display: grid;
-  gap: var(--sp-md);
-}
-
-/* ---- Hero --------------------------------------------------------------- */
-.hero {
-  text-align: center;
-  padding-top: clamp(40px, 8vw, 80px);
-}
-
-.hero-logo {
-  width: clamp(96px, 18vw, 132px);
-  height: auto;
-  margin: 0 auto var(--sp-xl);
-}
-
-.hero-sub {
-  margin: var(--sp-lg) auto 0;
-  max-width: 46ch;
-  font-size: clamp(16px, 2.2vw, 19px);
-  line-height: 1.6;
-  color: var(--text-muted);
-}
-
-.hero-region {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--sp-sm);
-  margin-bottom: var(--sp-lg);
-  padding: 6px var(--sp-md);
-  border-radius: 999px;
-  background: var(--success-bg);
-  border: 1px solid var(--success-border);
-  color: var(--success-text);
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 800;
-  letter-spacing: 0.72px;
+  letter-spacing: .18em;
   text-transform: uppercase;
+  color: var(--muted);
 }
 
-/* ---- Store badges (PLACEHOLDERS) ---------------------------------------
-   These are deliberately inert until the real listing URLs exist. See the
-   comments in index.html for exactly what to change to switch one on.     */
-.store-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--sp-md);
-  justify-content: center;
-  margin-top: var(--sp-xxl);
-}
+.topbar .region { color: var(--muted); }
+.topbar .region:hover { color: var(--primary); text-decoration: none; }
 
-.store-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--sp-md);
-  min-height: var(--button-height);
-  padding: var(--sp-md) var(--sp-xl);
-  border-radius: var(--r-lg);
-  background: var(--primary);
-  color: var(--on-primary);
-  border: 1px solid var(--primary);
-  text-align: left;
-  font-family: inherit;
-  text-decoration: none;
-}
-
-.store-badge:hover {
-  background: var(--primary-pressed);
-  border-color: var(--primary-pressed);
-  text-decoration: none;
-}
-
-.store-badge svg {
-  width: 24px;
-  height: 24px;
-  flex: none;
-  fill: currentColor;
-}
-
-.store-badge .badge-lines {
-  display: grid;
-}
-
-.store-badge .badge-kicker {
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 500;
-  opacity: 0.85;
-}
-
-.store-badge .badge-name {
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 800;
-}
-
-/* The "not published yet" state. Remove `is-placeholder` (and the
-   aria-disabled attribute) once a real href is in place. */
-.store-badge.is-placeholder {
-  background: transparent;
-  color: var(--text-muted);
-  border: 1px dashed var(--surface-border);
-  cursor: not-allowed;
-}
-
-.store-badge.is-placeholder:hover {
-  background: transparent;
-  border-color: var(--surface-border);
-}
-
-.store-note {
-  margin-top: var(--sp-md);
-  text-align: center;
-}
-
-/* ---- Cards -------------------------------------------------------------- */
-.grid {
-  display: grid;
-  gap: var(--sp-lg);
-}
-
-.grid-3 {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.grid-2 {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-@media (max-width: 880px) {
-  .grid-3 {
-    grid-template-columns: 1fr;
-  }
-  .grid-2 {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Cards use 1px borders, not shadows — the app's rule (tokens.ts). */
-.card {
-  background: var(--surface);
-  border: 1px solid var(--surface-border);
-  border-radius: var(--r-xl);
-  padding: var(--sp-xl);
-  display: grid;
-  gap: var(--sp-md);
-  align-content: start;
-}
-
-.card-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--r-md);
-  background: var(--success-bg);
-  color: var(--success-text);
-  display: grid;
-  place-items: center;
-  margin-bottom: var(--sp-xs);
-}
-
-.card-icon svg {
-  width: 20px;
-  height: 20px;
-  fill: currentColor;
-}
-
-/* ---- Steps -------------------------------------------------------------- */
-.steps {
-  counter-reset: step;
-}
-
-.step {
+.theme-toggle {
   position: relative;
-}
-
-.step .step-no {
-  display: inline-grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  background: var(--primary);
-  color: var(--on-primary);
-  font-weight: 800;
-  font-size: 13px;
-  line-height: 16px;
-  margin-bottom: var(--sp-xs);
-}
-
-/* ---- Feature list ------------------------------------------------------- */
-.feature-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: var(--sp-md);
-}
-
-.feature-list li {
-  display: flex;
-  gap: var(--sp-md);
-  align-items: flex-start;
-}
-
-.feature-list svg {
-  width: 20px;
-  height: 20px;
-  flex: none;
-  margin-top: 2px;
-  fill: var(--success-text);
-}
-
-/* ---- Premium ------------------------------------------------------------ */
-.premium {
-  border-radius: var(--r-xl);
-  border: 1px solid var(--surface-border);
-  background: var(--surface);
-  padding: clamp(24px, 4vw, 40px);
-  display: grid;
-  gap: var(--sp-xl);
-}
-
-.premium-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--sp-sm);
-  align-self: start;
-  /* .premium is a grid, so without this the pill stretches the full row. */
-  justify-self: start;
-  padding: 6px var(--sp-md);
-  border-radius: 999px;
-  background: var(--premium-gold);
-  color: #17251E; /* tokens.ts light.text — premiumGold is identical in both
-                     themes, so the label keeps its dark ink in dark mode. */
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 800;
-  letter-spacing: 0.72px;
+  font: inherit;
+  letter-spacing: .18em;
   text-transform: uppercase;
+  color: var(--muted);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border-bottom: 1px solid var(--line);
 }
 
-/* ---- Callout ------------------------------------------------------------ */
-.callout {
-  border-radius: var(--r-lg);
-  border: 1px solid var(--warn-border);
-  background: var(--warn-bg);
-  color: var(--warn);
-  padding: var(--sp-lg);
-  font-size: 13px;
-  line-height: 20px;
-  font-weight: 700;
+.theme-toggle:hover { color: var(--primary); }
+
+/* These two labels are small by design. The hit area is widened to the 44px
+   minimum with an overlay rather than padding, so the touch target is
+   compliant without the topbar growing taller. */
+.theme-toggle::before,
+.topbar .region::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  right: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 44px;
 }
+
+.topbar .region { position: relative; }
 
 /* ---- Footer ------------------------------------------------------------- */
 .site-footer {
-  border-top: 1px solid var(--surface-border);
-  background: var(--surface-nav);
-  padding: var(--sp-xxl) 0;
+  border-top: 1px solid var(--hair);
+  background: var(--bg);
+  padding: 24px 0 32px;
 }
 
-.site-footer .wrap {
+.footer-inner {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--sp-xl);
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-start;
+  gap: 16px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  font-size: clamp(10px, .95vw, 13px);
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--muted);
 }
 
 .footer-links {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--sp-xl);
+  gap: clamp(12px, 1.6vw, 22px);
 }
 
 .footer-links a {
-  color: var(--text-muted);
-  font-size: 13px;
-  line-height: 16px;
+  color: var(--muted);
   font-weight: 700;
   display: inline-flex;
   align-items: center;
   min-height: var(--min-touch);
 }
 
-.footer-links a:hover {
-  color: var(--text);
-}
-
-/* A placeholder link that has no destination yet. */
-.is-placeholder-link {
-  color: var(--text-faint);
-  cursor: not-allowed;
-  text-decoration: line-through;
-}
-
-.is-placeholder-link:hover {
-  color: var(--text-faint);
-  text-decoration: line-through;
-}
+.footer-links a:hover { color: var(--primary); }
 
 /* ---- Policy page (long-form legal text, e.g. Privacy Policy) ------------ */
 .policy {
@@ -611,10 +341,19 @@ section {
   margin-top: var(--sp-xs);
 }
 
+/* Wide tables scroll inside their own box. Without this the whole page
+   scrolls sideways on a phone, which is never acceptable. */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: var(--sp-lg) 0 0;
+}
+
 .policy table {
   width: 100%;
+  min-width: 480px;
   border-collapse: collapse;
-  margin: var(--sp-lg) 0 0;
+  margin: 0;
   font-size: 13px;
   line-height: 18px;
 }

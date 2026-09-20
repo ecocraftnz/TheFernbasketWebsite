@@ -19,6 +19,17 @@
 <meta property="og:image" content="https://thefernbasket.com/assets/logo-mark.png">
 <meta name="twitter:card" content="summary">
 
+<!-- Same key and behaviour as index.html: a theme chosen on the landing page
+     must carry across, and must apply before first paint. Keep inline. -->
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('fb-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) { /* storage blocked - fall through to the OS preference */ }
+  })();
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -28,20 +39,9 @@
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 
-<header class="site-header">
-  <div class="wrap">
-    <a class="brand" href="/">
-      <img src="/assets/logo-mark.png" alt="" width="32" height="32">
-      <span>The Fern Basket</span>
-    </a>
-    <nav class="site-nav" aria-label="Primary">
-      <a href="/#how">How it works</a>
-      <a href="/#features">Features</a>
-      <a href="/#premium">Premium</a>
-      <a href="/PrivacyPolicy/">Privacy</a>
-      <a href="/#get">Get the app</a>
-    </nav>
-  </div>
+<header class="topbar">
+  <a class="region" href="/">The Fern Basket · Aotearoa New Zealand</a>
+  <button type="button" class="theme-toggle" id="theme-toggle">Dark</button>
 </header>
 
 <main id="main">
@@ -73,7 +73,8 @@
       </p>
 
       <h2>What we process, why, and our lawful basis</h2>
-      <table>
+      <div class="table-scroll">
+<table>
         <thead>
           <tr>
             <th>Data</th>
@@ -181,6 +182,7 @@
           </tr>
         </tbody>
       </table>
+</div>
 
       <h3>What we deliberately don't collect</h3>
       <p>
@@ -226,7 +228,8 @@
       <p class="muted">
         In summary — the parties below, what they handle, and where:
       </p>
-      <table>
+      <div class="table-scroll">
+<table>
         <thead>
           <tr>
             <th>Processor</th>
@@ -292,6 +295,7 @@
           </tr>
         </tbody>
       </table>
+</div>
 
       <h2>International transfers</h2>
       <p>
@@ -416,31 +420,41 @@
 </main>
 
 <footer class="site-footer">
-  <div class="wrap">
-    <div>
-      <a class="brand" href="/">
-        <img src="/assets/logo-mark.png" alt="" width="32" height="32">
-        <span>The Fern Basket</span>
-      </a>
-      <p class="caption" style="margin-top:var(--sp-md);">
-        © <span id="year">2026</span> Hyosun Kim, trading as The Fern Basket. Aotearoa New Zealand.
-      </p>
-    </div>
-
-    <nav class="footer-links" aria-label="Footer">
-      <a href="/PrivacyPolicy/">Privacy policy</a>
-      <a class="is-placeholder-link" href="#" aria-disabled="true">Terms</a>
-      <a class="is-placeholder-link" href="#" aria-disabled="true">Support</a>
-      <a href="mailto:support@thefernbasket.com">support@thefernbasket.com</a>
-    </nav>
+  <div class="footer-inner">
+    <span>© <span id="year">2026</span> Hyosun Kim, trading as The Fern Basket. Aotearoa New Zealand.</span>
+    <span class="footer-links">
+      <a href="/">Home</a>
+      <a href="mailto:support@thefernbasket.com">Support</a>
+    </span>
   </div>
 </footer>
 
 <script>
   document.getElementById('year').textContent = String(new Date().getFullYear());
-  document.querySelectorAll('.is-placeholder, .is-placeholder-link').forEach(function (el) {
-    el.addEventListener('click', function (e) { e.preventDefault(); });
-  });
+
+  (function () {
+    var btn = document.getElementById('theme-toggle');
+    function current() {
+      var set = document.documentElement.dataset.theme;
+      if (set) return set;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function paint() {
+      var next = current() === 'dark' ? 'light' : 'dark';
+      btn.textContent = next === 'dark' ? 'Dark' : 'Light';
+      btn.setAttribute('aria-label', 'Switch to ' + next + ' theme');
+    }
+    btn.addEventListener('click', function () {
+      var next = current() === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      try { localStorage.setItem('fb-theme', next); } catch (e) { /* private mode */ }
+      paint();
+    });
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
+      if (!document.documentElement.dataset.theme) paint();
+    });
+    paint();
+  })();
 </script>
 </body>
 </html>
