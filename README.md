@@ -85,10 +85,14 @@ The identifiers for building those URLs, from the app's `app.json`:
 each a real `href` and drop that class once those pages exist. Privacy policy
 and the contact email are done.
 
-**Legal entity and contact email** — done. The footer, and the privacy
-policy at `public/PrivacyPolicy/index.html`, both name Hyosun Kim trading as
-"The Fern Basket", 4B Halberg Street, Auckland 0629, New Zealand, and
-`support@thefernbasket.com`.
+**Legal entity and contact email** — the published policy deliberately does
+NOT carry the operator's personal name or street address. It is a residential
+address, the app has not launched, and the page is indexed by Google. The
+policy identifies the operator as "The Fern Basket", a sole trader in New
+Zealand, gives `support@thefernbasket.com`, and says the full registered name
+and postal address are available on request. Replace that with a non-
+residential postal address (PO Box or registered office) before launch, then
+restore a full identity block.
 
 **The privacy policy page itself** — done. `public/PrivacyPolicy/index.html`
 publishes the app's `PRIVACY_POLICY.md` (from `ecocraftnz/basket-trans-tasman`)
