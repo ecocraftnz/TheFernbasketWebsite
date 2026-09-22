@@ -19,6 +19,7 @@ Everything that gets published lives in `public/`. Nothing else does.
 | `public/styles.css` | Design tokens + layout. Only the privacy page links it |
 | `public/robots.txt` | Allows everything. Pure ASCII on purpose - see below |
 | `public/sitemap.xml` | Both pages, with `lastmod` taken from git |
+| `public/assets/screens/*.png` | App screenshots for the "screen by screen" section |
 | `public/assets/logo-mark.png` | The app's logo mark, copied from the app repo |
 | `public/assets/favicon.png` | The app's favicon, copied from the app repo |
 | `wrangler.jsonc` | Cloudflare Workers deployment config (not published) |
@@ -146,6 +147,35 @@ copy is ever updated to match:
 
 The EU representative paragraph was dropped (the draft said to delete it if
 not applicable — the app isn't offered to EU/EEA users specifically).
+
+## App screenshots
+
+The "From recipe to shopping list, screen by screen" section expects four PNGs
+in `public/assets/screens/`, and the page ships with the markup already in
+place:
+
+| File | Screen |
+| --- | --- |
+| `capture.png` | Home, showing the four ways to add a recipe |
+| `recipe.png` | A recipe open, with the ingredient list read from it |
+| `basket.png` | The basket, grouped by supermarket section |
+| `price-check.png` | The store comparison |
+
+They are portrait phone captures; the CSS frame is `aspect-ratio:9/19.5` and
+crops with `object-fit:cover`, so anything close to a modern phone screen fits
+without distortion. The same four filenames are also listed as `screenshot` on
+the `MobileApplication` node in the page's JSON-LD, which is one of the things
+Google wants before it will show an app rich result.
+
+**Use a plain `<img>`, not `<picture>` with a WebP `<source>`.** `<picture>`
+falls back on *format support*, not on a missing file: if the `.webp` 404s the
+browser does not drop to the `.png`, it shows nothing. Verified in Chromium. To
+serve WebP later, add **both** files for every screenshot.
+
+**The screens show example data, not a real shop**, and the section says so in
+its opening paragraph. Keep that line if the images are ever replaced, and keep
+the app's rule that prices are estimates: the captions describe the comparison
+without quoting a figure from the screenshots.
 
 ## Keeping copy in step with the app
 
