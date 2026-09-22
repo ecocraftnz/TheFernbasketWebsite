@@ -152,10 +152,10 @@
       "inLanguage": "en-NZ",
       "description": "Turns a recipe link, a photo of a cookbook page, or a video into one tidy shopping list, merging repeated ingredients and sorting the list by aisle.",
       "screenshot": [
-        "https://thefernbasket.com/assets/screens/capture.png",
-        "https://thefernbasket.com/assets/screens/recipe.png",
-        "https://thefernbasket.com/assets/screens/basket.png",
-        "https://thefernbasket.com/assets/screens/price-check.png"
+        "https://thefernbasket.com/assets/screens/capture.webp",
+        "https://thefernbasket.com/assets/screens/recipe.webp",
+        "https://thefernbasket.com/assets/screens/basket.webp",
+        "https://thefernbasket.com/assets/screens/price-check.webp"
       ],
       "publisher": { "@id": "https://thefernbasket.com/#org" }
     }
@@ -457,10 +457,10 @@
   /* Phone screenshots. The frame carries the aspect ratio so the row cannot
      shift as images decode, which is why these need no width/height attrs.
 
-     Deliberately a plain <img>, not <picture> + a WebP <source>: <picture>
-     falls back on FORMAT SUPPORT, not on a missing file, so a <source> whose
-     .webp is absent breaks the image outright instead of dropping to the .png.
-     Verified in Chromium. To add WebP later, add BOTH files per screenshot. */
+     The screens are WebP, served directly by a plain <img> with no <picture>
+     and no PNG fallback: every browser this site targets decodes WebP, and a
+     <picture> whose <source> 404s shows nothing rather than falling back,
+     since it switches on FORMAT SUPPORT and not on a missing file. */
   .screens { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin:32px 0 0; }
   .shot { margin:0; }
   .shot .frame {
@@ -696,7 +696,7 @@
       <div class="screens">
         <figure class="shot">
           <div class="frame">
-            <img src="/assets/screens/capture.png" alt="The Fern Basket home screen, offering four ways to add a recipe: paste a link, take a photo, add a YouTube video, or type it in. Example data." loading="lazy" decoding="async">
+            <img src="/assets/screens/capture.webp" alt="The Fern Basket home screen, offering four ways to add a recipe: paste a link, take a photo, add a YouTube video, or type it in. Example data." width="665" height="1440" loading="lazy" decoding="async">
           </div>
           <figcaption>
             <h3>Add a recipe</h3>
@@ -706,7 +706,7 @@
 
         <figure class="shot">
           <div class="frame">
-            <img src="/assets/screens/recipe.png" alt="A recipe open in The Fern Basket, showing the ingredient list read from the page with a quantity beside each item. Example data." loading="lazy" decoding="async">
+            <img src="/assets/screens/recipe.webp" alt="A recipe open in The Fern Basket, showing the ingredient list read from the page with a quantity beside each item. Example data." width="665" height="1440" loading="lazy" decoding="async">
           </div>
           <figcaption>
             <h3>Check the ingredients</h3>
@@ -716,7 +716,7 @@
 
         <figure class="shot">
           <div class="frame">
-            <img src="/assets/screens/basket.png" alt="A shopping basket in The Fern Basket, grouped by supermarket section, combining the items from two recipes. Example data." loading="lazy" decoding="async">
+            <img src="/assets/screens/basket.webp" alt="A shopping basket in The Fern Basket, grouped by supermarket section, combining the items from two recipes. Example data." width="665" height="1440" loading="lazy" decoding="async">
           </div>
           <figcaption>
             <h3>Build the basket</h3>
@@ -726,7 +726,7 @@
 
         <figure class="shot">
           <div class="frame">
-            <img src="/assets/screens/price-check.png" alt="The price check screen in The Fern Basket, comparing an estimated basket total across Pak'nSave, New World and Woolworths. Example data." loading="lazy" decoding="async">
+            <img src="/assets/screens/price-check.webp" alt="The price check screen in The Fern Basket, comparing an estimated basket total across Pak'nSave, New World and Woolworths. Example data." width="665" height="1440" loading="lazy" decoding="async">
           </div>
           <figcaption>
             <h3>Compare the stores</h3>
