@@ -195,6 +195,12 @@
   /* Tokens copied from the artboard. --bg/--surface/--primary/--accent/--text
      match the app's src/theme/tokens.ts; --muted/--line/--hair are this
      design's own, and have no counterpart in the app. */
+  /* Small text uses --accent, never --primary. In dark mode --primary is
+     #2E7D5B, only 3.65:1 on the background and 3.31:1 on a surface, under the
+     4.5:1 WCAG AA needs for normal text; --accent is #6FC79B at 8.97:1. In
+     light mode the two are the same colour, so this costs nothing there.
+     The h1's brand accent keeps --primary: at 37-70px it is large text, where
+     3:1 applies and 3.65:1 passes. */
   :root {
     --bg:#F6F1E8; --surface:#FFFDF9; --primary:#17513B; --accent:#17513B;
     --text:#17251E; --muted:#5A6B62;
@@ -222,7 +228,7 @@
   *, *::before, *::after { box-sizing: border-box; }
   html, body { margin:0; padding:0; background:var(--bg); }
   img { display:block; max-width:100%; }
-  a { color:var(--primary); text-decoration:none; }
+  a { color:var(--accent); text-decoration:none; }
   a:hover { color:var(--accent); }
   :focus-visible { outline:2px solid var(--primary); outline-offset:3px; border-radius:6px; }
 
@@ -234,6 +240,7 @@
   .skip-link { position:absolute; left:-9999px; }
   .skip-link:focus {
     left:16px; top:16px; z-index:10; background:var(--surface); color:var(--text);
+    display:inline-flex; align-items:center; min-height:44px;
     padding:12px 16px; border:1px solid var(--hair); border-radius:10px;
   }
 
@@ -265,13 +272,13 @@
     background:none; border:none; padding:0; cursor:pointer;
     border-bottom:1px solid var(--line);
   }
-  .theme-toggle:hover { color:var(--primary); }
+  .theme-toggle:hover { color:var(--accent); }
   /* The label is small by design; widen the hit area to the 44px minimum with
      an overlay rather than padding, so the target is compliant without the
      topbar growing taller. */
   .theme-toggle::before {
     content:""; position:absolute; left:-8px; right:-8px; top:50%;
-    transform:translateY(-50%); height:44px;
+    transform:translateY(-50%); height:48px;
   }
 
   .main {
@@ -303,7 +310,7 @@
   .lede .h1-sub {
     margin:clamp(6px,.8vh,10px) 0 0; max-width:44ch;
     font-size:clamp(12.5px,1.25vw,20px); line-height:1.35; font-weight:600;
-    letter-spacing:-.01em; color:var(--primary);
+    letter-spacing:-.01em; color:var(--accent);
     animation:fb-in .7s ease-out .08s both;
   }
   /* Tighten the gap the support line would otherwise double up on, so the
@@ -364,7 +371,7 @@
     font-size:clamp(10px,.98vw,14.5px); font-weight:700; letter-spacing:.16em;
     text-transform:uppercase; color:var(--muted);
   }
-  .receipt-total .est { color:var(--primary); }
+  .receipt-total .est { color:var(--accent); }
   .receipt .tear {
     position:absolute; left:0; right:0; bottom:-9px; height:10px; background:var(--surface);
     -webkit-mask-image:repeating-conic-gradient(from -45deg at 50% 0, #000 0deg 90deg, transparent 90deg 180deg);
@@ -379,7 +386,11 @@
     padding-top:clamp(8px,1.4vh,14px); border-top:1px solid var(--hair);
     font-size:clamp(10px,.95vw,13px); font-weight:600; letter-spacing:.04em; color:var(--muted);
   }
-  .footer-links { display:flex; gap:clamp(12px,1.6vw,22px); }
+  .footer-links { display:flex; gap:8px; margin:0 -8px; }
+  .footer-links a {
+    display:inline-flex; align-items:center; justify-content:center;
+    min-width:44px; min-height:44px; padding:0 8px; /* 8px gap = inactive buffer */
+  }
 
   /* Stacked. The artboard swaps to a 360x600 variant at the same point. */
   @media (max-width: 900px) {
@@ -414,7 +425,7 @@
     margin-top:8px; border-radius:999px; color:var(--muted);
     animation:fb-in .7s ease-out .5s both;
   }
-  .scroll-cue:hover { color:var(--primary); }
+  .scroll-cue:hover { color:var(--accent); }
   .scroll-cue svg { width:24px; height:24px; }
 
   .content { background:var(--bg); color:var(--text);
@@ -433,7 +444,7 @@
   }
   .content p { margin:0; font-size:clamp(15px,1.25vw,18px); line-height:1.6; color:var(--muted); }
   .content .lead { max-width:68ch; font-size:clamp(16px,1.4vw,20px); line-height:1.65; }
-  .content a { color:var(--primary); text-decoration:underline; text-underline-offset:3px; }
+  .content a { color:var(--accent); text-decoration:underline; text-underline-offset:3px; }
   .content a:hover { color:var(--accent); }
 
   .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
@@ -479,7 +490,7 @@
   }
   .faq details[open] summary::after { transform:rotate(-135deg) translate(-2px,-2px); }
   .faq summary h3 { margin:0; }
-  .faq summary:hover h3 { color:var(--primary); }
+  .faq summary:hover h3 { color:var(--accent); }
   .faq details p { padding:0 24px 24px; max-width:72ch; }
 
   .footer-inner {

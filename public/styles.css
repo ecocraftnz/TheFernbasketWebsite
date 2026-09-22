@@ -142,6 +142,9 @@ a:hover {
   left: var(--gutter);
   top: var(--sp-lg);
   z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--min-touch);
   background: var(--surface);
   color: var(--text);
   padding: var(--sp-md) var(--sp-lg);
@@ -236,7 +239,7 @@ html[data-theme="dark"] { --muted:#9DB0A6; --line:rgba(111,199,155,.26); --hair:
 }
 
 .topbar .region { color: var(--muted); }
-.topbar .region:hover { color: var(--primary); text-decoration: none; }
+.topbar .region:hover { color: var(--accent); text-decoration: none; }
 
 .theme-toggle {
   position: relative;
@@ -251,7 +254,7 @@ html[data-theme="dark"] { --muted:#9DB0A6; --line:rgba(111,199,155,.26); --hair:
   border-bottom: 1px solid var(--line);
 }
 
-.theme-toggle:hover { color: var(--primary); }
+.theme-toggle:hover { color: var(--accent); }
 
 /* These two labels are small by design. The hit area is widened to the 44px
    minimum with an overlay rather than padding, so the touch target is
@@ -302,10 +305,13 @@ html[data-theme="dark"] { --muted:#9DB0A6; --line:rgba(111,199,155,.26); --hair:
   font-weight: 700;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: var(--min-touch);
+  min-width: var(--min-touch); /* height was set, width was not: measured 29px */
+  padding: 0 var(--sp-sm);
 }
 
-.footer-links a:hover { color: var(--primary); }
+.footer-links a:hover { color: var(--accent); }
 
 /* ---- Policy page (long-form legal text, e.g. Privacy Policy) ------------ */
 .policy {
