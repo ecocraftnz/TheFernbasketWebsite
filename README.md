@@ -99,16 +99,19 @@ app, loaded from Google Fonts.
 Everything below is deliberately inert and marked in the source with a
 `PLACEHOLDER` comment.
 
-**App store links** — the two badges in the hero and the two in "Get the app".
-For each one:
+**App store links** — the two badges in the hero. They are real, working links
+that currently point at `#faq`, the FAQ entry explaining when the app ships; an
+`href="#"` is a dead end for a visitor and an empty link to a crawler. For each
+one:
 
-1. Replace `href="#"` with the real listing URL.
-2. Change `class="store-badge is-placeholder"` to `class="store-badge"`.
-3. Delete the `aria-disabled="true"` attribute.
+1. Replace `href="#faq"` with the real listing URL.
+2. Change `class="badge badge-primary is-placeholder"` to `class="badge
+   badge-primary"` (and the same for `badge-ghost`).
 
-Then update the `.store-note` line under each pair, which currently says the
-app isn't published yet. Switch the hero pair and the "Get the app" pair on
-together, so the page never offers a link in one place and not the other.
+Then change the "Coming soon to" kicker in each badge, and the FAQ answer to
+"When is it coming to the App Store and Google Play?", which says it is not
+published yet. Switch both badges on together, so the page never offers a link
+in one place and not the other.
 
 The identifiers for building those URLs, from the app's `app.json`:
 

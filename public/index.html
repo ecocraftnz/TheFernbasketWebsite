@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Fern Basket — Every recipe, one shopping list.</title>
-<meta name="description" content="The Fern Basket turns any recipe — a link, a photo, even a video — into one tidy, aisle-sorted shopping list. Built for New Zealand.">
+<title>Turn Any Recipe Into a Shopping List | The Fern Basket NZ</title>
+<meta name="description" content="Turn any recipe — a link, a photo, even a video — into one aisle-sorted grocery list. The Fern Basket is a recipe to shopping list app built for New Zealand supermarkets.">
 <meta name="theme-color" content="#F6F1E8" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0E1713" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="/assets/favicon.png" type="image/png">
@@ -22,7 +22,10 @@
 <meta property="og:image" content="https://thefernbasket.com/assets/logo-mark.png">
 <meta property="og:image:alt" content="The Fern Basket logo: a woven basket with a fern frond.">
 
-<meta name="twitter:card" content="summary_large_image">
+<!-- `summary`, not `summary_large_image`: the only share image we have is the
+     450x434 logo mark, and a large card expects roughly 1200x630. Switch this
+     back once a real 1200x630 image exists at /assets/. -->
+<meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="The Fern Basket — Every recipe, one shopping list.">
 <meta name="twitter:description" content="Turn any recipe into one tidy, aisle-sorted shopping list. Built for Aotearoa New Zealand.">
 <meta name="twitter:image" content="https://thefernbasket.com/assets/logo-mark.png">
@@ -52,6 +55,93 @@
       "url": "https://thefernbasket.com/",
       "inLanguage": "en-NZ",
       "publisher": { "@id": "https://thefernbasket.com/#org" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://thefernbasket.com/#faq",
+      "inLanguage": "en-NZ",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Which New Zealand supermarkets does it compare?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pak'nSave, New World and Woolworths. You can set a default store during setup and change it any time, and the app can find nearby branches using your location or a suburb you type in."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are the supermarket prices accurate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They are estimates, not quotes. No New Zealand supermarket publishes a public price feed, so the comparison is there to help you choose where to shop rather than to predict your receipt. What you pay at the shelf can differ, and the app says so wherever a number appears."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I add a recipe from a YouTube video?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Send a video link and the app reads the recipe out of it. Links to recipe pages, plain pasted text, and photos of cookbook pages or recipe cards all work too."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the shopping list work without internet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Browsing your saved recipes, building and editing baskets, shop mode and sharing a list are all local to your phone by design. A connection is needed to add a new recipe, compare prices or find stores."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can it adapt recipes for vegetarian, vegan or gluten-free diets?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, as part of Premium. The app swaps ingredients one at a time so you can accept or skip each change, and it tells you honestly when a dish changes so much that it is really a different meal. You can also record preferences such as dairy-free, nut-free, halal, kosher, low-FODMAP, keto and others."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is The Fern Basket free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Capturing recipes, building baskets, the aisle-sorted shopping list and the store price comparison are part of the app. Premium adds the recipe rewriting — healthier, lower calorie, and dietary adaptations — and starts with a seven-day free trial on a monthly or annual plan. You can cancel any time in Settings. Prices are shown in the app in your own currency."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need an account?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The app works without signing in. Signing in with your email adds syncing of your recipes, baskets and settings across your devices, and uses a one-time code rather than a password."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What data does the app collect?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No analytics, no advertising identifiers, no contacts, no device identifiers and no background location. It asks for exactly two permissions — location, and photo library or camera — and only at the moment you use the feature needing them. Dietary and allergy tags stay on your device even when you are signed in. The full privacy policy sets out the detail."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it available outside New Zealand?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not yet. The store comparison and nearby-store lookup are built around New Zealand supermarkets, so the app is New Zealand only for now."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When is it coming to the App Store and Google Play?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is not published yet. When it is, the download links will appear at the top of this page. You must be at least 16 to use The Fern Basket."
+          }
+        }
+      ]
     },
     {
       "@type": "MobileApplication",
@@ -203,6 +293,17 @@
   }
   h1 .accent { color:var(--primary); }
 
+  /* Two classes, so this beats `.lede p` on specificity. */
+  .lede .h1-sub {
+    margin:clamp(6px,.8vh,10px) 0 0; max-width:44ch;
+    font-size:clamp(12.5px,1.25vw,20px); line-height:1.35; font-weight:600;
+    letter-spacing:-.01em; color:var(--primary);
+    animation:fb-in .7s ease-out .08s both;
+  }
+  /* Tighten the gap the support line would otherwise double up on, so the
+     hero keeps filling roughly one screen. */
+  .lede .h1-sub + p { margin-top:clamp(8px,1.1vh,13px); }
+
   .lede p {
     margin:clamp(12px,1.6vh,18px) 0 0; max-width:42ch;
     font-size:clamp(15px,1.55vw,23px); line-height:1.5; color:var(--muted);
@@ -226,7 +327,6 @@
   .badge-ghost .kicker { color:var(--muted); }
   .badge-ghost:hover { transform:translateY(-2px); border-color:var(--primary); color:var(--text); }
   /* Inert until the listings exist — see the markup comment. */
-  .badge.is-placeholder { cursor:not-allowed; }
 
   /* The receipt. 4px radius, hairline border, torn bottom edge. */
   .receipt {
@@ -283,6 +383,12 @@
     .lede { align-items:flex-start; }
   }
   @media (max-width: 560px) {
+    /* Reclaim the height the h1 support line costs, so the hero still fills
+       about one screen on a phone and the scroll cue stays visible. Both
+       values stay on the 8px grid. */
+    .mark { width:clamp(72px,12vw,176px); }
+    .main { padding:16px 0; }
+
     /* The brand line stays — the artboard keeps it in its compact variant too.
        It is allowed to wrap rather than be hidden or force a sideways scroll. */
     .topbar { gap:10px; }
@@ -379,8 +485,8 @@
 <div class="stage">
 
   <div class="watermarks" aria-hidden="true">
-    <img class="wm-a" src="/assets/logo-mark.png" alt="">
-    <img class="wm-b" src="/assets/logo-mark.png" alt="">
+    <img class="wm-a" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
+    <img class="wm-b" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
   </div>
 
   <header class="topbar">
@@ -396,20 +502,26 @@
           <span class="ring" aria-hidden="true"></span>
           <span class="ring" aria-hidden="true"></span>
           <span class="ring" aria-hidden="true"></span>
-          <img src="/assets/logo-mark.png" alt="The Fern Basket logo: a woven basket with a fern frond.">
+          <img src="/assets/logo-mark.png" alt="The Fern Basket logo: a woven basket with a fern frond." width="450" height="434" decoding="async">
         </div>
 
         <h1>Every recipe,<br><span class="accent">one shopping list.</span></h1>
+
+        <!-- Carries the words the <h1> can't: "recipe", "shopping list", "app",
+             "New Zealand". The h1 stays the brand line; this does the work. -->
+        <p class="h1-sub">A recipe to shopping list app for New Zealand supermarkets.</p>
 
         <p>Paste a link, snap a cookbook page, or share a video. The Fern Basket
         reads the recipe, merges everything you're cooking into one tidy list,
         and sorts it by aisle for the shop.</p>
 
         <!--
-          STORE LINK PLACEHOLDERS — both are inert. To switch one on:
-            1. Replace href="#" with the real listing URL.
+          STORE LINK PLACEHOLDERS — no listings exist yet, so both point at the
+          FAQ entry that explains when they will. They are real, working links:
+          an href="#" is a dead end for a visitor and an empty link to a crawler.
+          To switch one on:
+            1. Replace href="#faq" with the real listing URL.
             2. Drop `is-placeholder` from the class.
-            3. Delete aria-disabled="true".
           Then update the footer note, which says the app isn't published yet,
           and change the "Coming soon to" kicker. Switch both on together.
           Identifiers for building the URLs, from the app's app.json:
@@ -417,14 +529,14 @@
             Android package nz.co.ecocraft.baskettranstasman
         -->
         <div class="stores">
-          <a class="badge badge-primary is-placeholder" href="#" aria-disabled="true">
+          <a class="badge badge-primary is-placeholder" href="#faq">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.42 2.2-1.12 3.01-.85.98-2.24 1.74-3.37 1.65a3.78 3.78 0 0 1 1.13-2.94c.79-.86 2.15-1.5 3.36-1.72Z"></path><path d="M20.345 17.49c-.58 1.34-.86 1.94-1.6 3.12-1.04 1.65-2.5 3.7-4.31 3.72-1.61.01-2.02-1.05-4.2-1.04-2.18.01-2.64 1.06-4.25 1.04-1.81-.02-3.2-1.87-4.23-3.51-2.9-4.62-3.2-10.04-1.42-12.92 1.27-2.05 3.27-3.25 5.15-3.25 1.92 0 3.12 1.05 4.7 1.05 1.54 0 2.48-1.05 4.7-1.05 1.68 0 3.45.91 4.72 2.49-4.15 2.27-3.48 8.2.74 10.35Z"></path></svg>
             <span class="lines">
               <span class="kicker">Coming soon to</span>
               <span class="name">the App Store</span>
             </span>
           </a>
-          <a class="badge badge-ghost is-placeholder" href="#" aria-disabled="true">
+          <a class="badge badge-ghost is-placeholder" href="#faq">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#00A0FF" d="M4 2.2 14.2 12 4 21.8Z"></path><path fill="#00C853" d="M4 2.2 17.6 9.3 14.2 12Z"></path><path fill="#FF3A44" d="M4 21.8 17.6 14.7 14.2 12Z"></path><path fill="#FFBC00" d="M17.6 9.3 20.6 12 17.6 14.7 14.2 12Z"></path></svg>
             <span class="lines">
               <span class="kicker">Coming soon to</span>
@@ -494,7 +606,7 @@
       photograph a cookbook page, or share a cooking video, and it reads the ingredients into a
       structured list you can check and edit. Add everything you are cooking this week and the
       repeats collapse into single lines, so three recipes calling for butter become one entry
-      rather than three. The finished list is sorted by supermarket aisle and works on your phone
+      rather than three. The finished grocery list is sorted by supermarket aisle and works on your phone
       without a signal, because the part of the shop that matters happens in a building with
       famously bad reception.</p>
     </div>
@@ -538,7 +650,7 @@
     </div>
   </section>
 
-  <section class="band">
+  <section class="band" id="faq">
     <div class="inner">
       <h2>Questions people ask</h2>
       <div class="faq">
@@ -664,11 +776,6 @@
 
     paint();
 
-    // The store badges go nowhere yet; swallow the click so the page doesn't
-    // jump to the top and read as broken.
-    document.querySelectorAll('.is-placeholder').forEach(function (el) {
-      el.addEventListener('click', function (e) { e.preventDefault(); });
-    });
   })();
 </script>
 </body>
