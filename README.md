@@ -14,8 +14,11 @@ Everything that gets published lives in `public/`. Nothing else does.
 
 | Path | What it is |
 | --- | --- |
-| `public/index.html` | The whole marketing page |
-| `public/styles.css` | Design tokens + layout |
+| `public/index.html` | The whole marketing page, self-contained (its own `<style>`) |
+| `public/PrivacyPolicy/index.html` | The published privacy policy |
+| `public/styles.css` | Design tokens + layout. Only the privacy page links it |
+| `public/robots.txt` | Allows everything. Pure ASCII on purpose - see below |
+| `public/sitemap.xml` | Both pages, with `lastmod` taken from git |
 | `public/assets/logo-mark.png` | The app's logo mark, copied from the app repo |
 | `public/assets/favicon.png` | The app's favicon, copied from the app repo |
 | `wrangler.jsonc` | Cloudflare Workers deployment config (not published) |
@@ -41,7 +44,40 @@ npx wrangler@latest deploy --dry-run
 ```
 
 It reports the assets directory it read and errors on an invalid config. The
-file count it prints includes directories, so the four site files read as five.
+file count it prints counts directories too, so it reads higher than the number
+of site files - that is expected, not a sign that something stray got included.
+
+## Edge configuration lives in the Cloudflare dashboard
+
+Some of what visitors and crawlers actually receive is set at the edge, not in
+this repo, so it will never show up in a diff. Check the dashboard before
+concluding the site is misbehaving.
+
+**Bot Preference Sync** (AI Crawl Control -> Settings) is **on**. It prepends
+`public/robots.txt` with the crawler preferences configured in **AI Crawl
+Control -> Crawlers**, so the served file can carry `Disallow` rules that are
+not in this repo. If Google is on that block list, `Google-Extended` is
+disallowed and tools that check AI-use permissions report
+`URL_FETCH_STATUS_GOOGLE_EXTENDED_OPT_OUT`.
+
+That status is **not** a Search problem. `Google-Extended` governs whether
+content may be used for Gemini training and grounding; `Googlebot` governs
+Search crawling and indexing, and the two are independent. Leaving the sync on
+costs nothing in ranking.
+
+The Crawlers tab is the source of truth; `robots.txt` as served is its output.
+To read the real file, bypass the caches:
+
+```bash
+curl -sS 'https://thefernbasket.com/robots.txt?v=1'
+```
+
+Also set at the edge: the `www` -> apex 301 (Rules -> Redirect Rules). Nothing
+in `wrangler.jsonc` does that redirect.
+
+**Keep `public/robots.txt` pure ASCII.** The file is served without
+`charset=utf-8`, so non-ASCII bytes render as mojibake - an em dash in the
+first comment line showed up live as `a€"`. Use `-`, not `—`.
 
 ## Colours come from the app, not from here
 
@@ -99,8 +135,9 @@ publishes the app's `PRIVACY_POLICY.md` (from `ecocraftnz/basket-trans-tasman`)
 with its placeholders filled in. Two things from that source doc were
 resolved as part of publishing it, and should stay in sync if the app repo's
 copy is ever updated to match:
-- Children's minimum age: stated as 13 (the draft offered "16 / the age of
-  digital consent where you are").
+- Children's minimum age: stated as **16**. The draft offered "16 / the age of
+  digital consent where you are"; the app repo's `PRIVACY_POLICY.md` now says 16
+  too, so the two are in sync.
 - Dormant/never-verified account retention: stated as not yet enforced,
   since that deletion job is switched off in the code.
 

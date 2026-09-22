@@ -1,4 +1,4 @@
-# The Fern Basket — https://thefernbasket.com
+# The Fern Basket - https://thefernbasket.com
 # Everything here is public; nothing is disallowed.
 
 User-agent: *
