@@ -164,8 +164,10 @@ files in `public/assets/screens/`, all 665x1440:
 (2.167), so nothing is cropped. A replacement close to any modern phone screen
 will also fit; `object-fit:cover` absorbs the difference. The same four
 filenames are listed as `screenshot` on the `MobileApplication` node in the
-page's JSON-LD, which is one of the things Google wants before it will show an
-app rich result.
+page's JSON-LD. `screenshot` is a documented schema.org property; whether
+Google *requires* it for an app rich result was not verified here, because
+`developers.google.com` is unreachable from the build environment. Treat that
+as the reason it was added, not as a confirmed requirement.
 
 **Check what an export actually is before committing it.** The first upload of
 these four arrived named `.png` but was WebP underneath (`RIFF....WEBPVP8L`),
@@ -173,10 +175,15 @@ which would have been served as `image/png` with WebP bytes. `file *.png` or
 the first eight bytes will tell you.
 
 **Serve them with a plain `<img>`, no `<picture>`.** There is no PNG fallback
-and none is wanted: every browser this site targets decodes WebP, and a
-`<picture>` whose `<source>` 404s shows nothing at all rather than falling back
-to the `<img>`, because it switches on *format support* and not on whether the
-file exists. Verified in Chromium.
+and none is wanted. This repo declares no browser support targets (there is no
+`package.json` and no browserslist), so the working assumption is current
+desktop and mobile browsers, all of which decode WebP — Safari has since 14,
+in 2020. That is recalled, not checked against a support table here.
+
+The reason not to add a `<picture>` + `<source>` pair *is* verified in
+Chromium: `<picture>` switches on *format support*, not on whether the file
+exists, so a `<source>` pointing at a missing `.webp` shows nothing at all
+rather than falling back to the `<img>`.
 
 **The screens show example data, not a real shop**, and the section says so in
 its opening paragraph. Keep that line if the images are ever replaced, and keep

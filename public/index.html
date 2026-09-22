@@ -261,7 +261,11 @@
   .watermarks .wm-b { right:-12%; top:-26%;   width:62vh; opacity:.05;  transform:rotate(26deg); }
 
   .topbar {
-    position:relative; z-index:1; display:flex; align-items:baseline;
+    /* z-index:2, above .main. Both were 1, so .main won on DOM order and
+       painted over the bottom of the toggle's hit overlay, leaving 43px of a
+       declared 48px actually clickable. The overlay is transparent, so this
+       changes hit-testing only, nothing visual. */
+    position:relative; z-index:2; display:flex; align-items:baseline;
     justify-content:space-between; gap:16px;
     padding-bottom:clamp(8px,1.4vh,14px); border-bottom:1px solid var(--hair);
     font-size:clamp(10px,.95vw,13px); font-weight:700; letter-spacing:.18em;
@@ -458,9 +462,11 @@
      shift as images decode, which is why these need no width/height attrs.
 
      The screens are WebP, served directly by a plain <img> with no <picture>
-     and no PNG fallback: every browser this site targets decodes WebP, and a
-     <picture> whose <source> 404s shows nothing rather than falling back,
-     since it switches on FORMAT SUPPORT and not on a missing file. */
+     and no PNG fallback. This repo declares no browser targets, so that rests
+     on WebP being decoded by current browsers rather than on a stated policy.
+     The reason not to add a <source> pair is verified though: <picture>
+     switches on FORMAT SUPPORT, not on whether the file exists, so a <source>
+     pointing at a missing file shows nothing instead of falling back. */
   .screens { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin:32px 0 0; }
   .shot { margin:0; }
   .shot .frame {
