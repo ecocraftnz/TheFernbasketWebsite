@@ -60,3 +60,15 @@ was built. If the demo recipe or the phone copy changes, re-take them.
 | Swaps are Premium | `server/README.md` (402 unless premium), `src/app/paywall.tsx` |
 | Store estimates are free | no entitlement check in `src/app/compare.tsx` |
 | Capture tile wording on the home screen | `src/components/CaptureTiles.tsx` |
+| Premium: Improve (healthier, lower calories) | `src/app/improve/index.tsx`; gated in `src/app/improve/results.tsx` |
+| Premium: Adapt (vegetarian, vegan, gluten-free; changes the steps; household default) | `src/app/adapt/index.tsx`; gated in `src/app/adapt/results.tsx` |
+| Premium: original kept, saved versions, undo any swap | the Improve/Adapt screens' own copy; `src/app/paywall.tsx` |
+| Premium: monthly or annual, "Cancel anytime in Settings" | `src/app/paywall.tsx` |
+| Premium: 7-day free trial | paywall copy, and confirmed by the owner as set in Play Console |
+| Home screen Premium card wording | `src/components/UpgradeBar.tsx` |
+
+**Deliberately not claimed:** "Unlimited recipes". The paywall lists it as a
+Premium benefit, but free users have no recipe limit in the code, so on this
+page it would describe a restriction that does not exist. **No subscription
+price is quoted**: prices come from Google Play at runtime and none are in the
+code.
