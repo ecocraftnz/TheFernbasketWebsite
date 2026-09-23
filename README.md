@@ -197,10 +197,22 @@ so that the two never drift apart:
 
 - The tagline **"Every recipe, one shopping list."** is the app's welcome-screen
   subtitle (`src/app/onboarding.tsx`).
-- The three perk cards are the app's `HERO_PERKS`, word for word.
-- The three Premium cards are the paywall's `BENEFITS` list.
+- The store-comparison card borrows the app's own framing from
+  `src/components/SavingsCTA.tsx`: "Find the cheapest store", and the caveat
+  that shelf prices may differ.
 
-If any of those change in the app, change them here too.
+If either changes in the app, change it here too.
+
+The six cards under "What the app does" are written for the web, not quoted:
+they describe the same features as the app's `HERO_PERKS` (onboarding) and the
+paywall's `BENEFITS`, but in longer, search-friendly headings. An earlier
+version of the page used those two lists word for word; this one does not, so
+there is nothing to keep verbatim. Keep the *claims* in step instead: if a
+feature changes or moves behind Premium, the card describing it must change.
+
+Store names: the app spells it both `PAK'nSAVE` and `Pak'nSave`; this site
+uses `Pak'nSave` throughout. Pick one if that ever matters, and change every
+occurrence, including the FAQ, whose answers also feed the FAQPage JSON-LD.
 
 One rule the app holds and the site inherits: **prices are estimates.** No NZ
 supermarket offers a public price feed, so the site never quotes a grocery
