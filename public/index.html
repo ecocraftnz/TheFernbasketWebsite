@@ -180,7 +180,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
 <!--
   This page is deliberately self-contained: /styles.css belongs to the privacy
@@ -207,7 +207,8 @@
     --logo-filter:none;
     --shadow:0 18px 40px -28px rgba(23,37,30,.4);
     --shadow-paper:0 2px 0 rgba(23,37,30,.05), 0 32px 56px -30px rgba(23,37,30,.5);
-    --font-display:'Fraunces', Georgia, 'Times New Roman', serif;
+    /* One typeface, the app's: Plus Jakarta Sans in the four weights it loads
+       (500/600/700/800). Headings are 800 with the app's negative tracking. */
     --font-body:'Plus Jakarta Sans', Helvetica, Arial, sans-serif;
   }
   html[data-theme="dark"] {
@@ -311,28 +312,28 @@
   .mark img { position:relative; width:100%; height:100%; object-fit:contain; filter:var(--logo-filter); animation:fb-sway 8s ease-in-out infinite; }
 
   h1 {
-    margin:clamp(16px,2vh,24px) 0 0; font:500 40px/48px var(--font-display);
-    letter-spacing:-.015em; text-wrap:balance; animation:fb-in .7s ease-out both;
+    margin:clamp(16px,2vh,24px) 0 0; font:800 40px/48px var(--font-body);
+    letter-spacing:-.02em; text-wrap:balance; animation:fb-in .7s ease-out both;
   }
   .h1-sub {
     margin:8px 0 0; max-width:44ch; font-size:16px; line-height:24px; font-weight:600;
     color:var(--accent); animation:fb-in .7s ease-out .08s both;
   }
   .hero-lede {
-    margin:16px 0 0; max-width:34em; font-size:17px; line-height:28px; font-weight:400;
+    margin:16px 0 0; max-width:34em; font-size:17px; line-height:28px; font-weight:500;
     color:var(--muted); text-wrap:pretty; animation:fb-in .7s ease-out .1s both;
   }
   .cta { margin-top:24px; display:flex; flex-direction:column; align-items:flex-start; gap:8px; animation:fb-in .7s ease-out .2s both; }
   .btn {
     display:inline-flex; align-items:center; justify-content:center; min-height:56px; padding:16px 32px;
-    border-radius:12px; background:var(--accent); color:var(--on-accent); font-weight:700; font-size:17px;
-    text-decoration:none; box-shadow:var(--shadow); transition:transform .18s ease, opacity .18s ease;
+    border-radius:16px; background:var(--accent); color:var(--on-accent); font-weight:700; font-size:16px; line-height:20px;
+    text-decoration:none; box-shadow:0 12px 24px rgba(23,81,59,.35); /* the app's primaryButtonShadow */ transition:transform .18s ease, opacity .18s ease;
   }
   .btn:hover { transform:translateY(-2px); opacity:.92; color:var(--on-accent); }
   /* Not a link yet: quieter, and no hover lift, so it does not promise a click. */
-  .btn-soon { background:var(--surface); color:var(--text); box-shadow:inset 0 0 0 1.5px var(--line); cursor:default; }
+  .btn-soon { background:var(--surface); color:var(--text); box-shadow:inset 0 0 0 1px var(--rule); cursor:default; }   /* the app's secondary button: 1px border, no shadow */
   .btn-soon:hover { transform:none; opacity:1; color:var(--text); }
-  .note { font-size:14px; line-height:24px; color:var(--muted); }
+  .note { font-size:14px; line-height:20px; color:var(--muted); }
 
   @media (min-width: 768px) { h1 { font-size:56px; line-height:64px; } .h1-sub { font-size:18px; line-height:28px; } }
   @media (min-width: 960px) {
@@ -351,9 +352,9 @@
     transition: background-color 250ms ease;
   }
   .beat .n { flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 14px; box-shadow: inset 0 0 0 1.5px var(--muted); color: var(--muted); transition: background-color 250ms ease, color 250ms ease, box-shadow 250ms ease; }
-  .beat b { display: block; font: 600 19px/28px var(--font-display); }
-  .beat .d { display: block; color: var(--muted); font-size: 14px; line-height: 22px; }
-  .beat.on { background: var(--surface); box-shadow: var(--shadow); }
+  .beat b { display: block; font: 800 17px/24px var(--font-body); letter-spacing: -.01em; }
+  .beat .d { display: block; color: var(--muted); font-size: 14px; line-height: 20px; }
+  .beat.on { background: var(--surface); box-shadow: inset 0 0 0 1px var(--rule); }   /* app cards: 1px border, no shadow */
   .beat.on .n { background: var(--accent); color: var(--on-accent); box-shadow: none; }
   .controls { margin-top: 8px; display: flex; align-items: center; gap: 16px; padding: 0 16px; }
   .pp { flex: none; width: 48px; height: 48px; display: grid; place-items: center; border: 0; border-radius: 12px; background: var(--surface); color: var(--text); box-shadow: inset 0 0 0 1.5px var(--rule); cursor: pointer; }
@@ -383,7 +384,7 @@
   .card { position: absolute; left: 52px; top: 20px; width: 256px; height: 256px; padding: 16px; border-radius: 6px; background: var(--surface);
     background-image: repeating-linear-gradient(transparent 0 23px, var(--rule) 23px 24px); background-position: 0 8px;
     box-shadow: var(--shadow-paper), inset 0 0 0 1px var(--rule); transform: rotate(-2deg); }
-  .card .t { font: italic 400 18px/24px var(--font-display); }
+  .card .t { font: 800 16px/20px var(--font-body); letter-spacing: -.01em; }
   .card .sv { margin-top: 0; font-size: 13px; line-height: 24px; font-weight: 600; color: var(--muted); }
   .ln { position: absolute; left: 16px; right: 16px; height: 24px; font-size: 13px; line-height: 24px; white-space: nowrap; }
   .ln .q { position: absolute; left: 0; font-weight: 700; font-variant-numeric: tabular-nums; }
@@ -393,9 +394,9 @@
   .roll .col { display: flex; flex-direction: column; }
   .roll .col > span { height: 24px; }
   .strike { position: absolute; left: -2px; right: -2px; height: 2px; top: 11px; background: var(--text); transform: scaleX(0); transform-origin: left center; }
-  .swapto { position: absolute; left: 84px; color: var(--accent); font: italic 400 15px/24px var(--font-display); opacity: 0; }
+  .swapto { position: absolute; left: 84px; color: var(--accent); font: 700 13px/24px var(--font-body); opacity: 0; }
   .chip { position: absolute; left: 148px; top: 4px; height: 16px; padding: 0 6px; border-radius: 8px; font: 700 10px/16px var(--font-body); letter-spacing: .06em; text-transform: uppercase; box-shadow: inset 0 0 0 1px var(--accent); color: var(--accent); opacity: 0; }
-  .gotit { position: absolute; left: 156px; font: italic 400 15px/24px var(--font-display); color: var(--muted); opacity: 0; transform: rotate(-4deg); }
+  .gotit { position: absolute; left: 156px; font: 600 13px/24px var(--font-body); color: var(--muted); opacity: 0; transform: rotate(-4deg); }
   .tap { position: absolute; width: 36px; height: 36px; margin: -18px 0 0 -18px; border-radius: 50%; box-shadow: 0 0 0 2px var(--accent); opacity: 0; }
 
   .card2 { position: absolute; left: 76px; top: 64px; width: 208px; height: 136px; padding: 16px; border-radius: 6px; background: var(--surface);
@@ -419,7 +420,7 @@
 
   /* Shopping list */
   .list { position: absolute; left: 40px; top: 12px; width: 280px; height: 312px; padding: 16px; border-radius: 6px; background: var(--surface); box-shadow: var(--shadow-paper), inset 0 0 0 1px var(--rule); opacity: 0; transform: translateY(40px); }
-  .list .t { font: italic 400 18px/24px var(--font-display); }
+  .list .t { font: 800 16px/20px var(--font-body); letter-spacing: -.01em; }
   .aisle { position: absolute; left: 16px; font: 700 11px/24px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
   .li { position: absolute; left: 16px; right: 16px; height: 24px; font-size: 13px; line-height: 24px; white-space: nowrap; }
   .li .bx { position: absolute; left: 0; top: 5px; width: 14px; height: 14px; border-radius: 3px; box-shadow: inset 0 0 0 1.5px var(--text); }
@@ -449,10 +450,10 @@
   .inner { width:100%; max-width:1000px; margin:0 auto; }
 
   .content h2 {
-    margin:0 0 24px; font:500 clamp(28px,3.2vw,40px)/1.15 var(--font-display); letter-spacing:-.015em;
+    margin:0 0 24px; font:800 clamp(26px,3.2vw,40px)/1.15 var(--font-body); letter-spacing:-.02em;
   }
   .content h3 {
-    margin:0 0 8px; font-weight:700; letter-spacing:-.015em;
+    margin:0 0 8px; font-weight:800; letter-spacing:-.01em;
     font-size:clamp(17px,1.5vw,21px); line-height:1.3;
   }
   .content p { margin:0; font-size:clamp(15px,1.25vw,18px); line-height:1.6; color:var(--muted); }
@@ -517,7 +518,7 @@
   .footer-links { display:flex; gap:8px; margin:0 -8px; }
   .footer-links a {
     display:inline-flex; align-items:center; justify-content:center;
-    min-width:44px; min-height:44px; padding:0 8px; /* 8px gap = inactive buffer */
+    min-width:48px; min-height:48px; padding:0 8px; /* 8px gap = inactive buffer */
   }
 
   @media (max-width: 900px) {
@@ -612,7 +613,7 @@
 
           <!-- Second recipe, arrives in beat 3 -->
           <div class="card2" id="card2">
-            <p class="t" style="font: italic 400 16px/24px var(--font-display)">Courgette fritters</p>
+            <p class="t">Courgette fritters</p>
             <div class="ln" style="top:40px"><span class="q">3</span><span class="n" style="left:36px">courgettes</span></div>
             <div class="ln" style="top:64px"><span class="q">1</span><span class="n" style="left:36px">brown onion</span></div>
             <div class="ln" style="top:88px"><span class="q">2</span><span class="n" style="left:36px">eggs</span></div>
@@ -638,11 +639,28 @@
           <div class="basket" id="basket">
             <svg class="layer" viewBox="0 0 280 236">
               <ellipse cx="140" cy="214" rx="122" ry="10" fill="#17251E" opacity=".14"/>
-              <path d="M44 88C44 -12 236 -12 236 88" stroke="#7A5B3A" stroke-width="13" fill="none" stroke-linecap="round"/>
-              <path d="M44 88C44 -12 236 -12 236 88" stroke="#CBAA78" stroke-width="8" fill="none" stroke-linecap="round"/>
-              <path d="M44 86C44 -14 236 -14 236 86" stroke="#EBD3A3" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".8"/>
               <ellipse cx="140" cy="84" rx="130" ry="22" fill="#5A4330"/>
               <ellipse cx="140" cy="86" rx="118" ry="16" fill="#3B2B1F"/>
+              <g fill="none" stroke="#4A7556" stroke-width="3" stroke-linecap="round">
+                <path d="M150 110C172 62 206 26 258 4"/>
+              </g>
+              <g fill="#6E9A76" stroke="#4A7556" stroke-width="1.4" stroke-linejoin="round">
+                <path d="M0 0C8.5 -11.6 25.5 -10.4 34.0 0C25.5 10.4 8.5 11.6 0 0Z" transform="translate(163.7 78.8) rotate(-96.6)"/>
+                <path d="M0 0C8.5 -11.6 25.5 -10.4 34.0 0C25.5 10.4 8.5 11.6 0 0Z" transform="translate(163.7 78.8) rotate(-12.6)"/>
+                <path d="M0 0C7.7 -10.5 23.1 -9.4 30.8 0C23.1 9.4 7.7 10.5 0 0Z" transform="translate(174.4 64.9) rotate(-92.1)"/>
+                <path d="M0 0C7.7 -10.5 23.1 -9.4 30.8 0C23.1 9.4 7.7 10.5 0 0Z" transform="translate(174.4 64.9) rotate(-8.1)"/>
+                <path d="M0 0C6.9 -9.4 20.7 -8.4 27.6 0C20.7 8.4 6.9 9.4 0 0Z" transform="translate(186.2 51.9) rotate(-87.4)"/>
+                <path d="M0 0C6.9 -9.4 20.7 -8.4 27.6 0C20.7 8.4 6.9 9.4 0 0Z" transform="translate(186.2 51.9) rotate(-3.4)"/>
+                <path d="M0 0C6.1 -8.3 18.3 -7.5 24.4 0C18.3 7.5 6.1 8.3 0 0Z" transform="translate(199.1 39.8) rotate(-82.5)"/>
+                <path d="M0 0C6.1 -8.3 18.3 -7.5 24.4 0C18.3 7.5 6.1 8.3 0 0Z" transform="translate(199.1 39.8) rotate(1.5)"/>
+                <path d="M0 0C5.3 -7.2 15.9 -6.5 21.2 0C15.9 6.5 5.3 7.2 0 0Z" transform="translate(213.3 28.7) rotate(-77.5)"/>
+                <path d="M0 0C5.3 -7.2 15.9 -6.5 21.2 0C15.9 6.5 5.3 7.2 0 0Z" transform="translate(213.3 28.7) rotate(6.5)"/>
+                <path d="M0 0C4.5 -6.1 13.5 -5.5 18.0 0C13.5 5.5 4.5 6.1 0 0Z" transform="translate(228.9 18.6) rotate(-72.6)"/>
+                <path d="M0 0C4.5 -6.1 13.5 -5.5 18.0 0C13.5 5.5 4.5 6.1 0 0Z" transform="translate(228.9 18.6) rotate(11.4)"/>
+                <path d="M0 0C3.7 -5.0 11.1 -4.5 14.8 0C11.1 4.5 3.7 5.0 0 0Z" transform="translate(242.9 11.0) rotate(-68.7)"/>
+                <path d="M0 0C3.7 -5.0 11.1 -4.5 14.8 0C11.1 4.5 3.7 5.0 0 0Z" transform="translate(242.9 11.0) rotate(15.3)"/>
+                <path d="M0 0C4 -4 10 -5 16 0C10 5 4 4 0 0Z" transform="translate(258.0 4.0) rotate(-22.9)"/>
+              </g>
             </svg>
             <div class="items" id="items"></div>
             <svg class="layer" viewBox="0 0 280 236">
@@ -691,26 +709,10 @@
               <path d="M10 82Q140 120 270 82" stroke="#7A5B3A" stroke-width="12" fill="none" stroke-linecap="round"/>
               <path d="M10 82Q140 120 270 82" stroke="#D3B57E" stroke-width="7" fill="none" stroke-linecap="round"/>
               <path d="M10 80Q140 118 270 80" stroke="#EBD3A3" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
-              <g fill="none" stroke="#2E7D5B" stroke-width="3.5" stroke-linecap="round">
-                <path d="M148 104C172 60 206 26 258 4"/>
-              </g>
-              <g fill="#3E8F63" stroke="#2E7D5B" stroke-width="1.4" stroke-linejoin="round">
-                <path d="M0 0C8.5 -11.6 25.5 -10.4 34.0 0C25.5 10.4 8.5 11.6 0 0Z" transform="translate(163.7 78.8) rotate(-96.6)"/>
-                <path d="M0 0C8.5 -11.6 25.5 -10.4 34.0 0C25.5 10.4 8.5 11.6 0 0Z" transform="translate(163.7 78.8) rotate(-12.6)"/>
-                <path d="M0 0C7.7 -10.5 23.1 -9.4 30.8 0C23.1 9.4 7.7 10.5 0 0Z" transform="translate(174.4 64.9) rotate(-92.1)"/>
-                <path d="M0 0C7.7 -10.5 23.1 -9.4 30.8 0C23.1 9.4 7.7 10.5 0 0Z" transform="translate(174.4 64.9) rotate(-8.1)"/>
-                <path d="M0 0C6.9 -9.4 20.7 -8.4 27.6 0C20.7 8.4 6.9 9.4 0 0Z" transform="translate(186.2 51.9) rotate(-87.4)"/>
-                <path d="M0 0C6.9 -9.4 20.7 -8.4 27.6 0C20.7 8.4 6.9 9.4 0 0Z" transform="translate(186.2 51.9) rotate(-3.4)"/>
-                <path d="M0 0C6.1 -8.3 18.3 -7.5 24.4 0C18.3 7.5 6.1 8.3 0 0Z" transform="translate(199.1 39.8) rotate(-82.5)"/>
-                <path d="M0 0C6.1 -8.3 18.3 -7.5 24.4 0C18.3 7.5 6.1 8.3 0 0Z" transform="translate(199.1 39.8) rotate(1.5)"/>
-                <path d="M0 0C5.3 -7.2 15.9 -6.5 21.2 0C15.9 6.5 5.3 7.2 0 0Z" transform="translate(213.3 28.7) rotate(-77.5)"/>
-                <path d="M0 0C5.3 -7.2 15.9 -6.5 21.2 0C15.9 6.5 5.3 7.2 0 0Z" transform="translate(213.3 28.7) rotate(6.5)"/>
-                <path d="M0 0C4.5 -6.1 13.5 -5.5 18.0 0C13.5 5.5 4.5 6.1 0 0Z" transform="translate(228.9 18.6) rotate(-72.6)"/>
-                <path d="M0 0C4.5 -6.1 13.5 -5.5 18.0 0C13.5 5.5 4.5 6.1 0 0Z" transform="translate(228.9 18.6) rotate(11.4)"/>
-                <path d="M0 0C3.7 -5.0 11.1 -4.5 14.8 0C11.1 4.5 3.7 5.0 0 0Z" transform="translate(242.9 11.0) rotate(-68.7)"/>
-                <path d="M0 0C3.7 -5.0 11.1 -4.5 14.8 0C11.1 4.5 3.7 5.0 0 0Z" transform="translate(242.9 11.0) rotate(15.3)"/>
-                <path d="M0 0C4 -4 10 -5 16 0C10 5 4 4 0 0Z" transform="translate(258.0 4.0) rotate(-22.9)"/>
-              </g>
+              <path d="M28 98C28 -8 252 -8 252 98" stroke="#7A5B3A" stroke-width="13" fill="none" stroke-linecap="round"/>
+              <path d="M28 98C28 -8 252 -8 252 98" stroke="#CBAA78" stroke-width="8" fill="none" stroke-linecap="round"/>
+              <path d="M28 96C28 -10 252 -10 252 96" stroke="#EBD3A3" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".8"/>
+              <path d="M21 78h14M21 84h14M21 90h14M245 78h14M245 84h14M245 90h14" stroke="#5E4632" stroke-width="2.5" stroke-linecap="round"/>
             </svg>
             <span class="plus" id="plus">+1</span>
             <span class="badge"><span class="col" id="badge"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span></span></span>
