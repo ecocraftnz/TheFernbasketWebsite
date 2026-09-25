@@ -90,6 +90,7 @@ html:not(.js) .controls { display: none; }
 .fit { position: relative; width: calc(360px * var(--s, 1)); height: calc(480px * var(--s, 1)); }
 .scene { position: absolute; left: 0; top: 0; width: 360px; height: 480px; transform: scale(var(--s, 1)); transform-origin: 0 0; }
 .inner { position: absolute; inset: 0; }
+.card, .card2, .list, .basket, .ico, .badge .col, .roll .col, .tap { will-change: transform, opacity; }
 .ab { position: absolute; left: 0; top: 0; }
 
 /* Recipe card */
@@ -113,7 +114,7 @@ html:not(.js) .controls { display: none; }
 
 .card2 { position: absolute; left: 76px; top: 64px; width: 208px; height: 136px; padding: 16px; border-radius: 6px; background: var(--surface);
   background-image: repeating-linear-gradient(transparent 0 23px, var(--line) 23px 24px); background-position: 0 8px;
-  box-shadow: var(--shadow-paper), inset 0 0 0 1px var(--line); opacity: 0; transform: translateX(240px) rotate(6deg); }
+  box-shadow: var(--shadow-paper), inset 0 0 0 1px var(--line); opacity: 0; transform: translate(200px,-12px) rotate(5deg); }
 .card2 .ln { left: 16px; }
 
 /* Basket: back (shadow, handle, inside), the items, then the woven front over them.
@@ -266,7 +267,7 @@ const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const E = { out: 'cubic-bezier(.2,.7,.2,1)', inOut: 'cubic-bezier(.6,0,.3,1)', back: 'cubic-bezier(.34,1.56,.64,1)', lin: 'linear' };
 const BEAT_START = [0, 2400, 5600, 10900];
 const BEAT_SHOW = [2300, 5500, 10800, 15800];   // a still frame that sums up each beat
-const LOOP = 17200;
+const LOOP = 17000;
 
 /* ---- Timeline helper -------------------------------------------------- */
 const specs = [];
@@ -275,12 +276,12 @@ let anims = [], clock;
 
 /* ---- Ingredients, drawn in ink (40 x 40) ------------------------------- */
 const ICON = {
-  lamb: '<ellipse class="gs" cx="40" cy="66" rx="26" ry="4" fill="#17251E" opacity=".08"/><path d="M56 30l12-14" stroke="#EDE6D8" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M12 42c0-14 12-24 30-24s26 8 26 20-10 22-28 22S12 56 12 42z" fill="#EFDFC8"/><path d="M17 44c0-11 10-18 24-18s21 7 21 16-9 17-22 17S17 55 17 44z" fill="#C4685A"/><path d="M27 38c6 2 11 8 20 6M31 50c6-1 10-4 16-2" stroke="#E9B9AE" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M23 40c2-5 7-9 13-10" stroke="#fff" opacity=".35" stroke-width="2" fill="none" stroke-linecap="round"/>',
-  rosemary: '<ellipse class="gs" cx="40" cy="74" rx="14" ry="3" fill="#17251E" opacity=".08"/><path d="M40 74V18" stroke="#7E5E42" stroke-width="2.6" stroke-linecap="round"/><path d="M40 14c-2 2-3 6-3 10h6c0-4-1-8-3-10z" fill="#4F7D5C"/><path d="M40 26c-4-4-10-6-15-4 3 5 9 7 15 4z" fill="#4F7D5C"/><path d="M40 26c4-4 10-6 15-4-3 5-9 7-15 4z" fill="#6E9E78"/><path d="M40 35c-4-4-11-6-16-4 3 5 10 7 16 4z" fill="#6E9E78"/><path d="M40 35c4-4 11-6 16-4-3 5-10 7-16 4z" fill="#4F7D5C"/><path d="M40 44c-4-4-11-6-17-4 3 5 11 7 17 4z" fill="#4F7D5C"/><path d="M40 44c4-4 11-6 17-4-3 5-11 7-17 4z" fill="#6E9E78"/><path d="M40 53c-4-4-11-6-17-4 3 5 11 7 17 4z" fill="#6E9E78"/><path d="M40 53c4-4 11-6 17-4-3 5-11 7-17 4z" fill="#4F7D5C"/><path d="M40 62c-4-4-10-6-15-4 3 5 9 7 15 4z" fill="#4F7D5C"/><path d="M40 62c4-4 10-6 15-4-3 5-9 7-15 4z" fill="#6E9E78"/>',
-  garlic: '<ellipse class="gs" cx="40" cy="70" rx="18" ry="3" fill="#17251E" opacity=".08"/><path d="M34 66l-2 6M40 67v6M46 66l2 6" stroke="#B9AA8C" stroke-width="1.6" stroke-linecap="round"/><path d="M40 14c3 8 20 14 20 32 0 12-9 20-20 20S20 58 20 46c0-18 17-24 20-32z" fill="#F0EADB"/><path d="M40 24c-6 8-9 20-8 40M40 24c6 8 9 20 8 40M40 24c-11 6-14 18-16 36M40 24c11 6 14 18 16 36" stroke="#D8CDB4" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M36 20c1-5 3-10 4-12 1 2 3 7 4 12z" fill="#D9CDB0"/><path d="M30 38c1-6 4-10 7-13" stroke="#fff" opacity=".5" stroke-width="2" fill="none" stroke-linecap="round"/>',
+  lamb: '<ellipse class="gs" cx="40" cy="66" rx="27" ry="4" fill="#17251E" opacity=".08"/><path d="M52 40l14-16" stroke="#E4DAC6" stroke-width="7" stroke-linecap="round"/><circle cx="67" cy="23" r="5" fill="#EFE7D6"/><circle cx="67" cy="23" r="2" fill="#D9A79C"/><path d="M12 44c0-15 13-25 30-25 12 0 20 5 22 14 2 10-6 24-24 26C22 61 12 56 12 44z" fill="#EAD9C1"/><path d="M17 45c0-12 11-20 25-20 10 0 16 4 17 11 1 8-6 19-20 21-13 1-22-3-22-12z" fill="#B24E45"/><path d="M22 46c1-9 9-15 19-15 8 0 12 3 13 8 0 7-6 14-16 15-9 1-16-2-16-8z" fill="#C5645A"/><path d="M27 41c6 0 10 6 19 4M29 51c5-2 9-4 15-3M43 35c3 1 5 3 6 6" stroke="#EFC9BF" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".9"/><path d="M20 38c3-5 9-9 16-10" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round" opacity=".45"/>',
+  rosemary: '<ellipse class="gs" cx="40" cy="76" rx="14" ry="3" fill="#17251E" opacity=".08"/><path d="M40 76V12" stroke="#6E5238" stroke-width="2.2" stroke-linecap="round"/><g stroke-width="2.3" stroke-linecap="round" fill="none"><path d="M40 70l-9-9M40 65l9-10M40 60l-10-9M40 55l10-10M40 50l-10-10M40 45l10-10M40 40l-10-9M40 35l9-10M40 30l-9-9M40 25l8-10M40 20l-6-9M40 16l5-9" stroke="#3E6B48"/><path d="M40 68l-8-9M40 62l8-9M40 57l-9-9M40 52l9-10M40 47l-9-10M40 42l9-10M40 37l-8-9M40 32l8-9M40 27l-7-9M40 22l6-9" stroke="#6C9A6F"/><path d="M40 73l-7-6M40 72l7-8M40 12l-3-6M40 12l3-6" stroke="#9CBE93"/></g>',
+  garlic: '<ellipse class="gs" cx="40" cy="70" rx="20" ry="3" fill="#17251E" opacity=".08"/><path d="M33 66l-3 6M40 67v6M47 66l3 6M36 67l-1 6M44 67l1 6" stroke="#B9AA8C" stroke-width="1.4" stroke-linecap="round"/><path d="M40 20c3 7 24 10 24 30 0 12-11 19-24 19S16 62 16 50c0-20 21-23 24-30z" fill="#EFE8DA"/><path d="M40 28c-5 8-8 18-6 40M40 28c5 8 8 18 6 40M40 28c-11 5-15 17-16 35M40 28c11 5 15 17 16 35" stroke="#D5C8AE" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M26 44c-2 6-2 14 0 20M54 44c2 6 2 14 0 20" stroke="#C7B6D2" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".7"/><path d="M36 22c0-6 2-11 4-14 2 3 4 8 4 14-3-1-5-1-8 0z" fill="#D9CFB4"/><path d="M40 8v14" stroke="#C9BC9C" stroke-width="1.2" stroke-linecap="round"/><path d="M27 40c2-6 6-10 11-12" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round" opacity=".6"/>',
   onion: '<ellipse class="gs" cx="40" cy="70" rx="20" ry="3" fill="#17251E" opacity=".08"/><path d="M34 68l-2 5M40 68v6M46 68l2 5" stroke="#8C6A45" stroke-width="1.4" stroke-linecap="round"/><path d="M40 16c6 8 22 12 22 30 0 13-10 22-22 22S18 59 18 46c0-18 16-22 22-30z" fill="#C98F52"/><path d="M40 22c-8 8-12 20-10 42M40 22c8 8 12 20 10 42M40 22c-13 8-17 20-18 36M40 22c13 8 17 20 18 36" stroke="#A9702F" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M30 40c1-8 5-14 9-18" stroke="#EBBE86" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M36 18c0-6 2-10 4-12 2 2 4 6 4 12z" fill="#A9702F"/><path d="M44 12c3-2 6-2 8 1" stroke="#A9702F" stroke-width="1.6" fill="none" stroke-linecap="round"/>',
   pumpkin: '<ellipse class="gs" cx="40" cy="70" rx="28" ry="4" fill="#17251E" opacity=".08"/><path d="M37 26c0-5 1-9 4-13 2 1 3 4 3 8s-1 5-1 5z" fill="#6E8A5A"/><ellipse cx="40" cy="46" rx="30" ry="22" fill="#B96E2A"/><ellipse cx="22" cy="46" rx="11" ry="21" fill="#D98A3D" stroke="#B96E2A" stroke-width="1.2"/><ellipse cx="58" cy="46" rx="11" ry="21" fill="#D98A3D" stroke="#B96E2A" stroke-width="1.2"/><ellipse cx="31" cy="46" rx="11" ry="23" fill="#E39A4C" stroke="#B96E2A" stroke-width="1.2"/><ellipse cx="49" cy="46" rx="11" ry="23" fill="#E39A4C" stroke="#B96E2A" stroke-width="1.2"/><ellipse cx="40" cy="46" rx="11" ry="24" fill="#EBA858" stroke="#B96E2A" stroke-width="1.2"/><path d="M36 30c-2 6-2 14 0 22" stroke="#fff" opacity=".3" stroke-width="2.4" fill="none" stroke-linecap="round"/>',
-  courgette: '<ellipse class="gs" cx="40" cy="66" rx="30" ry="4" fill="#17251E" opacity=".08"/><path d="M14 62c-3 1-7 3-9 6 2 1 5 1 8-1 2-1 3-3 1-5z" fill="#6B8C56"/><path d="M12 58c8-14 26-30 48-40 4-2 8 1 6 5-8 20-26 34-48 40-5 1-8-2-6-5z" fill="#4C7A3A"/><path d="M18 52c10-10 24-22 40-30M22 58c12-8 26-20 38-32" stroke="#7DAA5E" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/><circle cx="30" cy="46" r="1.2" fill="#A9CB8A"/><circle cx="42" cy="36" r="1.2" fill="#A9CB8A"/><circle cx="52" cy="28" r="1.2" fill="#A9CB8A"/>',
+  courgette: '<ellipse class="gs" cx="42" cy="68" rx="30" ry="4" fill="#17251E" opacity=".08"/><path d="M12.9 60.6L6.1 66.4" stroke="#C4D4A0" stroke-width="8" stroke-linecap="round"/><path d="M12.9 60.6L6.1 66.4" stroke="#93AB76" stroke-width="2.4" stroke-linecap="round"/><path d="M21.8 64.9L73.8 20.9A9 9 0 0 0 62.2 7.1L10.2 51.1A9 9 0 0 0 21.8 64.9Z" fill="#33582A"/><path d="M19.6 61.6L69.8 19.1A7.6 7.6 0 0 0 60 7.4L9.8 49.9A7.6 7.6 0 0 0 19.6 61.6Z" fill="#456F35"/><path d="M17.5 50.6L57 17.2" stroke="#7BA35A" stroke-width="2.2" stroke-linecap="round" opacity=".8"/><g fill="#A5C77F" opacity=".85"><ellipse cx="24" cy="54" rx="1.2" ry=".7" transform="rotate(-40 24 54)"/><ellipse cx="30" cy="52" rx="1.2" ry=".7" transform="rotate(-40 30 52)"/><ellipse cx="34" cy="45" rx="1.2" ry=".7" transform="rotate(-40 34 45)"/><ellipse cx="40" cy="43" rx="1.2" ry=".7" transform="rotate(-40 40 43)"/><ellipse cx="44" cy="36" rx="1.2" ry=".7" transform="rotate(-40 44 36)"/><ellipse cx="51" cy="33" rx="1.2" ry=".7" transform="rotate(-40 51 33)"/><ellipse cx="54" cy="26" rx="1.2" ry=".7" transform="rotate(-40 54 26)"/><ellipse cx="61" cy="23" rx="1.2" ry=".7" transform="rotate(-40 61 23)"/><ellipse cx="63" cy="15" rx="1.2" ry=".7" transform="rotate(-40 63 15)"/><ellipse cx="28" cy="44" rx="1.2" ry=".7" transform="rotate(-40 28 44)"/><ellipse cx="48" cy="26" rx="1.2" ry=".7" transform="rotate(-40 48 26)"/></g><circle cx="74" cy="9" r="1.7" fill="#8A6A4B"/>',
   egg: '<ellipse class="gs" cx="40" cy="68" rx="18" ry="3" fill="#17251E" opacity=".08"/><path d="M40 12c10 0 18 14 18 30 0 12-8 22-18 22S22 54 22 42c0-16 8-30 18-30z" fill="#EFDFC3"/><ellipse cx="48" cy="44" rx="7" ry="16" fill="#DCC7A3" opacity=".6"/><ellipse cx="33" cy="28" rx="3" ry="6" fill="#fff" opacity=".55"/><circle cx="30" cy="44" r="1" fill="#C9B08A"/><circle cx="44" cy="24" r=".9" fill="#C9B08A"/><circle cx="38" cy="56" r="1" fill="#C9B08A"/>'
 };
 function makeIcon(name) {
@@ -365,11 +366,11 @@ firstRecipe.forEach((f, i) => {
   squash(r.land, f[4]); bumpCount(r.land);
   if (f[1] === 'onion') { onionR1 = el; onionRest = r.rest; }
 });
-A(8200, card, 'transform', ['translateY(-6px) rotate(-2deg)', 'translate(-280px,-10px) rotate(-10deg)'], 620, E.inOut);
-A(8200, card, 'opacity', [1, 0], 460);
+A(8200, card, 'transform', ['translateY(-6px) rotate(-2deg)', 'translate(-240px,-40px) rotate(-8deg)'], 700, E.inOut);
+A(8200, card, 'opacity', [1, 0], 520, E.inOut);
 const card2 = $('#card2'), c2lines = card2.querySelectorAll('.ln');
-A(8400, card2, 'transform', ['translateX(240px) rotate(6deg)', 'translateX(0) rotate(2deg)'], 680, E.back);
-A(8400, card2, 'opacity', [0, 1], 220);
+A(8380, card2, 'transform', ['translate(200px,-12px) rotate(5deg)', 'translate(0,0) rotate(2deg)'], 760, E.out);
+A(8380, card2, 'opacity', [0, 1], 360);
 [[0, 'courgette', [56, 36], -34, 9150], [2, 'egg', [148, 38], 16, 9550]].forEach(f => {
   const el = makeIcon(f[1]);
   A(f[4], c2lines[f[0]], 'opacity', [1, .28], 220);
@@ -387,14 +388,14 @@ A(8400, card2, 'opacity', [0, 1], 220);
   A(r.land, $('#plus'), 'opacity', [0, 1, 1, 0], 950, E.lin, [0, .15, .7, 1]);
   A(r.land, $('#plus'), 'transform', ['translateY(0)', 'translateY(-22px)'], 950, E.out);
 }
-A(10700, card2, 'transform', ['translateX(0) rotate(2deg)', 'translateX(-280px) rotate(-8deg)'], 560, E.inOut);
-A(10700, card2, 'opacity', [1, 0], 420);
+A(10700, card2, 'transform', ['translate(0,0) rotate(2deg)', 'translate(-240px,-40px) rotate(-8deg)'], 640, E.inOut);
+A(10700, card2, 'opacity', [1, 0], 480, E.inOut);
 
 /* ---- Beat 4: go shopping ---------------------------------------------- */
-A(10950, $('#basket'), 'transform', ['none', 'translate(78px,20px) scale(.68)'], 720, E.inOut);
+A(10950, $('#basket'), 'transform', ['none', 'translate(78px,20px) scale(.68)'], 800, E.inOut);
 const list = $('#list');
-A(11100, list, 'opacity', [0, 1], 360);
-A(11100, list, 'transform', ['translateY(40px)', 'translateY(0)'], 620, E.out);
+A(11080, list, 'opacity', [0, 1], 420);
+A(11080, list, 'transform', ['translateY(48px)', 'translateY(0)'], 760, E.out);
 list.querySelectorAll('.li').forEach((li, i) => {
   const t = 11900 + i * 300;
   A(t, li.querySelector('.ck'), 'opacity', [0, 1], 120);
@@ -404,7 +405,8 @@ list.querySelectorAll('.li').forEach((li, i) => {
 });
 A(14150, $('#stamp'), 'opacity', [0, 1], 120);
 A(14150, $('#stamp'), 'transform', ['rotate(-12deg) scale(1.7)', 'rotate(-12deg) scale(1)'], 340, E.back);
-A(16500, $('#inner'), 'opacity', [1, 0], 500, E.inOut);
+A(0, $('#inner'), 'opacity', [0, 1], 420, E.out);
+A(16450, $('#inner'), 'opacity', [1, 0], 480, E.inOut);
 
 /* ---- Build: later animations on the same property take over from earlier
    ones. The first on each element fills backwards (sets the starting look);
