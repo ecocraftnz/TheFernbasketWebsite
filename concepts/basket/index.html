@@ -17,9 +17,8 @@
   color-scheme: light;
   --paper: #F6F1E8; --surface: #FFFDF9; --line: #EAE1CF; --ink: #17251E; --muted: #5C6B62;
   --accent: #17513B; --on-accent: #F3F8F2; --checked: #797369;
-  /* ingredient fills, all app tokens: warnBg, successBg, premiumGold, surface */
-  --f-warm: #FBF4E4; --f-green: #E6F0E6; --f-gold: #F3D98A; --f-plain: #FFFDF9; --f-inside: #EAE1CF;
   --shadow: 0 2px 0 rgba(23,37,30,.05), 0 24px 48px -28px rgba(23,37,30,.45);
+  --shadow-paper: 0 2px 0 rgba(23,37,30,.05), 0 32px 56px -30px rgba(23,37,30,.5);
   --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
 }
@@ -28,8 +27,8 @@
     color-scheme: dark;
     --paper: #0E1713; --surface: #17211C; --line: #26332B; --ink: #EAF0EC; --muted: #8A968F;
     --accent: #6FC79B; --on-accent: #0E1713; --checked: #918B80;
-    --f-warm: #241E12; --f-green: #152A20; --f-gold: #F3D98A; --f-plain: #17211C; --f-inside: #26332B;
     --shadow: 0 2px 0 rgba(0,0,0,.3), 0 24px 48px -28px rgba(0,0,0,.8);
+    --shadow-paper: 0 2px 0 rgba(0,0,0,.3), 0 32px 56px -30px rgba(0,0,0,.9);
   }
 }
 
@@ -96,7 +95,7 @@ html:not(.js) .controls { display: none; }
 /* Recipe card */
 .card { position: absolute; left: 52px; top: 20px; width: 256px; height: 256px; padding: 16px; border-radius: 6px; background: var(--surface);
   background-image: repeating-linear-gradient(transparent 0 23px, var(--line) 23px 24px); background-position: 0 8px;
-  box-shadow: var(--shadow), inset 0 0 0 1px var(--line); transform: rotate(-2deg); }
+  box-shadow: var(--shadow-paper), inset 0 0 0 1px var(--line); transform: rotate(-2deg); }
 .card .t { font: italic 400 18px/24px var(--font-display); }
 .card .sv { margin-top: 0; font-size: 13px; line-height: 24px; font-weight: 600; color: var(--muted); }
 .ln { position: absolute; left: 16px; right: 16px; height: 24px; font-size: 13px; line-height: 24px; white-space: nowrap; }
@@ -114,24 +113,25 @@ html:not(.js) .controls { display: none; }
 
 .card2 { position: absolute; left: 76px; top: 64px; width: 208px; height: 136px; padding: 16px; border-radius: 6px; background: var(--surface);
   background-image: repeating-linear-gradient(transparent 0 23px, var(--line) 23px 24px); background-position: 0 8px;
-  box-shadow: var(--shadow), inset 0 0 0 1px var(--line); opacity: 0; transform: translateX(240px) rotate(6deg); }
+  box-shadow: var(--shadow-paper), inset 0 0 0 1px var(--line); opacity: 0; transform: translateX(240px) rotate(6deg); }
 .card2 .ln { left: 16px; }
 
-/* Basket: back (handle + inside), items, front (woven body) */
-.basket { position: absolute; left: 80px; top: 300px; width: 200px; height: 150px; transform-origin: 50% 100%; }
-.basket svg.layer { position: absolute; inset: 0; width: 200px; height: 150px; overflow: visible; fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+/* Basket: back (shadow, handle, inside), the items, then the woven front over them.
+   Drawn at 280 x 236 and shown at 200 x 170. The produce and the wicker keep
+   their natural colours in both colour schemes; that is what makes them readable. */
+.basket { position: absolute; left: 80px; top: 290px; width: 200px; height: 170px; transform-origin: 50% 100%; }
+.basket svg.layer { position: absolute; inset: 0; width: 200px; height: 170px; overflow: visible; }
 .items { position: absolute; inset: 0; }
-.ico { position: absolute; left: 0; top: 0; width: 40px; height: 40px; opacity: 0; }
-.ico svg { width: 40px; height: 40px; fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
-.f-warm { fill: var(--f-warm); } .f-green { fill: var(--f-green); } .f-gold { fill: var(--f-gold); } .f-plain { fill: var(--f-plain); } .f-inside { fill: var(--f-inside); }
-.fern { stroke: var(--accent); stroke-width: 1.75; }
-.badge { position: absolute; left: 172px; top: 4px; width: 32px; height: 32px; border-radius: 50%; background: var(--ink); color: var(--paper); overflow: hidden; font: 700 14px/32px var(--font-body); text-align: center; font-variant-numeric: tabular-nums; }
+.ico { position: absolute; left: 0; top: 0; width: 52px; height: 52px; opacity: 0; }
+.ico svg { display: block; width: 52px; height: 52px; overflow: visible; }
+.ico .gs { opacity: 0; }
+.badge { position: absolute; left: 170px; top: -4px; width: 32px; height: 32px; border-radius: 50%; background: var(--ink); color: var(--paper); overflow: hidden; font: 700 14px/32px var(--font-body); text-align: center; font-variant-numeric: tabular-nums; }
 .badge .col { display: flex; flex-direction: column; }
 .badge .col > span { height: 32px; }
 .plus { position: absolute; left: 112px; top: -4px; font: 700 16px/24px var(--font-body); color: var(--accent); opacity: 0; }
 
 /* Shopping list */
-.list { position: absolute; left: 40px; top: 12px; width: 280px; height: 312px; padding: 16px; border-radius: 6px; background: var(--surface); box-shadow: var(--shadow), inset 0 0 0 1px var(--line); opacity: 0; transform: translateY(40px); }
+.list { position: absolute; left: 40px; top: 12px; width: 280px; height: 312px; padding: 16px; border-radius: 6px; background: var(--surface); box-shadow: var(--shadow-paper), inset 0 0 0 1px var(--line); opacity: 0; transform: translateY(40px); }
 .list .t { font: italic 400 18px/24px var(--font-display); }
 .aisle { position: absolute; left: 16px; font: 700 11px/24px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .li { position: absolute; left: 16px; right: 16px; height: 24px; font-size: 13px; line-height: 24px; white-space: nowrap; }
@@ -206,21 +206,26 @@ html:not(.js) .controls { display: none; }
 
         <!-- Basket: back layer, the items, then the woven front over them -->
         <div class="basket" id="basket">
-          <svg class="layer" viewBox="0 0 200 150">
-            <path d="M36 52C36 -6 164 -6 164 52" stroke-width="4"/>
-            <ellipse cx="100" cy="52" rx="92" ry="14" class="f-inside"/>
+          <svg class="layer" viewBox="0 0 280 236">
+            <ellipse cx="140" cy="216" rx="118" ry="11" fill="#17251E" opacity=".12"/>
+            <path d="M60 78C60 -4 220 -4 220 78" stroke="#8E704A" stroke-width="11" fill="none" stroke-linecap="round"/>
+            <path d="M60 78C60 -4 220 -4 220 78" stroke="#C9A876" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M60 78C60 -4 220 -4 220 78" stroke="#E3C994" stroke-width="2" fill="none" stroke-dasharray="6 5" opacity=".9"/>
+            <ellipse cx="140" cy="80" rx="128" ry="22" fill="#5E4632"/>
+            <ellipse cx="140" cy="82" rx="116" ry="16" fill="#3F2E22"/>
           </svg>
           <div class="items" id="items"></div>
-          <svg class="layer" viewBox="0 0 200 150">
-            <defs><clipPath id="body"><path d="M8 52Q100 78 192 52L172 138Q100 152 28 138Z"/></clipPath></defs>
-            <path d="M8 52Q100 78 192 52L172 138Q100 152 28 138Z" class="f-plain"/>
-            <g clip-path="url(#body)" stroke-width="1.5" opacity=".75">
-              <path d="M10 82Q100 104 190 82M14 106Q100 126 186 106M18 128Q100 146 182 128"/>
-              <path d="M40 60L46 146M70 66L73 150M100 68V152M130 66L127 150M160 60L154 146"/>
-            </g>
-            <path d="M8 52Q100 78 192 52L172 138Q100 152 28 138Z"/>
-            <path d="M8 52Q100 78 192 52" stroke-width="4"/>
-            <g class="fern" transform="translate(100 112)"><path d="M-14 12C-6 4 2-4 12-12"/><path d="M-8 6.5l-4-1M-8 6.5l1-4M-2 1l-4-1M-2 1l1-4M4-4.5l-3.5-1M4-4.5l1-3.5M9-9l-3-.5M9-9l.5-3"/></g>
+          <svg class="layer" viewBox="0 0 280 236">
+            <path d="M12 80Q140 118 268 80L246 196Q140 222 34 196Z" fill="#C9A876"/>
+            <path d="M60 90Q58 150 66 204M100 96Q99 150 102 208M140 98V210M180 96Q181 150 178 208M220 90Q222 150 214 204" stroke="#8E704A" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path d="M17 104Q140 136 263 104M20 122Q140 154 260 122M24 140Q140 172 256 140M27 158Q140 190 253 158M31 176Q140 206 249 176" stroke="#A5875A" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M15 95Q140 127 265 95M19 113Q140 145 261 113M22 131Q140 163 258 131M26 149Q140 181 254 149M29 167Q140 197 251 167M33 185Q140 214 247 185" stroke="#E3C994" stroke-width="3.5" fill="none" stroke-linecap="round" opacity=".75"/>
+            <path d="M12 80Q140 118 268 80L246 196Q140 222 34 196Z" fill="none" stroke="#6E5540" stroke-width="1.5" opacity=".5"/>
+            <path d="M12 80Q140 118 268 80" stroke="#8E704A" stroke-width="10" fill="none" stroke-linecap="round"/>
+            <path d="M12 80Q140 118 268 80" stroke="#E3C994" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="9 7" opacity=".85"/>
+            <rect x="116" y="138" width="48" height="34" rx="7" fill="#5E4632"/>
+            <rect x="118.5" y="140.5" width="43" height="29" rx="5.5" fill="none" stroke="#E3C994" stroke-width="1" opacity=".5"/>
+            <g transform="translate(140 155)" fill="none" stroke="#E3C994" stroke-width="1.8" stroke-linecap="round"><path d="M-12 10C-5 3 2-4 11-12"/><path d="M-7 5.5l-4-1M-7 5.5l1-4M-2 .5l-4-1M-2 .5l1-4M3-4.5l-3.5-1M3-4.5l1-3.5M8-9l-3-.5M8-9l.5-3"/></g>
           </svg>
           <span class="plus" id="plus">+1</span>
           <span class="badge"><span class="col" id="badge"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span></span></span>
@@ -270,24 +275,24 @@ let anims = [], clock;
 
 /* ---- Ingredients, drawn in ink (40 x 40) ------------------------------- */
 const ICON = {
-  lamb: '<path class="f-warm" d="M7 24c-1-8 6-14 14-14 7 0 12 4 12 10 0 7-6 11-13 11-7 0-12-2-13-7z"/><path d="M12 21c3-3 8-4 12-2"/><circle class="f-plain" cx="25" cy="23" r="2.6"/>',
-  rosemary: '<path d="M20 35V5"/><path d="M20 9l-5-3M20 9l5-3M20 14l-6-3M20 14l6-3M20 19l-6-3M20 19l6-3M20 24l-6-3M20 24l6-3M20 29l-5-2M20 29l5-2"/>',
-  garlic: '<path class="f-plain" d="M20 7c2 4 11 8 11 17 0 6-5 9-11 9S9 30 9 24C9 15 18 11 20 7z"/><path d="M20 11c-2 5-3 13-1 21M20 11c2 5 3 13 1 21"/><path d="M17 33l-2 3M20 33v3M23 33l2 3"/>',
-  onion: '<path class="f-warm" d="M20 10c4 5 12 7 12 15 0 5-5 9-12 9S8 30 8 25c0-8 8-10 12-15z"/><path d="M20 10V5M18 5l2 2 2-2"/><path d="M14 18c-2 4-2 10 1 14M26 18c2 4 2 10-1 14M20 14v19"/>',
-  pumpkin: '<path class="f-gold" d="M20 12c-8-2-14 3-14 11s6 11 14 11 14-3 14-11-6-13-14-11z"/><path d="M20 12c-4 2-5 16 0 22M20 12c4 2 5 16 0 22M11 16c-3 5-3 12 1 17M29 16c3 5 3 12-1 17"/><path d="M20 12c0-3 1-5 3-6"/>',
-  courgette: '<path class="f-green" d="M6 27c4-10 16-18 27-19 2 0 2 2 1 3-6 9-16 18-26 19-2 0-3-1-2-3z"/><path d="M33 8l3-3"/><path d="M12 24c5-5 11-9 17-12" opacity=".6"/>',
-  egg: '<path class="f-plain" d="M20 6c6 0 11 10 11 17s-5 11-11 11S9 30 9 23 14 6 20 6z"/><path d="M14 16c1-3 3-5 5-6" opacity=".6"/>'
+  lamb: '<ellipse class="gs" cx="40" cy="66" rx="26" ry="4" fill="#17251E" opacity=".08"/><path d="M56 30l12-14" stroke="#EDE6D8" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M12 42c0-14 12-24 30-24s26 8 26 20-10 22-28 22S12 56 12 42z" fill="#EFDFC8"/><path d="M17 44c0-11 10-18 24-18s21 7 21 16-9 17-22 17S17 55 17 44z" fill="#C4685A"/><path d="M27 38c6 2 11 8 20 6M31 50c6-1 10-4 16-2" stroke="#E9B9AE" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M23 40c2-5 7-9 13-10" stroke="#fff" opacity=".35" stroke-width="2" fill="none" stroke-linecap="round"/>',
+  rosemary: '<ellipse class="gs" cx="40" cy="74" rx="14" ry="3" fill="#17251E" opacity=".08"/><path d="M40 74V18" stroke="#7E5E42" stroke-width="2.6" stroke-linecap="round"/><path d="M40 14c-2 2-3 6-3 10h6c0-4-1-8-3-10z" fill="#4F7D5C"/><path d="M40 26c-4-4-10-6-15-4 3 5 9 7 15 4z" fill="#4F7D5C"/><path d="M40 26c4-4 10-6 15-4-3 5-9 7-15 4z" fill="#6E9E78"/><path d="M40 35c-4-4-11-6-16-4 3 5 10 7 16 4z" fill="#6E9E78"/><path d="M40 35c4-4 11-6 16-4-3 5-10 7-16 4z" fill="#4F7D5C"/><path d="M40 44c-4-4-11-6-17-4 3 5 11 7 17 4z" fill="#4F7D5C"/><path d="M40 44c4-4 11-6 17-4-3 5-11 7-17 4z" fill="#6E9E78"/><path d="M40 53c-4-4-11-6-17-4 3 5 11 7 17 4z" fill="#6E9E78"/><path d="M40 53c4-4 11-6 17-4-3 5-11 7-17 4z" fill="#4F7D5C"/><path d="M40 62c-4-4-10-6-15-4 3 5 9 7 15 4z" fill="#4F7D5C"/><path d="M40 62c4-4 10-6 15-4-3 5-9 7-15 4z" fill="#6E9E78"/>',
+  garlic: '<ellipse class="gs" cx="40" cy="70" rx="18" ry="3" fill="#17251E" opacity=".08"/><path d="M34 66l-2 6M40 67v6M46 66l2 6" stroke="#B9AA8C" stroke-width="1.6" stroke-linecap="round"/><path d="M40 14c3 8 20 14 20 32 0 12-9 20-20 20S20 58 20 46c0-18 17-24 20-32z" fill="#F0EADB"/><path d="M40 24c-6 8-9 20-8 40M40 24c6 8 9 20 8 40M40 24c-11 6-14 18-16 36M40 24c11 6 14 18 16 36" stroke="#D8CDB4" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M36 20c1-5 3-10 4-12 1 2 3 7 4 12z" fill="#D9CDB0"/><path d="M30 38c1-6 4-10 7-13" stroke="#fff" opacity=".5" stroke-width="2" fill="none" stroke-linecap="round"/>',
+  onion: '<ellipse class="gs" cx="40" cy="70" rx="20" ry="3" fill="#17251E" opacity=".08"/><path d="M34 68l-2 5M40 68v6M46 68l2 5" stroke="#8C6A45" stroke-width="1.4" stroke-linecap="round"/><path d="M40 16c6 8 22 12 22 30 0 13-10 22-22 22S18 59 18 46c0-18 16-22 22-30z" fill="#C98F52"/><path d="M40 22c-8 8-12 20-10 42M40 22c8 8 12 20 10 42M40 22c-13 8-17 20-18 36M40 22c13 8 17 20 18 36" stroke="#A9702F" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M30 40c1-8 5-14 9-18" stroke="#EBBE86" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M36 18c0-6 2-10 4-12 2 2 4 6 4 12z" fill="#A9702F"/><path d="M44 12c3-2 6-2 8 1" stroke="#A9702F" stroke-width="1.6" fill="none" stroke-linecap="round"/>',
+  pumpkin: '<ellipse class="gs" cx="40" cy="70" rx="28" ry="4" fill="#17251E" opacity=".08"/><path d="M37 26c0-5 1-9 4-13 2 1 3 4 3 8s-1 5-1 5z" fill="#6E8A5A"/><ellipse cx="40" cy="46" rx="30" ry="22" fill="#B96E2A"/><ellipse cx="22" cy="46" rx="11" ry="21" fill="#D98A3D" stroke="#B96E2A" stroke-width="1.2"/><ellipse cx="58" cy="46" rx="11" ry="21" fill="#D98A3D" stroke="#B96E2A" stroke-width="1.2"/><ellipse cx="31" cy="46" rx="11" ry="23" fill="#E39A4C" stroke="#B96E2A" stroke-width="1.2"/><ellipse cx="49" cy="46" rx="11" ry="23" fill="#E39A4C" stroke="#B96E2A" stroke-width="1.2"/><ellipse cx="40" cy="46" rx="11" ry="24" fill="#EBA858" stroke="#B96E2A" stroke-width="1.2"/><path d="M36 30c-2 6-2 14 0 22" stroke="#fff" opacity=".3" stroke-width="2.4" fill="none" stroke-linecap="round"/>',
+  courgette: '<ellipse class="gs" cx="40" cy="66" rx="30" ry="4" fill="#17251E" opacity=".08"/><path d="M14 62c-3 1-7 3-9 6 2 1 5 1 8-1 2-1 3-3 1-5z" fill="#6B8C56"/><path d="M12 58c8-14 26-30 48-40 4-2 8 1 6 5-8 20-26 34-48 40-5 1-8-2-6-5z" fill="#4C7A3A"/><path d="M18 52c10-10 24-22 40-30M22 58c12-8 26-20 38-32" stroke="#7DAA5E" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/><circle cx="30" cy="46" r="1.2" fill="#A9CB8A"/><circle cx="42" cy="36" r="1.2" fill="#A9CB8A"/><circle cx="52" cy="28" r="1.2" fill="#A9CB8A"/>',
+  egg: '<ellipse class="gs" cx="40" cy="68" rx="18" ry="3" fill="#17251E" opacity=".08"/><path d="M40 12c10 0 18 14 18 30 0 12-8 22-18 22S22 54 22 42c0-16 8-30 18-30z" fill="#EFDFC3"/><ellipse cx="48" cy="44" rx="7" ry="16" fill="#DCC7A3" opacity=".6"/><ellipse cx="33" cy="28" rx="3" ry="6" fill="#fff" opacity=".55"/><circle cx="30" cy="44" r="1" fill="#C9B08A"/><circle cx="44" cy="24" r=".9" fill="#C9B08A"/><circle cx="38" cy="56" r="1" fill="#C9B08A"/>'
 };
 function makeIcon(name) {
   const d = document.createElement('div'); d.className = 'ico';
-  d.innerHTML = '<svg viewBox="0 0 40 40">' + ICON[name] + '</svg>';
+  d.innerHTML = '<svg viewBox="0 0 80 80">' + ICON[name] + '</svg>';
   $('#items').append(d);
   return d;
 }
 
 /* An arcing throw from a recipe line into the basket, with a pop at the
    start and a turn in the air. Coordinates are icon centres, basket space. */
-const tf = (x, y, r, sc) => 'translate(' + (x - 20).toFixed(1) + 'px,' + (y - 20).toFixed(1) + 'px) rotate(' + r.toFixed(1) + 'deg) scale(' + sc.toFixed(3) + ')';
+const tf = (x, y, r, sc) => 'translate(' + (x - 26).toFixed(1) + 'px,' + (y - 26).toFixed(1) + 'px) rotate(' + r.toFixed(1) + 'deg) scale(' + sc.toFixed(3) + ')';
 function throwInto(t, el, from, to, rot, dur) {
   const N = 14, vals = [], offs = [], apex = Math.min(from[1], to[1]) - 64;
   const ctrl = [(from[0] + to[0]) / 2, apex];
@@ -300,10 +305,14 @@ function throwInto(t, el, from, to, rot, dur) {
   }
   A(t, el, 'opacity', [0, 1], 140);
   A(t, el, 'transform', vals, dur, E.lin, offs);
-  return { land: t + dur, rest: tf(to[0], to[1], rot, 1) };
+  const rest = tf(to[0], to[1], rot, 1);
+  A(t + dur, el, 'transform', [rest, rest + ' scale(1.08,.92)', rest + ' scale(.98,1.02)', rest], 300, E.out, [0, .35, .7, 1]);   // settle
+  A(t + dur, el.querySelector('.gs'), 'opacity', [0, 1], 260);   // its shadow comes back once it has landed
+  return { land: t + dur, rest: rest };
 }
-function squash(t) {
-  A(t, $('#basket'), 'transform', ['none', 'scale(1.04,.94)', 'scale(.99,1.02)', 'none'], 340, E.out, [0, .3, .65, 1]);
+function squash(t, k) {   // k: how heavy the landing is
+  k = k || 1;
+  A(t, $('#basket'), 'transform', ['none', 'scale(' + (1 + .04 * k) + ',' + (1 - .06 * k) + ')', 'scale(.99,1.02)', 'none'], 340, E.out, [0, .3, .65, 1]);
 }
 let count = 0;
 function bumpCount(t) {
@@ -347,13 +356,13 @@ A(5120, $('#gotit'), 'transform', ['rotate(-4deg) translateX(-6px)', 'rotate(-4d
 /* ---- Beat 3: into your basket ----------------------------------------- */
 A(5600, card, 'transform', ['translateY(0) rotate(-2deg)', 'translateY(-6px) rotate(-2deg)'], 320);
 // line index, ingredient, landing spot in the basket, final tilt
-const firstRecipe = [[0, 'lamb', [100, 52], -8], [1, 'rosemary', [44, 42], -22], [2, 'garlic', [154, 48], 12], [3, 'onion', [128, 44], 6], [4, 'pumpkin', [72, 46], -6]];
+const firstRecipe = [[0, 'lamb', [100, 54], -8, 1.6], [1, 'rosemary', [42, 42], -30, .5], [2, 'garlic', [158, 52], 18, .9], [3, 'onion', [132, 48], 8, 1], [4, 'pumpkin', [68, 48], -14, 1.3]];
 let onionR1 = null, onionRest = '';
 firstRecipe.forEach((f, i) => {
   const t = 5950 + i * 430, el = makeIcon(f[1]);
   A(t, lines[f[0]], 'opacity', [1, .28], 220);
-  const r = throwInto(t, el, [96, -178 + 24 * f[0]], f[2], f[3], 640);
-  squash(r.land); bumpCount(r.land);
+  const r = throwInto(t, el, [96, -168 + 24 * f[0]], f[2], f[3], 700);
+  squash(r.land, f[4]); bumpCount(r.land);
   if (f[1] === 'onion') { onionR1 = el; onionRest = r.rest; }
 });
 A(8200, card, 'transform', ['translateY(-6px) rotate(-2deg)', 'translate(-280px,-10px) rotate(-10deg)'], 620, E.inOut);
@@ -361,18 +370,18 @@ A(8200, card, 'opacity', [1, 0], 460);
 const card2 = $('#card2'), c2lines = card2.querySelectorAll('.ln');
 A(8400, card2, 'transform', ['translateX(240px) rotate(6deg)', 'translateX(0) rotate(2deg)'], 680, E.back);
 A(8400, card2, 'opacity', [0, 1], 220);
-[[0, 'courgette', [60, 34], -32, 9150], [2, 'egg', [146, 36], 16, 9550]].forEach(f => {
+[[0, 'courgette', [56, 36], -34, 9150], [2, 'egg', [148, 38], 16, 9550]].forEach(f => {
   const el = makeIcon(f[1]);
   A(f[4], c2lines[f[0]], 'opacity', [1, .28], 220);
-  const r = throwInto(f[4], el, [78, -184 + 24 * f[0]], f[2], f[3], 640);
-  squash(r.land); bumpCount(r.land);
+  const r = throwInto(f[4], el, [78, -174 + 24 * f[0]], f[2], f[3], 700);
+  squash(r.land, .8); bumpCount(r.land);
 });
 // The second onion lands on the first: one line, not two. The count holds.
 {
   const el = makeIcon('onion');
   A(9950, c2lines[1], 'opacity', [1, .28], 220);
-  const r = throwInto(9950, el, [78, -160], [128, 44], 6, 640);
-  squash(r.land);
+  const r = throwInto(9950, el, [78, -150], [132, 48], 8, 700);
+  squash(r.land, .8);
   A(r.land, el, 'opacity', [1, 0], 200);
   A(r.land, onionR1, 'transform', [onionRest, onionRest + ' scale(1.18)', onionRest], 380, E.out);
   A(r.land, $('#plus'), 'opacity', [0, 1, 1, 0], 950, E.lin, [0, .15, .7, 1]);
