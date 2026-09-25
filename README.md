@@ -101,12 +101,15 @@ same as the app), loaded from Google Fonts.
 Everything below is deliberately inert and marked in the source with a
 `PLACEHOLDER` comment.
 
-**The Get-the-app button** — the hero's button reads "Coming soon" and is a
-label, not a link, because no store listing exists yet. It is marked
-`PLACEHOLDER` in the source. When there is a listing:
+**The Get-the-app buttons** — the hero's "Coming soon" label is not a link,
+and the two store badges under it are real, working links that point at
+`#faq`, the FAQ entry explaining when the app ships; an `href="#"` is a dead
+end for a visitor and an empty link to a crawler. All three are marked
+`PLACEHOLDER` in the source. When a listing exists:
 
-1. Make it `<a class="btn" href="LISTING URL">Make it your own</a>`.
-2. Reword the FAQ answer to "When is it coming to the App Store and Google
+1. Point that badge's `href` at the listing URL and drop `is-placeholder`.
+2. Change its kicker from "Coming to" to "Get it on".
+3. Reword the FAQ answer to "When is it coming to the App Store and Google
    Play?" (in both the markup and the JSON-LD, which mirror each other) and
    the footer note. Both say it is not published yet.
 
