@@ -141,7 +141,7 @@
           "name": "When is it coming to the App Store and Google Play?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The Android build is in testing on Google Play: the button at the top of this page takes you to it, and it is free. It is not on the App Store yet. You must be at least 16 to use The Fern Basket."
+            "text": "It is not published yet. When it is, the download links will appear at the top of this page. You must be at least 16 to use The Fern Basket."
           }
         }
       ]
@@ -329,6 +329,9 @@
     text-decoration:none; box-shadow:var(--shadow); transition:transform .18s ease, opacity .18s ease;
   }
   .btn:hover { transform:translateY(-2px); opacity:.92; color:var(--on-accent); }
+  /* Not a link yet: quieter, and no hover lift, so it does not promise a click. */
+  .btn-soon { background:var(--surface); color:var(--text); box-shadow:inset 0 0 0 1.5px var(--line); cursor:default; }
+  .btn-soon:hover { transform:none; opacity:1; color:var(--text); }
   .note { font-size:14px; line-height:24px; color:var(--muted); }
 
   @media (min-width: 768px) { h1 { font-size:56px; line-height:64px; } .h1-sub { font-size:18px; line-height:28px; } }
@@ -374,6 +377,7 @@
      ========================================================================= */
   .fit { position: relative; width: calc(360px * var(--s, 1)); height: calc(480px * var(--s, 1)); }
   .scene { position: absolute; left: 0; top: 0; width: 360px; height: 480px; transform: scale(var(--s, 1)); transform-origin: 0 0; }
+  .scene p, .beats, .note { margin: 0; }   /* the page does not reset these; the drawings assume it */
   .scene-inner { position: absolute; inset: 0; }
   .card, .card2, .list, .basket, .ico, .badge .col, .roll .col, .tap { will-change: transform, opacity; }
   .ab { position: absolute; left: 0; top: 0; }
@@ -576,16 +580,16 @@
       <p class="hero-lede">Add a recipe, make it your own, put it in your basket and go shopping. That’s the whole app.</p>
 
       <!--
-        CHECK before merging: this is the Google Play testing opt-in URL built
-        from the Android package in the app's app.json. It only works while a
-        test track is open and the visitor is allowed to join it. Once there is
-        a public listing, point the button there and reword the FAQ answer to
-        "When is it coming to the App Store and Google Play?" and the footer
-        note, which both say the Android build is in testing on Google Play.
+        PLACEHOLDER: there is no store listing yet, so this is a label, not a
+        link. When the app ships, make it
+          <a class="btn" href="LISTING URL">Make it your own</a>
+        and reword the FAQ answer to "When is it coming to the App Store and
+        Google Play?" (markup and JSON-LD mirror each other) and the footer
+        note, which both say it is not published yet.
       -->
       <div class="cta">
-        <a class="btn" href="https://play.google.com/apps/testing/nz.co.ecocraft.baskettranstasman">Make it your own</a>
-        <p class="note">Free. Android only for now.</p>
+        <span class="btn btn-soon">Coming soon</span>
+        <p class="note">Free. Android first.</p>
       </div>
     </div>
 
@@ -875,9 +879,8 @@
 
         <details>
           <summary><h3>When is it coming to the App Store and Google Play?</h3></summary>
-          <p>The Android build is in testing on Google Play: the button at the top of this page
-          takes you to it, and it is free. It is not on the App Store yet. You must be at least
-          16 to use The Fern Basket.</p>
+          <p>It is not published yet. When it is, the download links will appear at the top of this
+          page. You must be at least 16 to use The Fern Basket.</p>
         </details>
 
       </div>
@@ -887,7 +890,7 @@
 
 <footer class="footer">
   <div class="footer-inner">
-    <span>Android is in testing on Google Play. Not on the App Store yet. Prices are estimates, not quotes.</span>
+    <span>Not on the app stores yet — links land here when it ships. Prices are estimates, not quotes.</span>
     <span class="footer-links">
       <a href="/PrivacyPolicy/">Privacy</a>
       <a href="mailto:support@thefernbasket.com">Support</a>

@@ -101,17 +101,14 @@ same as the app), loaded from Google Fonts.
 Everything below is deliberately inert and marked in the source with a
 `PLACEHOLDER` comment.
 
-**The Get-the-app button** — the hero's one button, "Make it your own",
-points at the Google Play testing opt-in URL built from the Android package
-below. That link only works while a test track is open and the visitor is
-allowed to join it, so it is marked `CHECK` in the source. When there is a
-public listing:
+**The Get-the-app button** — the hero's button reads "Coming soon" and is a
+label, not a link, because no store listing exists yet. It is marked
+`PLACEHOLDER` in the source. When there is a listing:
 
-1. Point the button at the listing URL.
+1. Make it `<a class="btn" href="LISTING URL">Make it your own</a>`.
 2. Reword the FAQ answer to "When is it coming to the App Store and Google
    Play?" (in both the markup and the JSON-LD, which mirror each other) and
-   the footer note. Both currently say the Android build is in testing on
-   Google Play and it is not on the App Store yet.
+   the footer note. Both say it is not published yet.
 
 The identifiers for building those URLs, from the app's `app.json`:
 
