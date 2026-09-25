@@ -361,9 +361,6 @@
   .pp .i-play { display: none; } .pp[aria-pressed="true"] .i-play { display: block; } .pp[aria-pressed="true"] .i-pause { display: none; }
   .bar { flex: 1; height: 4px; border-radius: 2px; background: var(--rule); overflow: hidden; }
   .bar i { display: block; height: 100%; background: var(--text); transform-origin: left; transform: scaleX(0); }
-  .cta { margin-top: 32px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
-  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 16px 32px; border-radius: 12px; background: var(--accent); color: var(--on-accent); font-weight: 700; text-decoration: none; box-shadow: var(--shadow); }
-  .note { font-size: 14px; line-height: 24px; color: var(--muted); }
   /* Without JavaScript, or with reduced motion, there is nothing to pause. */
   html:not(.js) .controls { display: none; }
   @media (prefers-reduced-motion: reduce) { .controls { display: none; } }
