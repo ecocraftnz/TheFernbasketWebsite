@@ -412,7 +412,7 @@
   .ico { position: absolute; left: 0; top: 0; width: 52px; height: 52px; opacity: 0; }
   .ico svg { display: block; width: 52px; height: 52px; overflow: visible; }
   .ico .gs { opacity: 0; }
-  .badge { position: absolute; left: 170px; top: -4px; width: 32px; height: 32px; border-radius: 50%; background: var(--text); color: var(--bg); overflow: hidden; font: 700 14px/32px var(--font-body); text-align: center; font-variant-numeric: tabular-nums; }
+  .badge { position: absolute; left: -2px; top: -4px; width: 32px; height: 32px; border-radius: 50%; background: var(--text); color: var(--bg); overflow: hidden; font: 700 14px/32px var(--font-body); text-align: center; font-variant-numeric: tabular-nums; }
   .badge .col { display: flex; flex-direction: column; }
   .badge .col > span { height: 32px; }
   .plus { position: absolute; left: 112px; top: -4px; font: 700 16px/24px var(--font-body); color: var(--accent); opacity: 0; }
@@ -637,25 +637,80 @@
           <!-- Basket: back layer, the items, then the woven front over them -->
           <div class="basket" id="basket">
             <svg class="layer" viewBox="0 0 280 236">
-              <ellipse cx="140" cy="216" rx="118" ry="11" fill="#17251E" opacity=".12"/>
-              <path d="M60 78C60 -4 220 -4 220 78" stroke="#8E704A" stroke-width="11" fill="none" stroke-linecap="round"/>
-              <path d="M60 78C60 -4 220 -4 220 78" stroke="#C9A876" stroke-width="5" fill="none" stroke-linecap="round"/>
-              <path d="M60 78C60 -4 220 -4 220 78" stroke="#E3C994" stroke-width="2" fill="none" stroke-dasharray="6 5" opacity=".9"/>
-              <ellipse cx="140" cy="80" rx="128" ry="22" fill="#5E4632"/>
-              <ellipse cx="140" cy="82" rx="116" ry="16" fill="#3F2E22"/>
+              <ellipse cx="140" cy="214" rx="122" ry="10" fill="#17251E" opacity=".14"/>
+              <path d="M44 88C44 -12 236 -12 236 88" stroke="#7A5B3A" stroke-width="13" fill="none" stroke-linecap="round"/>
+              <path d="M44 88C44 -12 236 -12 236 88" stroke="#CBAA78" stroke-width="8" fill="none" stroke-linecap="round"/>
+              <path d="M44 86C44 -14 236 -14 236 86" stroke="#EBD3A3" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".8"/>
+              <ellipse cx="140" cy="84" rx="130" ry="22" fill="#5A4330"/>
+              <ellipse cx="140" cy="86" rx="118" ry="16" fill="#3B2B1F"/>
             </svg>
             <div class="items" id="items"></div>
             <svg class="layer" viewBox="0 0 280 236">
-              <path d="M12 80Q140 118 268 80L246 196Q140 222 34 196Z" fill="#C9A876"/>
-              <path d="M60 90Q58 150 66 204M100 96Q99 150 102 208M140 98V210M180 96Q181 150 178 208M220 90Q222 150 214 204" stroke="#8E704A" stroke-width="4" fill="none" stroke-linecap="round"/>
-              <path d="M17 104Q140 136 263 104M20 122Q140 154 260 122M24 140Q140 172 256 140M27 158Q140 190 253 158M31 176Q140 206 249 176" stroke="#A5875A" stroke-width="5" fill="none" stroke-linecap="round"/>
-              <path d="M15 95Q140 127 265 95M19 113Q140 145 261 113M22 131Q140 163 258 131M26 149Q140 181 254 149M29 167Q140 197 251 167M33 185Q140 214 247 185" stroke="#E3C994" stroke-width="3.5" fill="none" stroke-linecap="round" opacity=".75"/>
-              <path d="M12 80Q140 118 268 80L246 196Q140 222 34 196Z" fill="none" stroke="#6E5540" stroke-width="1.5" opacity=".5"/>
-              <path d="M12 80Q140 118 268 80" stroke="#8E704A" stroke-width="10" fill="none" stroke-linecap="round"/>
-              <path d="M12 80Q140 118 268 80" stroke="#E3C994" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="9 7" opacity=".85"/>
-              <rect x="116" y="138" width="48" height="34" rx="7" fill="#5E4632"/>
-              <rect x="118.5" y="140.5" width="43" height="29" rx="5.5" fill="none" stroke="#E3C994" stroke-width="1" opacity=".5"/>
-              <g transform="translate(140 155)" fill="none" stroke="#E3C994" stroke-width="1.8" stroke-linecap="round"><path d="M-12 10C-5 3 2-4 11-12"/><path d="M-7 5.5l-4-1M-7 5.5l1-4M-2 .5l-4-1M-2 .5l1-4M3-4.5l-3.5-1M3-4.5l1-3.5M8-9l-3-.5M8-9l.5-3"/></g>
+              <defs>
+                <clipPath id="fb-body"><path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z"/></clipPath>
+                <linearGradient id="fb-round" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFF6DE" stop-opacity=".22"/><stop offset=".35" stop-color="#FFF6DE" stop-opacity="0"/><stop offset=".7" stop-color="#3A2614" stop-opacity="0"/><stop offset="1" stop-color="#3A2614" stop-opacity=".34"/></linearGradient>
+                <linearGradient id="fb-down" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#3A2614" stop-opacity="0"/><stop offset="1" stop-color="#3A2614" stop-opacity=".3"/></linearGradient>
+              </defs>
+              <path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z" fill="#C9A876"/>
+              <g clip-path="url(#fb-body)">
+              <path d="M60 40L-140 240M122 40L-78 240M184 40L-16 240M246 40L46 240M308 40L108 240M370 40L170 240M432 40L232 240M494 40L294 240" stroke="#7A5B3A" stroke-width="28" fill="none"/>
+              <path d="M60 40L-140 240M122 40L-78 240M184 40L-16 240M246 40L46 240M308 40L108 240M370 40L170 240M432 40L232 240M494 40L294 240" stroke="#CBAA78" stroke-width="22" fill="none"/>
+              <path d="M60 40L-140 240M122 40L-78 240M184 40L-16 240M246 40L46 240M308 40L108 240M370 40L170 240M432 40L232 240M494 40L294 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" transform="translate(-1.2 -1.2)"/>
+              <path d="M-160 40L40 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+              <path d="M-160 40L40 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+              <path d="M-160 40L40 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+              <path d="M-98 40L102 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+              <path d="M-98 40L102 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+              <path d="M-98 40L102 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+              <path d="M-36 40L164 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+              <path d="M-36 40L164 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+              <path d="M-36 40L164 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+              <path d="M26 40L226 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+              <path d="M26 40L226 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+              <path d="M26 40L226 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+              <path d="M88 40L288 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+              <path d="M88 40L288 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+              <path d="M88 40L288 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+              <path d="M150 40L350 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+              <path d="M150 40L350 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+              <path d="M150 40L350 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+              <path d="M212 40L412 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+              <path d="M212 40L412 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+              <path d="M212 40L412 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+              <path d="M274 40L474 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+              <path d="M274 40L474 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+              <path d="M274 40L474 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+              <path d="M336 40L536 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+              <path d="M336 40L536 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+              <path d="M336 40L536 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+              </g>
+              <path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z" fill="url(#fb-round)"/>
+              <path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z" fill="url(#fb-down)"/>
+              <path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z" fill="none" stroke="#5E4632" stroke-width="1.5" opacity=".6"/>
+              <path d="M14 98Q140 136 266 98" stroke="#5E4632" stroke-width="2" fill="none" opacity=".45"/>
+              <path d="M10 82Q140 120 270 82" stroke="#7A5B3A" stroke-width="12" fill="none" stroke-linecap="round"/>
+              <path d="M10 82Q140 120 270 82" stroke="#D3B57E" stroke-width="7" fill="none" stroke-linecap="round"/>
+              <path d="M10 80Q140 118 270 80" stroke="#EBD3A3" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+              <g fill="none" stroke="#2E7D5B" stroke-width="3.5" stroke-linecap="round">
+                <path d="M148 104C172 60 206 26 258 4"/>
+              </g>
+              <g fill="#3E8F63" stroke="#2E7D5B" stroke-width="1.4" stroke-linejoin="round">
+                <path d="M0 0C8.5 -11.6 25.5 -10.4 34.0 0C25.5 10.4 8.5 11.6 0 0Z" transform="translate(163.7 78.8) rotate(-96.6)"/>
+                <path d="M0 0C8.5 -11.6 25.5 -10.4 34.0 0C25.5 10.4 8.5 11.6 0 0Z" transform="translate(163.7 78.8) rotate(-12.6)"/>
+                <path d="M0 0C7.7 -10.5 23.1 -9.4 30.8 0C23.1 9.4 7.7 10.5 0 0Z" transform="translate(174.4 64.9) rotate(-92.1)"/>
+                <path d="M0 0C7.7 -10.5 23.1 -9.4 30.8 0C23.1 9.4 7.7 10.5 0 0Z" transform="translate(174.4 64.9) rotate(-8.1)"/>
+                <path d="M0 0C6.9 -9.4 20.7 -8.4 27.6 0C20.7 8.4 6.9 9.4 0 0Z" transform="translate(186.2 51.9) rotate(-87.4)"/>
+                <path d="M0 0C6.9 -9.4 20.7 -8.4 27.6 0C20.7 8.4 6.9 9.4 0 0Z" transform="translate(186.2 51.9) rotate(-3.4)"/>
+                <path d="M0 0C6.1 -8.3 18.3 -7.5 24.4 0C18.3 7.5 6.1 8.3 0 0Z" transform="translate(199.1 39.8) rotate(-82.5)"/>
+                <path d="M0 0C6.1 -8.3 18.3 -7.5 24.4 0C18.3 7.5 6.1 8.3 0 0Z" transform="translate(199.1 39.8) rotate(1.5)"/>
+                <path d="M0 0C5.3 -7.2 15.9 -6.5 21.2 0C15.9 6.5 5.3 7.2 0 0Z" transform="translate(213.3 28.7) rotate(-77.5)"/>
+                <path d="M0 0C5.3 -7.2 15.9 -6.5 21.2 0C15.9 6.5 5.3 7.2 0 0Z" transform="translate(213.3 28.7) rotate(6.5)"/>
+                <path d="M0 0C4.5 -6.1 13.5 -5.5 18.0 0C13.5 5.5 4.5 6.1 0 0Z" transform="translate(228.9 18.6) rotate(-72.6)"/>
+                <path d="M0 0C4.5 -6.1 13.5 -5.5 18.0 0C13.5 5.5 4.5 6.1 0 0Z" transform="translate(228.9 18.6) rotate(11.4)"/>
+                <path d="M0 0C3.7 -5.0 11.1 -4.5 14.8 0C11.1 4.5 3.7 5.0 0 0Z" transform="translate(242.9 11.0) rotate(-68.7)"/>
+                <path d="M0 0C3.7 -5.0 11.1 -4.5 14.8 0C11.1 4.5 3.7 5.0 0 0Z" transform="translate(242.9 11.0) rotate(15.3)"/>
+                <path d="M0 0C4 -4 10 -5 16 0C10 5 4 4 0 0Z" transform="translate(258.0 4.0) rotate(-22.9)"/>
+              </g>
             </svg>
             <span class="plus" id="plus">+1</span>
             <span class="badge"><span class="col" id="badge"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span></span></span>
@@ -987,9 +1042,14 @@ function throwInto(t, el, from, to, rot, dur) {
   A(t + dur, el.querySelector('.gs'), 'opacity', [0, 1], 260);   // its shadow comes back once it has landed
   return { land: t + dur, rest: rest };
 }
+/* The basket leans back a touch while things are thrown in, and each landing
+   squashes it and turns it a few degrees, alternating sides, so it reads as a
+   solid object rather than a drawing. All of it is one transform. */
+const LEAN = 'perspective(800px) rotateX(-6deg)';
+let side = 1;
 function squash(t, k) {   // k: how heavy the landing is
-  k = k || 1;
-  A(t, $('#basket'), 'transform', ['none', 'scale(' + (1 + .04 * k) + ',' + (1 - .06 * k) + ')', 'scale(.99,1.02)', 'none'], 340, E.out, [0, .3, .65, 1]);
+  k = k || 1; side = -side;
+  A(t, $('#basket'), 'transform', [LEAN, LEAN + ' rotateY(' + (4 * side) + 'deg) scale(' + (1 + .04 * k) + ',' + (1 - .06 * k) + ')', LEAN + ' rotateY(' + (-1.5 * side) + 'deg) scale(.99,1.02)', LEAN], 380, E.out, [0, .3, .65, 1]);
 }
 let count = 0;
 function bumpCount(t) {
@@ -1032,6 +1092,7 @@ A(5120, $('#gotit'), 'transform', ['rotate(-4deg) translateX(-6px)', 'rotate(-4d
 
 /* ---- Beat 3: into your basket ----------------------------------------- */
 A(5600, card, 'transform', ['translateY(0) rotate(-2deg)', 'translateY(-6px) rotate(-2deg)'], 320);
+A(5600, $('#basket'), 'transform', ['none', LEAN], 480, E.out);
 // line index, ingredient, landing spot in the basket, final tilt
 const firstRecipe = [[0, 'lamb', [100, 54], -8, 1.6], [1, 'rosemary', [42, 42], -30, .5], [2, 'garlic', [158, 52], 18, .9], [3, 'onion', [132, 48], 8, 1], [4, 'pumpkin', [68, 48], -14, 1.3]];
 let onionR1 = null, onionRest = '';
@@ -1068,7 +1129,7 @@ A(10700, card2, 'transform', ['translate(0,0) rotate(2deg)', 'translate(-240px,-
 A(10700, card2, 'opacity', [1, 0], 480, E.inOut);
 
 /* ---- Beat 4: go shopping ---------------------------------------------- */
-A(10950, $('#basket'), 'transform', ['none', 'translate(78px,20px) scale(.68)'], 800, E.inOut);
+A(10950, $('#basket'), 'transform', [LEAN, 'translate(78px,20px) scale(.68)'], 800, E.inOut);
 const list = $('#list');
 A(11080, list, 'opacity', [0, 1], 420);
 A(11080, list, 'transform', ['translateY(48px)', 'translateY(0)'], 760, E.out);
