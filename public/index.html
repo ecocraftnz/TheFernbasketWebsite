@@ -141,7 +141,7 @@
           "name": "When is it coming to the App Store and Google Play?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It is not published yet. When it is, the download links will appear at the top of this page. You must be at least 16 to use The Fern Basket."
+            "text": "The Android build is in testing on Google Play: the button at the top of this page takes you to it, and it is free. It is not on the App Store yet. You must be at least 16 to use The Fern Basket."
           }
         }
       ]
@@ -173,63 +173,66 @@
     try {
       var t = localStorage.getItem('fb-theme');
       if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+      document.documentElement.className = 'js';   // the animation's controls show only with JavaScript
     } catch (e) { /* storage blocked - fall through to the OS preference */ }
   })();
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <!--
-  This page is built from the Claude Design artboard "Fern Basket Landing v2".
-  It is deliberately self-contained: /styles.css belongs to the privacy policy
-  page and must not be reshaped around this one.
+  This page is deliberately self-contained: /styles.css belongs to the privacy
+  policy page and must not be reshaped around this one.
 
-  The artboard is a fixed 940x430 canvas that its runtime scales to fit, so its
-  raw px values are not final sizes — at a 1440px viewport the whole board
-  renders at about 1.4x. Reproducing that with transform:scale would freeze the
-  type against browser zoom and user font settings, so the sizes below are
-  fluid instead, tuned to land on the artboard's rendered size at both ends:
-  the 50px heading resolves to ~69px at 1440 and ~49px at 1024, and the compact
-  stack bottoms out near the 38px the artboard's small variant uses.
+  The hero is the basket animation from concepts/basket: a recipe card lands,
+  gets made your own, its ingredients go into a basket, and the basket becomes
+  an aisle-sorted list. It runs on the Web Animations API (transform and
+  opacity only), pauses off screen, and shows the finished list as a still
+  when the visitor prefers reduced motion.
 -->
 <style>
-  /* Tokens copied from the artboard. --bg/--surface/--primary/--accent/--text
-     match the app's src/theme/tokens.ts; --muted/--line/--hair are this
-     design's own, and have no counterpart in the app. */
-  /* Small text uses --accent, never --primary. In dark mode --primary is
-     #2E7D5B, only 3.65:1 on the background and 3.31:1 on a surface, under the
-     4.5:1 WCAG AA needs for normal text; --accent is #6FC79B at 8.97:1. In
-     light mode the two are the same colour, so this costs nothing there.
-     The h1's brand accent keeps --primary: at 37-70px it is large text, where
-     3:1 applies and 3.65:1 passes. */
+  /* Tokens. --bg/--surface/--primary/--accent/--text/--rule/--on-accent/
+     --checked match the app's src/theme/tokens.ts (bg, surface, primary,
+     accent, text, surfaceBorder, onPrimary, textChecked); --muted/--line/
+     --hair are this design's own. The produce and the wicker in the animation
+     keep their natural colours in both schemes; that is what makes them read. */
+  /* Small text uses --accent, never --primary: in dark mode --primary is only
+     3.65:1 on the background, --accent is 8.97:1. Large text may use either. */
   :root {
-    --bg:#F6F1E8; --surface:#FFFDF9; --primary:#17513B; --accent:#17513B;
-    --text:#17251E; --muted:#5A6B62;
-    --line:rgba(23,81,59,.18); --hair:rgba(23,37,30,.12);
+    --bg:#F6F1E8; --surface:#FFFDF9; --primary:#17513B; --accent:#17513B; --on-accent:#F3F8F2;
+    --text:#17251E; --muted:#5A6B62; --checked:#797369;
+    --rule:#EAE1CF; --line:rgba(23,81,59,.18); --hair:rgba(23,37,30,.12);
     --logo-filter:none;
     --shadow:0 18px 40px -28px rgba(23,37,30,.4);
+    --shadow-paper:0 2px 0 rgba(23,37,30,.05), 0 32px 56px -30px rgba(23,37,30,.5);
+    --font-display:'Fraunces', Georgia, 'Times New Roman', serif;
+    --font-body:'Plus Jakarta Sans', Helvetica, Arial, sans-serif;
   }
   html[data-theme="dark"] {
-    --bg:#0E1713; --surface:#17211C; --primary:#2E7D5B; --accent:#6FC79B;
-    --text:#EAF0EC; --muted:#9DB0A6;
-    --line:rgba(111,199,155,.26); --hair:rgba(234,240,236,.14);
+    --bg:#0E1713; --surface:#17211C; --primary:#2E7D5B; --accent:#6FC79B; --on-accent:#0E1713;
+    --text:#EAF0EC; --muted:#9DB0A6; --checked:#918B80;
+    --rule:#26332B; --line:rgba(111,199,155,.26); --hair:rgba(234,240,236,.14);
     --logo-filter:brightness(0) invert(1) sepia(1) saturate(4) hue-rotate(95deg) brightness(1.1);
     --shadow:0 18px 40px -28px rgba(0,0,0,.6);
+    --shadow-paper:0 2px 0 rgba(0,0,0,.3), 0 32px 56px -30px rgba(0,0,0,.9);
   }
   @media (prefers-color-scheme: dark) {
     html:not([data-theme="light"]) {
-      --bg:#0E1713; --surface:#17211C; --primary:#2E7D5B; --accent:#6FC79B;
-      --text:#EAF0EC; --muted:#9DB0A6;
-      --line:rgba(111,199,155,.26); --hair:rgba(234,240,236,.14);
+      --bg:#0E1713; --surface:#17211C; --primary:#2E7D5B; --accent:#6FC79B; --on-accent:#0E1713;
+      --text:#EAF0EC; --muted:#9DB0A6; --checked:#918B80;
+      --rule:#26332B; --line:rgba(111,199,155,.26); --hair:rgba(234,240,236,.14);
       --logo-filter:brightness(0) invert(1) sepia(1) saturate(4) hue-rotate(95deg) brightness(1.1);
       --shadow:0 18px 40px -28px rgba(0,0,0,.6);
+      --shadow-paper:0 2px 0 rgba(0,0,0,.3), 0 32px 56px -30px rgba(0,0,0,.9);
     }
   }
 
   *, *::before, *::after { box-sizing: border-box; }
+  html { overflow-x: clip; -webkit-text-size-adjust: 100%; }
   html, body { margin:0; padding:0; background:var(--bg); }
+  body { color:var(--text); font-family:var(--font-body); font-weight:500; -webkit-font-smoothing:antialiased; }
   img { display:block; max-width:100%; }
   a { color:var(--accent); text-decoration:none; }
   a:hover { color:var(--accent); }
@@ -238,7 +241,6 @@
   @keyframes fb-in   { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
   @keyframes fb-sway { 0%,100% { transform:rotate(-1.6deg) translateY(-3px); } 50% { transform:rotate(1.6deg) translateY(3px); } }
   @keyframes fb-ring { 0% { transform:scale(.8); opacity:0; } 20% { opacity:.6; } 100% { transform:scale(1.45); opacity:0; } }
-  @keyframes fb-tick { 0%,8% { opacity:0; transform:scale(.4); } 16%,88% { opacity:1; transform:scale(1); } 100% { opacity:0; transform:scale(.4); } }
 
   .skip-link { position:absolute; left:-9999px; }
   .skip-link:focus {
@@ -247,27 +249,31 @@
     padding:12px 16px; border:1px solid var(--hair); border-radius:10px;
   }
 
-  /* The artboard locks to 100dvh and clips. A real page must not strand
-     content on a short viewport (landscape phones), so this is a minimum
-     height and the page scrolls if it has to. */
+  /* The hero is a minimum of one screen tall and scrolls if it has to, so a
+     short viewport (a landscape phone) never strands content. */
   .stage {
     position:relative; min-height:100dvh; width:100%; overflow:hidden;
     background:var(--bg); color:var(--text);
-    font-family:'Plus Jakarta Sans', Helvetica, Arial, sans-serif; font-weight:500;
     display:flex; flex-direction:column;
     padding:clamp(12px,2.4vh,30px) clamp(16px,3.4vw,44px);
   }
 
+  /* Watermarks: the logo mark, large and faint, behind the hero and again
+     behind the content. Opacity stays under .07 so nothing on top loses
+     contrast; the blur keeps them reading as texture rather than as images. */
   .watermarks { position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0; }
-  .watermarks img { position:absolute; max-width:none; filter:var(--logo-filter) blur(.5px); }
-  .watermarks .wm-a { left:-22%; bottom:-30%; width:96vh; opacity:.055; transform:rotate(-14deg); }
-  .watermarks .wm-b { right:-12%; top:-26%;   width:62vh; opacity:.05;  transform:rotate(26deg); }
+  .watermarks img { position:absolute; max-width:none; filter:var(--logo-filter) blur(.6px); }
+  .watermarks .wm-a { left:-20%; bottom:-28%; width:92vh; opacity:.055; transform:rotate(-14deg); }
+  .watermarks .wm-b { right:-10%; top:-24%;  width:60vh; opacity:.05;  transform:rotate(26deg); }
+  .watermarks .wm-c { left:38%;  top:-18%;   width:34vh; opacity:.04;  transform:rotate(-32deg); }
+  .watermarks .wm-d { right:-6%; bottom:6%;  width:40vh; opacity:.045; transform:rotate(12deg); }
+  .watermarks .wm-e { left:6%;   top:34%;    width:22vh; opacity:.04;  transform:rotate(38deg); }
+  .content .watermarks .wm-a { left:-14%; top:8%; bottom:auto; width:70vh; transform:rotate(-20deg); }
+  .content .watermarks .wm-b { right:-12%; top:38%; width:64vh; transform:rotate(18deg); }
+  .content .watermarks .wm-c { left:30%; bottom:-10%; top:auto; width:48vh; transform:rotate(-8deg); }
+  .content .watermarks .wm-d, .content .watermarks .wm-e { display:none; }
 
   .topbar {
-    /* z-index:2, above .main. Both were 1, so .main won on DOM order and
-       painted over the bottom of the toggle's hit overlay, leaving 43px of a
-       declared 48px actually clickable. The overlay is transparent, so this
-       changes hit-testing only, nothing visual. */
     position:relative; z-index:2; display:flex; align-items:baseline;
     justify-content:space-between; gap:16px;
     padding-bottom:clamp(8px,1.4vh,14px); border-bottom:1px solid var(--hair);
@@ -288,143 +294,139 @@
     transform:translateY(-50%); height:48px;
   }
 
-  .main {
+  /* ---- Hero: copy and the four steps on the left, the animation on the right.
+     Stacked on narrow screens: copy, animation, steps. ---------------------- */
+  .hero {
     position:relative; z-index:1; flex:1 1 auto; min-height:0;
-    display:flex; align-items:center; justify-content:center;
-    padding:clamp(20px,3vh,32px) 0;
+    width:100%; max-width:1200px; margin:0 auto; padding:clamp(20px,3vh,32px) 0 16px;
+    display:grid; gap:32px; justify-items:center; align-content:center;
   }
-  .board {
-    display:flex; align-items:center; gap:clamp(28px,4.4vw,66px);
-    width:100%; max-width:1320px; /* the artboard's 940 at its 1.4x cap */
-  }
+  .copy, .how { width:100%; max-width:480px; }
+  .copy { display:flex; flex-direction:column; align-items:flex-start; }
 
-  .lede { flex:1 1 0; min-width:0; display:flex; flex-direction:column; align-items:flex-start; }
-
-  .mark { position:relative; width:clamp(96px,12vw,176px); aspect-ratio:1; display:grid; place-items:center; flex:0 0 auto; }
+  .mark { position:relative; width:clamp(64px,7vw,96px); aspect-ratio:1; display:grid; place-items:center; flex:0 0 auto; }
   .mark .ring { position:absolute; inset:-6%; border-radius:50%; border:1px solid var(--line); animation:fb-ring 5s ease-out infinite; }
   .mark .ring:nth-child(2) { animation-delay:1.7s; }
   .mark .ring:nth-child(3) { animation-delay:3.4s; }
   .mark img { position:relative; width:100%; height:100%; object-fit:contain; filter:var(--logo-filter); animation:fb-sway 8s ease-in-out infinite; }
 
   h1 {
-    margin:clamp(16px,2vh,24px) 0 0; font-weight:800;
-    font-size:clamp(37px,4.8vw,70px); line-height:1.02; letter-spacing:-.035em;
-    animation:fb-in .7s ease-out both;
+    margin:clamp(16px,2vh,24px) 0 0; font:500 40px/48px var(--font-display);
+    letter-spacing:-.015em; text-wrap:balance; animation:fb-in .7s ease-out both;
   }
-  h1 .accent { color:var(--primary); }
+  .h1-sub {
+    margin:8px 0 0; max-width:44ch; font-size:16px; line-height:24px; font-weight:600;
+    color:var(--accent); animation:fb-in .7s ease-out .08s both;
+  }
+  .hero-lede {
+    margin:16px 0 0; max-width:34em; font-size:17px; line-height:28px; font-weight:400;
+    color:var(--muted); text-wrap:pretty; animation:fb-in .7s ease-out .1s both;
+  }
+  .cta { margin-top:24px; display:flex; flex-direction:column; align-items:flex-start; gap:8px; animation:fb-in .7s ease-out .2s both; }
+  .btn {
+    display:inline-flex; align-items:center; justify-content:center; min-height:56px; padding:16px 32px;
+    border-radius:12px; background:var(--accent); color:var(--on-accent); font-weight:700; font-size:17px;
+    text-decoration:none; box-shadow:var(--shadow); transition:transform .18s ease, opacity .18s ease;
+  }
+  .btn:hover { transform:translateY(-2px); opacity:.92; color:var(--on-accent); }
+  .note { font-size:14px; line-height:24px; color:var(--muted); }
 
-  /* Two classes, so this beats `.lede p` on specificity. */
-  .lede .h1-sub {
-    margin:clamp(6px,.8vh,10px) 0 0; max-width:44ch;
-    font-size:clamp(12.5px,1.25vw,20px); line-height:1.35; font-weight:600;
-    letter-spacing:-.01em; color:var(--accent);
-    animation:fb-in .7s ease-out .08s both;
-  }
-  /* Tighten the gap the support line would otherwise double up on, so the
-     hero keeps filling roughly one screen. */
-  .lede .h1-sub + p { margin-top:clamp(8px,1.1vh,13px); }
-
-  .lede p {
-    margin:clamp(12px,1.6vh,18px) 0 0; max-width:42ch;
-    font-size:clamp(15px,1.55vw,23px); line-height:1.5; color:var(--muted);
-    text-wrap:pretty; animation:fb-in .7s ease-out .1s both;
-  }
-
-  .stores { display:flex; flex-wrap:wrap; gap:10px; margin:clamp(18px,2.6vh,28px) 0 0; animation:fb-in .7s ease-out .2s both; }
-  .badge {
-    display:flex; align-items:center; gap:11px;
-    padding:clamp(12px,1.4vh,16px) clamp(18px,1.8vw,26px); border-radius:14px;
-    transition:transform .18s ease, opacity .18s ease, border-color .18s ease;
-  }
-  .badge svg { flex:none; width:clamp(19px,1.5vw,23px); height:clamp(19px,1.5vw,23px); }
-  .badge .lines { display:flex; flex-direction:column; gap:1px; text-align:left; }
-  .badge .kicker { font-size:clamp(10px,.95vw,14px); font-weight:600; letter-spacing:.12em; text-transform:uppercase; line-height:1.1; }
-  .badge .name   { font-size:clamp(16px,1.5vw,22px); font-weight:800; letter-spacing:-.015em; }
-  .badge-primary { background:var(--primary); color:#FFFDF9; }
-  .badge-primary .kicker { opacity:.75; }
-  .badge-primary:hover { transform:translateY(-2px); opacity:.92; color:#FFFDF9; }
-  .badge-ghost { background:transparent; color:var(--text); border:1px solid var(--line); }
-  .badge-ghost .kicker { color:var(--muted); }
-  .badge-ghost:hover { transform:translateY(-2px); border-color:var(--primary); color:var(--text); }
-  /* Inert until the listings exist — see the markup comment. */
-
-  /* The receipt. 4px radius, hairline border, torn bottom edge. */
-  .receipt {
-    position:relative; flex:0 0 clamp(300px,36vw,540px); align-self:center;
-    background:var(--surface); border:1px solid var(--hair); border-radius:4px;
-    box-shadow:var(--shadow);
-    padding:clamp(20px,2.4vw,32px) clamp(20px,2.4vw,32px) clamp(24px,2.8vw,38px);
-    animation:fb-in .8s ease-out .28s both;
-  }
-  .receipt-head {
-    display:flex; align-items:baseline; justify-content:space-between; gap:10px;
-    font-size:clamp(10px,.98vw,14.5px); font-weight:700; letter-spacing:.2em;
-    text-transform:uppercase; color:var(--muted);
-  }
-  .steps { margin-top:clamp(14px,1.7vw,23px); display:flex; flex-direction:column; gap:clamp(12px,1.5vw,20px); }
-  .step { display:flex; gap:12px; align-items:flex-start; }
-  .step .box {
-    flex:0 0 auto; width:clamp(20px,1.9vw,28px); height:clamp(20px,1.9vw,28px);
-    border:1.5px solid var(--primary); border-radius:5px; display:grid; place-items:center; margin-top:2px;
-  }
-  .step .box svg { width:65%; height:65%; animation:fb-tick 9s ease-in-out infinite; }
-  .step:nth-child(2) .box svg { animation-delay:.9s; }
-  .step:nth-child(3) .box svg { animation-delay:1.8s; }
-  .step .title { display:block; font-size:clamp(16px,1.55vw,23px); font-weight:700; letter-spacing:-.015em; }
-  .step .desc  { display:block; margin-top:2px; font-size:clamp(13px,1.26vw,19px); line-height:1.4; color:var(--muted); }
-
-  .receipt-total {
-    margin-top:clamp(14px,1.7vw,23px); padding-top:13px; border-top:1px dashed var(--line);
-    font-size:clamp(10px,.98vw,14.5px); font-weight:700; letter-spacing:.16em;
-    text-transform:uppercase; color:var(--muted);
-  }
-  .receipt-total .est { color:var(--accent); }
-  .receipt .tear {
-    position:absolute; left:0; right:0; bottom:-9px; height:10px; background:var(--surface);
-    -webkit-mask-image:repeating-conic-gradient(from -45deg at 50% 0, #000 0deg 90deg, transparent 90deg 180deg);
-            mask-image:repeating-conic-gradient(from -45deg at 50% 0, #000 0deg 90deg, transparent 90deg 180deg);
-    -webkit-mask-size:16px 20px;         mask-size:16px 20px;
-    -webkit-mask-repeat:repeat-x;        mask-repeat:repeat-x;
+  @media (min-width: 768px) { h1 { font-size:56px; line-height:64px; } .h1-sub { font-size:18px; line-height:28px; } }
+  @media (min-width: 960px) {
+    .hero {
+      grid-template-columns:minmax(0,560px) auto; grid-template-areas:"copy fit" "how fit";
+      align-items:start; align-content:center; justify-content:center; column-gap:clamp(40px,5vw,72px); row-gap:24px; justify-items:stretch;
+    }
+    .copy { grid-area:copy; max-width:none; } .how { grid-area:how; max-width:none; } .fit { grid-area:fit; align-self:center; }
   }
 
-  .footer {
-    position:relative; z-index:1; display:flex; flex-wrap:wrap; align-items:center;
-    justify-content:space-between; gap:10px;
-    padding-top:clamp(8px,1.4vh,14px); border-top:1px solid var(--hair);
-    font-size:clamp(10px,.95vw,13px); font-weight:600; letter-spacing:.04em; color:var(--muted);
+  /* Steps, synced with the animation. Each is a button that jumps to its beat. */
+  .beats { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .beat {
+    width: 100%; min-height: 48px; padding: 10px 16px; display: flex; gap: 16px; align-items: flex-start; text-align: left;
+    border: 0; border-radius: 16px; background: transparent; color: inherit; font: inherit; cursor: pointer;
+    transition: background-color 250ms ease;
   }
-  .footer-links { display:flex; gap:8px; margin:0 -8px; }
-  .footer-links a {
-    display:inline-flex; align-items:center; justify-content:center;
-    min-width:44px; min-height:44px; padding:0 8px; /* 8px gap = inactive buffer */
-  }
+  .beat .n { flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 14px; box-shadow: inset 0 0 0 1.5px var(--muted); color: var(--muted); transition: background-color 250ms ease, color 250ms ease, box-shadow 250ms ease; }
+  .beat b { display: block; font: 600 19px/28px var(--font-display); }
+  .beat .d { display: block; color: var(--muted); font-size: 14px; line-height: 22px; }
+  .beat.on { background: var(--surface); box-shadow: var(--shadow); }
+  .beat.on .n { background: var(--accent); color: var(--on-accent); box-shadow: none; }
+  .controls { margin-top: 8px; display: flex; align-items: center; gap: 16px; padding: 0 16px; }
+  .pp { flex: none; width: 48px; height: 48px; display: grid; place-items: center; border: 0; border-radius: 12px; background: var(--surface); color: var(--text); box-shadow: inset 0 0 0 1.5px var(--rule); cursor: pointer; }
+  .pp svg { width: 20px; height: 20px; fill: currentColor; }
+  .pp .i-play { display: none; } .pp[aria-pressed="true"] .i-play { display: block; } .pp[aria-pressed="true"] .i-pause { display: none; }
+  .bar { flex: 1; height: 4px; border-radius: 2px; background: var(--rule); overflow: hidden; }
+  .bar i { display: block; height: 100%; background: var(--text); transform-origin: left; transform: scaleX(0); }
+  .cta { margin-top: 32px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 16px 32px; border-radius: 12px; background: var(--accent); color: var(--on-accent); font-weight: 700; text-decoration: none; box-shadow: var(--shadow); }
+  .note { font-size: 14px; line-height: 24px; color: var(--muted); }
+  /* Without JavaScript, or with reduced motion, there is nothing to pause. */
+  html:not(.js) .controls { display: none; }
+  @media (prefers-reduced-motion: reduce) { .controls { display: none; } }
 
-  /* Stacked. The artboard swaps to a 360x600 variant at the same point. */
-  @media (max-width: 900px) {
-    .board { flex-direction:column; align-items:stretch; gap:24px; }
-    .receipt { flex:none; width:100%; }
-    .main { padding:24px 0; }
-    .lede { align-items:flex-start; }
-  }
-  @media (max-width: 560px) {
-    /* Reclaim the height the h1 support line costs, so the hero still fills
-       about one screen on a phone and the scroll cue stays visible. Both
-       values stay on the 8px grid. */
-    .mark { width:clamp(72px,12vw,176px); }
-    .main { padding:16px 0; }
+  /* =========================================================================
+     THE SCENE
+     Drawn at 360 x 480 and scaled to fit. Everything that moves is animated
+     with transform and opacity only (Web Animations API, run by the browser's
+     compositor), which is what keeps it smooth. Default styles below are the
+     state at the end of beat 1, so the scene still reads without JavaScript.
+     ========================================================================= */
+  .fit { position: relative; width: calc(360px * var(--s, 1)); height: calc(480px * var(--s, 1)); }
+  .scene { position: absolute; left: 0; top: 0; width: 360px; height: 480px; transform: scale(var(--s, 1)); transform-origin: 0 0; }
+  .scene-inner { position: absolute; inset: 0; }
+  .card, .card2, .list, .basket, .ico, .badge .col, .roll .col, .tap { will-change: transform, opacity; }
+  .ab { position: absolute; left: 0; top: 0; }
 
-    /* The brand line stays — the artboard keeps it in its compact variant too.
-       It is allowed to wrap rather than be hidden or force a sideways scroll. */
-    .topbar { gap:10px; }
-    .topbar .region { min-width:0; }
-    .footer { justify-content:flex-start; }
-  }
+  /* Recipe card */
+  .card { position: absolute; left: 52px; top: 20px; width: 256px; height: 256px; padding: 16px; border-radius: 6px; background: var(--surface);
+    background-image: repeating-linear-gradient(transparent 0 23px, var(--rule) 23px 24px); background-position: 0 8px;
+    box-shadow: var(--shadow-paper), inset 0 0 0 1px var(--rule); transform: rotate(-2deg); }
+  .card .t { font: italic 400 18px/24px var(--font-display); }
+  .card .sv { margin-top: 0; font-size: 13px; line-height: 24px; font-weight: 600; color: var(--muted); }
+  .ln { position: absolute; left: 16px; right: 16px; height: 24px; font-size: 13px; line-height: 24px; white-space: nowrap; }
+  .ln .q { position: absolute; left: 0; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .ln .u { position: absolute; left: 34px; color: var(--muted); }
+  .ln .n { position: absolute; left: 84px; }
+  .roll { display: inline-block; height: 24px; overflow: hidden; vertical-align: top; }
+  .roll .col { display: flex; flex-direction: column; }
+  .roll .col > span { height: 24px; }
+  .strike { position: absolute; left: -2px; right: -2px; height: 2px; top: 11px; background: var(--text); transform: scaleX(0); transform-origin: left center; }
+  .swapto { position: absolute; left: 84px; color: var(--accent); font: italic 400 15px/24px var(--font-display); opacity: 0; }
+  .chip { position: absolute; left: 148px; top: 4px; height: 16px; padding: 0 6px; border-radius: 8px; font: 700 10px/16px var(--font-body); letter-spacing: .06em; text-transform: uppercase; box-shadow: inset 0 0 0 1px var(--accent); color: var(--accent); opacity: 0; }
+  .gotit { position: absolute; left: 156px; font: italic 400 15px/24px var(--font-display); color: var(--muted); opacity: 0; transform: rotate(-4deg); }
+  .tap { position: absolute; width: 36px; height: 36px; margin: -18px 0 0 -18px; border-radius: 50%; box-shadow: 0 0 0 2px var(--accent); opacity: 0; }
 
-  /* ---- Content below the hero -------------------------------------------
-     Spacing is on the 8px grid; nothing here introduces a colour outside the
-     existing tokens, so the 60-30-10 balance of the hero carries through:
-     --bg dominant, --surface for the structural cards, --primary reserved for
-     links and accents only. */
+  .card2 { position: absolute; left: 76px; top: 64px; width: 208px; height: 136px; padding: 16px; border-radius: 6px; background: var(--surface);
+    background-image: repeating-linear-gradient(transparent 0 23px, var(--rule) 23px 24px); background-position: 0 8px;
+    box-shadow: var(--shadow-paper), inset 0 0 0 1px var(--rule); opacity: 0; transform: translate(200px,-12px) rotate(5deg); }
+  .card2 .ln { left: 16px; }
+
+  /* Basket: back (shadow, handle, inside), the items, then the woven front over them.
+     Drawn at 280 x 236 and shown at 200 x 170. The produce and the wicker keep
+     their natural colours in both colour schemes; that is what makes them readable. */
+  .basket { position: absolute; left: 80px; top: 290px; width: 200px; height: 170px; transform-origin: 50% 100%; }
+  .basket svg.layer { position: absolute; inset: 0; width: 200px; height: 170px; overflow: visible; }
+  .items { position: absolute; inset: 0; }
+  .ico { position: absolute; left: 0; top: 0; width: 52px; height: 52px; opacity: 0; }
+  .ico svg { display: block; width: 52px; height: 52px; overflow: visible; }
+  .ico .gs { opacity: 0; }
+  .badge { position: absolute; left: 170px; top: -4px; width: 32px; height: 32px; border-radius: 50%; background: var(--text); color: var(--bg); overflow: hidden; font: 700 14px/32px var(--font-body); text-align: center; font-variant-numeric: tabular-nums; }
+  .badge .col { display: flex; flex-direction: column; }
+  .badge .col > span { height: 32px; }
+  .plus { position: absolute; left: 112px; top: -4px; font: 700 16px/24px var(--font-body); color: var(--accent); opacity: 0; }
+
+  /* Shopping list */
+  .list { position: absolute; left: 40px; top: 12px; width: 280px; height: 312px; padding: 16px; border-radius: 6px; background: var(--surface); box-shadow: var(--shadow-paper), inset 0 0 0 1px var(--rule); opacity: 0; transform: translateY(40px); }
+  .list .t { font: italic 400 18px/24px var(--font-display); }
+  .aisle { position: absolute; left: 16px; font: 700 11px/24px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .li { position: absolute; left: 16px; right: 16px; height: 24px; font-size: 13px; line-height: 24px; white-space: nowrap; }
+  .li .bx { position: absolute; left: 0; top: 5px; width: 14px; height: 14px; border-radius: 3px; box-shadow: inset 0 0 0 1.5px var(--text); }
+  .li .ck { position: absolute; left: -1px; top: 1px; width: 18px; height: 18px; opacity: 0; transform: scale(0); fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  .li .tx { position: absolute; left: 24px; }
+  .li .tx b { font-variant-numeric: tabular-nums; }
+  .li .st { position: absolute; left: -2px; right: -2px; height: 1.5px; top: 12px; background: var(--checked); transform: scaleX(0); transform-origin: left center; }
+  .stamp { position: absolute; left: 196px; top: 20px; padding: 0 12px; border-radius: 8px; box-shadow: inset 0 0 0 2.5px var(--accent); color: var(--accent); font: 700 16px/32px var(--font-body); letter-spacing: .14em; opacity: 0; transform: rotate(-12deg); }
 
   .scroll-cue {
     position:relative; z-index:1; align-self:center; flex:0 0 auto;
@@ -435,15 +437,18 @@
   .scroll-cue:hover { color:var(--accent); }
   .scroll-cue svg { width:24px; height:24px; }
 
-  .content { background:var(--bg); color:var(--text);
-    font-family:'Plus Jakarta Sans', Helvetica, Arial, sans-serif; font-weight:500; }
+  /* ---- Content below the hero -------------------------------------------
+     Spacing is on the 8px grid; nothing here introduces a colour outside the
+     existing tokens: --bg dominant, --surface for the structural cards,
+     --primary reserved for links and accents only. */
+  .content { position:relative; background:var(--bg); color:var(--text); overflow:hidden; }
+  .content > .band { position:relative; z-index:1; }
   .band { padding:clamp(48px,8vw,96px) clamp(16px,3.4vw,44px); }
   .band-alt { background:var(--surface); border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); }
   .inner { width:100%; max-width:1000px; margin:0 auto; }
 
   .content h2 {
-    margin:0 0 24px; font-weight:800; letter-spacing:-.025em;
-    font-size:clamp(26px,3.2vw,40px); line-height:1.15;
+    margin:0 0 24px; font:500 clamp(28px,3.2vw,40px)/1.15 var(--font-display); letter-spacing:-.015em;
   }
   .content h3 {
     margin:0 0 8px; font-weight:700; letter-spacing:-.015em;
@@ -463,13 +468,9 @@
 
   /* Phone screenshots. The frame carries the aspect ratio so the row cannot
      shift as images decode, which is why these need no width/height attrs.
-
-     The screens are WebP, served directly by a plain <img> with no <picture>
-     and no PNG fallback. This repo declares no browser targets, so that rests
-     on WebP being decoded by current browsers rather than on a stated policy.
-     The reason not to add a <source> pair is verified though: <picture>
-     switches on FORMAT SUPPORT, not on whether the file exists, so a <source>
-     pointing at a missing file shows nothing instead of falling back. */
+     WebP, served by a plain <img>: <picture> switches on format support, not
+     on whether a file exists, so a <source> pointing at a missing fallback
+     would show nothing instead of falling back. */
   .screens { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin:32px 0 0; }
   .shot { margin:0; }
   .shot .frame {
@@ -502,11 +503,21 @@
   .faq summary:hover h3 { color:var(--accent); }
   .faq details p { padding:0 24px 24px; max-width:72ch; }
 
+  .footer {
+    position:relative; z-index:1; display:flex; flex-wrap:wrap; align-items:center;
+    justify-content:space-between; gap:10px;
+    padding:24px clamp(16px,3.4vw,44px); border-top:1px solid var(--hair);
+    font-size:clamp(10px,.95vw,13px); font-weight:600; letter-spacing:.04em; color:var(--muted);
+  }
   .footer-inner {
     width:100%; max-width:1000px; margin:0 auto;
     display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;
   }
-  .content + .footer { padding:24px clamp(16px,3.4vw,44px); border-top:1px solid var(--hair); }
+  .footer-links { display:flex; gap:8px; margin:0 -8px; }
+  .footer-links a {
+    display:inline-flex; align-items:center; justify-content:center;
+    min-width:44px; min-height:44px; padding:0 8px; /* 8px gap = inactive buffer */
+  }
 
   @media (max-width: 900px) {
     .cards { grid-template-columns:repeat(2,1fr); }
@@ -518,7 +529,14 @@
     .faq details p { padding:0 16px 16px; }
     .cell { padding:16px; }
   }
+  @media (max-width: 560px) {
+    .topbar { gap:10px; }
+    .topbar .region { min-width:0; }
+    .footer { justify-content:flex-start; }
+  }
 
+  /* CSS animations stop here. The hero's Web Animations are handled in the
+     script: with reduced motion it shows the finished list as a still. */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation:none !important; transition:none !important; }
   }
@@ -532,6 +550,9 @@
   <div class="watermarks" aria-hidden="true">
     <img class="wm-a" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
     <img class="wm-b" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
+    <img class="wm-c" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
+    <img class="wm-d" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
+    <img class="wm-e" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
   </div>
 
   <header class="topbar">
@@ -539,104 +560,130 @@
     <button type="button" class="theme-toggle" id="theme-toggle">Dark</button>
   </header>
 
-  <div class="main">
-    <div class="board">
-
-      <div class="lede">
-        <div class="mark">
-          <span class="ring" aria-hidden="true"></span>
-          <span class="ring" aria-hidden="true"></span>
-          <span class="ring" aria-hidden="true"></span>
-          <img src="/assets/logo-mark.png" alt="The Fern Basket logo: a woven basket with a fern frond." width="450" height="434" decoding="async">
-        </div>
-
-        <h1>Every recipe,<br><span class="accent">one shopping list.</span></h1>
-
-        <!-- Carries the words the <h1> can't: "recipe", "shopping list", "app",
-             "New Zealand". The h1 stays the brand line; this does the work. -->
-        <p class="h1-sub">A recipe to shopping list app for New Zealand supermarkets.</p>
-
-        <p>Paste a link, snap a cookbook page, or share a video. The Fern Basket
-        reads the recipe, merges everything you're cooking into one tidy list,
-        and sorts it by aisle for the shop.</p>
-
-        <!--
-          STORE LINK PLACEHOLDERS — no listings exist yet, so both point at the
-          FAQ entry that explains when they will. They are real, working links:
-          an href="#" is a dead end for a visitor and an empty link to a crawler.
-          To switch one on:
-            1. Replace href="#faq" with the real listing URL.
-            2. Drop `is-placeholder` from the class.
-          Then update the footer note, which says the app isn't published yet,
-          and change the "Coming soon to" kicker. Switch both on together.
-          Identifiers for building the URLs, from the app's app.json:
-            iOS bundle id   nz.co.ecocraft.baskettranstasman
-            Android package nz.co.ecocraft.baskettranstasman
-        -->
-        <div class="stores">
-          <a class="badge badge-primary is-placeholder" href="#faq">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.42 2.2-1.12 3.01-.85.98-2.24 1.74-3.37 1.65a3.78 3.78 0 0 1 1.13-2.94c.79-.86 2.15-1.5 3.36-1.72Z"></path><path d="M20.345 17.49c-.58 1.34-.86 1.94-1.6 3.12-1.04 1.65-2.5 3.7-4.31 3.72-1.61.01-2.02-1.05-4.2-1.04-2.18.01-2.64 1.06-4.25 1.04-1.81-.02-3.2-1.87-4.23-3.51-2.9-4.62-3.2-10.04-1.42-12.92 1.27-2.05 3.27-3.25 5.15-3.25 1.92 0 3.12 1.05 4.7 1.05 1.54 0 2.48-1.05 4.7-1.05 1.68 0 3.45.91 4.72 2.49-4.15 2.27-3.48 8.2.74 10.35Z"></path></svg>
-            <span class="lines">
-              <span class="kicker">Coming soon to</span>
-              <span class="name">the App Store</span>
-            </span>
-          </a>
-          <a class="badge badge-ghost is-placeholder" href="#faq">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#00A0FF" d="M4 2.2 14.2 12 4 21.8Z"></path><path fill="#00C853" d="M4 2.2 17.6 9.3 14.2 12Z"></path><path fill="#FF3A44" d="M4 21.8 17.6 14.7 14.2 12Z"></path><path fill="#FFBC00" d="M17.6 9.3 20.6 12 17.6 14.7 14.2 12Z"></path></svg>
-            <span class="lines">
-              <span class="kicker">Coming soon to</span>
-              <span class="name">Google Play</span>
-            </span>
-          </a>
-        </div>
+  <div class="hero">
+    <div class="copy">
+      <div class="mark">
+        <span class="ring" aria-hidden="true"></span>
+        <span class="ring" aria-hidden="true"></span>
+        <span class="ring" aria-hidden="true"></span>
+        <img src="/assets/logo-mark.png" alt="The Fern Basket logo: a woven basket with a fern frond." width="450" height="434" decoding="async">
       </div>
 
-      <div class="receipt">
-        <div class="receipt-head">
-          <span>How it works</span>
-          <span>No. 01–03</span>
-        </div>
+      <h1>Any recipe in.<br>A&nbsp;shopping list out.</h1>
+      <!-- Carries the words the h1 can't: "recipe", "shopping list", "app",
+           "New Zealand". The h1 stays the brand line; this does the work. -->
+      <p class="h1-sub">A recipe to shopping list app for New Zealand supermarkets.</p>
+      <p class="hero-lede">Add a recipe, make it your own, put it in your basket and go shopping. That’s the whole app.</p>
 
-        <div class="steps">
-          <div class="step">
-            <span class="box" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"></path></svg>
-            </span>
-            <span>
-              <span class="title">Capture the recipe</span>
-              <span class="desc">A link, a photo of a cookbook page, or a video.</span>
-            </span>
-          </div>
-          <div class="step">
-            <span class="box" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"></path></svg>
-            </span>
-            <span>
-              <span class="title">Build the basket</span>
-              <span class="desc">Repeats merge into one line; quantities scale with serves.</span>
-            </span>
-          </div>
-          <div class="step">
-            <span class="box" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"></path></svg>
-            </span>
-            <span>
-              <span class="title">Shop it</span>
-              <span class="desc">Sorted by aisle, ticked off on your phone — no signal needed.</span>
-            </span>
-          </div>
-        </div>
-
-        <div class="receipt-total">Basket total · <span class="est">estimate only</span></div>
-        <div class="tear" aria-hidden="true"></div>
+      <!--
+        CHECK before merging: this is the Google Play testing opt-in URL built
+        from the Android package in the app's app.json. It only works while a
+        test track is open and the visitor is allowed to join it. Once there is
+        a public listing, point the button there and reword the FAQ answer to
+        "When is it coming to the App Store and Google Play?" and the footer
+        note, which both say the Android build is in testing on Google Play.
+      -->
+      <div class="cta">
+        <a class="btn" href="https://play.google.com/apps/testing/nz.co.ecocraft.baskettranstasman">Make it your own</a>
+        <p class="note">Free. Android only for now.</p>
       </div>
+    </div>
 
+    <!-- The animation. Decorative: the steps beside it say the same thing in words. -->
+    <div class="fit" id="fit">
+      <div class="scene" aria-hidden="true">
+        <div class="scene-inner" id="inner">
+
+          <!-- Recipe card -->
+          <div class="card" id="card">
+            <p class="t" id="c-title">Lamb shoulder,<br>rosemary &amp; kūmara</p>
+            <p class="sv" id="c-serves">Serves <span class="roll"><span class="col" id="r-serves"><span>4</span><span>6</span></span></span></p>
+            <div class="ln" style="top:96px" id="l0"><span class="q"><span class="roll"><span class="col"><span>1.2</span><span>1.8</span></span></span></span><span class="u">kg</span><span class="n">lamb shoulder</span></div>
+            <div class="ln" style="top:120px" id="l1"><span class="q"><span class="roll"><span class="col"><span>2</span><span>3</span></span></span></span><span class="u">sprigs</span><span class="n">rosemary</span></div>
+            <div class="ln" style="top:144px" id="l2"><span class="q"><span class="roll"><span class="col"><span>4</span><span>6</span></span></span></span><span class="u">cloves</span><span class="n">garlic</span></div>
+            <div class="ln" style="top:168px" id="l3"><span class="q"><span class="roll"><span class="col"><span>2</span><span>3</span></span></span></span><span class="u"></span><span class="n">brown onions</span></div>
+            <div class="ln" style="top:192px" id="l4"><span class="q"><span class="roll"><span class="col"><span>600</span><span>900</span></span></span></span><span class="u">g</span><span class="n" id="kumara">kūmara<i class="strike" id="s-kumara"></i></span><span class="swapto" id="pumpkin">pumpkin</span><span class="chip" id="chip">Premium</span></div>
+            <div class="ln" style="top:216px" id="l5"><span class="q"><span class="roll"><span class="col"><span>2</span><span>3</span></span></span></span><span class="u">tbsp</span><span class="n">olive oil<i class="strike" id="s-oil"></i></span><span class="gotit" id="gotit">got it</span></div>
+            <i class="tap" id="tap1" style="left:76px;top:76px"></i>
+            <i class="tap" id="tap2" style="left:112px;top:204px"></i>
+            <i class="tap" id="tap3" style="left:116px;top:228px"></i>
+          </div>
+
+          <!-- Second recipe, arrives in beat 3 -->
+          <div class="card2" id="card2">
+            <p class="t" style="font: italic 400 16px/24px var(--font-display)">Courgette fritters</p>
+            <div class="ln" style="top:40px"><span class="q">3</span><span class="n" style="left:36px">courgettes</span></div>
+            <div class="ln" style="top:64px"><span class="q">1</span><span class="n" style="left:36px">brown onion</span></div>
+            <div class="ln" style="top:88px"><span class="q">2</span><span class="n" style="left:36px">eggs</span></div>
+          </div>
+
+          <!-- Shopping list, beat 4 -->
+          <div class="list" id="list">
+            <p class="t">This week</p>
+            <span class="aisle" style="top:48px">Fruit and vege</span>
+            <div class="li" style="top:72px"><i class="bx"></i><svg class="ck" viewBox="0 0 18 18"><path d="M3 9.5l4 4L15 4"/></svg><span class="tx"><b>3</b> sprigs rosemary<i class="st"></i></span></div>
+            <div class="li" style="top:96px"><i class="bx"></i><svg class="ck" viewBox="0 0 18 18"><path d="M3 9.5l4 4L15 4"/></svg><span class="tx"><b>6</b> cloves garlic<i class="st"></i></span></div>
+            <div class="li" style="top:120px"><i class="bx"></i><svg class="ck" viewBox="0 0 18 18"><path d="M3 9.5l4 4L15 4"/></svg><span class="tx"><b>4</b> brown onions<i class="st"></i></span></div>
+            <div class="li" style="top:144px"><i class="bx"></i><svg class="ck" viewBox="0 0 18 18"><path d="M3 9.5l4 4L15 4"/></svg><span class="tx"><b>900</b> g pumpkin<i class="st"></i></span></div>
+            <div class="li" style="top:168px"><i class="bx"></i><svg class="ck" viewBox="0 0 18 18"><path d="M3 9.5l4 4L15 4"/></svg><span class="tx"><b>3</b> courgettes<i class="st"></i></span></div>
+            <span class="aisle" style="top:192px">Meat and seafood</span>
+            <div class="li" style="top:216px"><i class="bx"></i><svg class="ck" viewBox="0 0 18 18"><path d="M3 9.5l4 4L15 4"/></svg><span class="tx"><b>1.8</b> kg lamb shoulder<i class="st"></i></span></div>
+            <span class="aisle" style="top:240px">Chilled</span>
+            <div class="li" style="top:264px"><i class="bx"></i><svg class="ck" viewBox="0 0 18 18"><path d="M3 9.5l4 4L15 4"/></svg><span class="tx"><b>2</b> eggs<i class="st"></i></span></div>
+            <span class="stamp" id="stamp">SORTED</span>
+          </div>
+
+          <!-- Basket: back layer, the items, then the woven front over them -->
+          <div class="basket" id="basket">
+            <svg class="layer" viewBox="0 0 280 236">
+              <ellipse cx="140" cy="216" rx="118" ry="11" fill="#17251E" opacity=".12"/>
+              <path d="M60 78C60 -4 220 -4 220 78" stroke="#8E704A" stroke-width="11" fill="none" stroke-linecap="round"/>
+              <path d="M60 78C60 -4 220 -4 220 78" stroke="#C9A876" stroke-width="5" fill="none" stroke-linecap="round"/>
+              <path d="M60 78C60 -4 220 -4 220 78" stroke="#E3C994" stroke-width="2" fill="none" stroke-dasharray="6 5" opacity=".9"/>
+              <ellipse cx="140" cy="80" rx="128" ry="22" fill="#5E4632"/>
+              <ellipse cx="140" cy="82" rx="116" ry="16" fill="#3F2E22"/>
+            </svg>
+            <div class="items" id="items"></div>
+            <svg class="layer" viewBox="0 0 280 236">
+              <path d="M12 80Q140 118 268 80L246 196Q140 222 34 196Z" fill="#C9A876"/>
+              <path d="M60 90Q58 150 66 204M100 96Q99 150 102 208M140 98V210M180 96Q181 150 178 208M220 90Q222 150 214 204" stroke="#8E704A" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M17 104Q140 136 263 104M20 122Q140 154 260 122M24 140Q140 172 256 140M27 158Q140 190 253 158M31 176Q140 206 249 176" stroke="#A5875A" stroke-width="5" fill="none" stroke-linecap="round"/>
+              <path d="M15 95Q140 127 265 95M19 113Q140 145 261 113M22 131Q140 163 258 131M26 149Q140 181 254 149M29 167Q140 197 251 167M33 185Q140 214 247 185" stroke="#E3C994" stroke-width="3.5" fill="none" stroke-linecap="round" opacity=".75"/>
+              <path d="M12 80Q140 118 268 80L246 196Q140 222 34 196Z" fill="none" stroke="#6E5540" stroke-width="1.5" opacity=".5"/>
+              <path d="M12 80Q140 118 268 80" stroke="#8E704A" stroke-width="10" fill="none" stroke-linecap="round"/>
+              <path d="M12 80Q140 118 268 80" stroke="#E3C994" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="9 7" opacity=".85"/>
+              <rect x="116" y="138" width="48" height="34" rx="7" fill="#5E4632"/>
+              <rect x="118.5" y="140.5" width="43" height="29" rx="5.5" fill="none" stroke="#E3C994" stroke-width="1" opacity=".5"/>
+              <g transform="translate(140 155)" fill="none" stroke="#E3C994" stroke-width="1.8" stroke-linecap="round"><path d="M-12 10C-5 3 2-4 11-12"/><path d="M-7 5.5l-4-1M-7 5.5l1-4M-2 .5l-4-1M-2 .5l1-4M3-4.5l-3.5-1M3-4.5l1-3.5M8-9l-3-.5M8-9l.5-3"/></g>
+            </svg>
+            <span class="plus" id="plus">+1</span>
+            <span class="badge"><span class="col" id="badge"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span></span></span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- The four steps in words; each jumps to its part of the animation. -->
+    <div class="how">
+      <ol class="beats" id="steps">
+        <li><button class="beat on" type="button" data-beat="0"><span class="n">1</span><span><b>Add a recipe</b><span class="d">From a link, a share from your browser, or a photo of the card.</span></span></button></li>
+        <li><button class="beat" type="button" data-beat="1"><span class="n">2</span><span><b>Make it your own</b><span class="d">Change the serves and every amount follows. Leave out what you’ve got. Premium can suggest swaps.</span></span></button></li>
+        <li><button class="beat" type="button" data-beat="2"><span class="n">3</span><span><b>Into your basket</b><span class="d">Everything you’re cooking goes in one basket. Doubles merge into one line.</span></span></button></li>
+        <li><button class="beat" type="button" data-beat="3"><span class="n">4</span><span><b>Go shopping</b><span class="d">Sorted by aisle. Tick it off as you go, even without signal.</span></span></button></li>
+      </ol>
+      <div class="controls">
+        <button class="pp" type="button" id="pp" aria-pressed="false" aria-label="Pause the animation">
+          <svg class="i-pause" viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="3" width="4" height="14" rx="1"/><rect x="12" y="3" width="4" height="14" rx="1"/></svg>
+          <svg class="i-play" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 3.5v13l11-6.5z"/></svg>
+        </button>
+        <div class="bar" aria-hidden="true"><i id="prog"></i></div>
+      </div>
     </div>
   </div>
 
-  <!-- The hero now fills the viewport with content beneath it, so there has to
-       be something telling people the page continues. Mobile has no persistent
-       scrollbar to do that job. 48px target, per the touch-ergonomics rule. -->
+  <!-- The hero fills the viewport with content beneath it; on mobile there is
+       no persistent scrollbar to say so. 48px target. -->
   <a class="scroll-cue" href="#content" aria-label="Read more about The Fern Basket">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
@@ -644,6 +691,13 @@
 </div>
 
 <main id="content" class="content">
+  <div class="watermarks" aria-hidden="true">
+    <img class="wm-a" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
+    <img class="wm-b" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
+    <img class="wm-c" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
+    <img class="wm-d" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
+    <img class="wm-e" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
+  </div>
   <section class="band">
     <div class="inner">
       <h2>Turn any recipe into one shopping list</h2>
@@ -821,8 +875,9 @@
 
         <details>
           <summary><h3>When is it coming to the App Store and Google Play?</h3></summary>
-          <p>It is not published yet. When it is, the download links will appear at the top of this
-          page. You must be at least 16 to use The Fern Basket.</p>
+          <p>The Android build is in testing on Google Play: the button at the top of this page
+          takes you to it, and it is free. It is not on the App Store yet. You must be at least
+          16 to use The Fern Basket.</p>
         </details>
 
       </div>
@@ -832,7 +887,7 @@
 
 <footer class="footer">
   <div class="footer-inner">
-    <span>Not on the app stores yet — links land here when it ships. Prices are estimates, not quotes.</span>
+    <span>Android is in testing on Google Play. Not on the App Store yet. Prices are estimates, not quotes.</span>
     <span class="footer-links">
       <a href="/PrivacyPolicy/">Privacy</a>
       <a href="mailto:support@thefernbasket.com">Support</a>
@@ -874,6 +929,222 @@
     paint();
 
   })();
+</script>
+<script>
+(function () {
+'use strict';
+/* =========================================================================
+   A 17-second loop in four beats. Every movement is a Web Animations API
+   animation on transform or opacity, all started together and run by the
+   browser, so playback is smooth and does not depend on scrolling.
+   ========================================================================= */
+const $ = s => document.querySelector(s);
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const E = { out: 'cubic-bezier(.2,.7,.2,1)', inOut: 'cubic-bezier(.6,0,.3,1)', back: 'cubic-bezier(.34,1.56,.64,1)', lin: 'linear' };
+const BEAT_START = [0, 2400, 5600, 10900];
+const BEAT_SHOW = [2300, 5500, 10800, 15800];   // a still frame that sums up each beat
+const LOOP = 17000;
+
+/* ---- Timeline helper -------------------------------------------------- */
+const specs = [];
+function A(t, el, prop, values, dur, easing, offsets) { specs.push({ t: t, el: el, prop: prop, values: values, dur: dur, easing: easing || E.out, offsets: offsets }); }
+let anims = [], clock;
+
+/* ---- Ingredients, drawn in ink (40 x 40) ------------------------------- */
+const ICON = {
+  lamb: '<ellipse class="gs" cx="40" cy="66" rx="27" ry="4" fill="#17251E" opacity=".08"/><path d="M52 40l14-16" stroke="#E4DAC6" stroke-width="7" stroke-linecap="round"/><circle cx="67" cy="23" r="5" fill="#EFE7D6"/><circle cx="67" cy="23" r="2" fill="#D9A79C"/><path d="M12 44c0-15 13-25 30-25 12 0 20 5 22 14 2 10-6 24-24 26C22 61 12 56 12 44z" fill="#EAD9C1"/><path d="M17 45c0-12 11-20 25-20 10 0 16 4 17 11 1 8-6 19-20 21-13 1-22-3-22-12z" fill="#B24E45"/><path d="M22 46c1-9 9-15 19-15 8 0 12 3 13 8 0 7-6 14-16 15-9 1-16-2-16-8z" fill="#C5645A"/><path d="M27 41c6 0 10 6 19 4M29 51c5-2 9-4 15-3M43 35c3 1 5 3 6 6" stroke="#EFC9BF" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".9"/><path d="M20 38c3-5 9-9 16-10" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round" opacity=".45"/>',
+  rosemary: '<ellipse class="gs" cx="40" cy="76" rx="14" ry="3" fill="#17251E" opacity=".08"/><path d="M40 76V12" stroke="#6E5238" stroke-width="2.2" stroke-linecap="round"/><g stroke-width="2.3" stroke-linecap="round" fill="none"><path d="M40 70l-9-9M40 65l9-10M40 60l-10-9M40 55l10-10M40 50l-10-10M40 45l10-10M40 40l-10-9M40 35l9-10M40 30l-9-9M40 25l8-10M40 20l-6-9M40 16l5-9" stroke="#3E6B48"/><path d="M40 68l-8-9M40 62l8-9M40 57l-9-9M40 52l9-10M40 47l-9-10M40 42l9-10M40 37l-8-9M40 32l8-9M40 27l-7-9M40 22l6-9" stroke="#6C9A6F"/><path d="M40 73l-7-6M40 72l7-8M40 12l-3-6M40 12l3-6" stroke="#9CBE93"/></g>',
+  garlic: '<ellipse class="gs" cx="40" cy="70" rx="20" ry="3" fill="#17251E" opacity=".08"/><path d="M33 66l-3 6M40 67v6M47 66l3 6M36 67l-1 6M44 67l1 6" stroke="#B9AA8C" stroke-width="1.4" stroke-linecap="round"/><path d="M40 20c3 7 24 10 24 30 0 12-11 19-24 19S16 62 16 50c0-20 21-23 24-30z" fill="#EFE8DA"/><path d="M40 28c-5 8-8 18-6 40M40 28c5 8 8 18 6 40M40 28c-11 5-15 17-16 35M40 28c11 5 15 17 16 35" stroke="#D5C8AE" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M26 44c-2 6-2 14 0 20M54 44c2 6 2 14 0 20" stroke="#C7B6D2" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".7"/><path d="M36 22c0-6 2-11 4-14 2 3 4 8 4 14-3-1-5-1-8 0z" fill="#D9CFB4"/><path d="M40 8v14" stroke="#C9BC9C" stroke-width="1.2" stroke-linecap="round"/><path d="M27 40c2-6 6-10 11-12" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round" opacity=".6"/>',
+  onion: '<ellipse class="gs" cx="40" cy="70" rx="20" ry="3" fill="#17251E" opacity=".08"/><path d="M34 68l-2 5M40 68v6M46 68l2 5" stroke="#8C6A45" stroke-width="1.4" stroke-linecap="round"/><path d="M40 16c6 8 22 12 22 30 0 13-10 22-22 22S18 59 18 46c0-18 16-22 22-30z" fill="#C98F52"/><path d="M40 22c-8 8-12 20-10 42M40 22c8 8 12 20 10 42M40 22c-13 8-17 20-18 36M40 22c13 8 17 20 18 36" stroke="#A9702F" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M30 40c1-8 5-14 9-18" stroke="#EBBE86" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M36 18c0-6 2-10 4-12 2 2 4 6 4 12z" fill="#A9702F"/><path d="M44 12c3-2 6-2 8 1" stroke="#A9702F" stroke-width="1.6" fill="none" stroke-linecap="round"/>',
+  pumpkin: '<ellipse class="gs" cx="40" cy="68" rx="30" ry="4" fill="#17251E" opacity=".08"/><path d="M35 30c0-5 2-9 5-11 3 2 5 6 5 11-3-1-7-1-10 0z" fill="#8F8A6C"/><path d="M40 19v11" stroke="#6E6A52" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="40" cy="48" rx="33" ry="19" fill="#6F8074"/><ellipse cx="18" cy="48" rx="10" ry="17" fill="#93A395" stroke="#6F8074" stroke-width="1.2"/><ellipse cx="62" cy="48" rx="10" ry="17" fill="#93A395" stroke="#6F8074" stroke-width="1.2"/><ellipse cx="28" cy="48" rx="11" ry="19" fill="#A5B4A6" stroke="#6F8074" stroke-width="1.2"/><ellipse cx="52" cy="48" rx="11" ry="19" fill="#A5B4A6" stroke="#6F8074" stroke-width="1.2"/><ellipse cx="40" cy="48" rx="11" ry="20" fill="#B3C0B2" stroke="#6F8074" stroke-width="1.2"/><path d="M34 36c-2 5-2 12 0 18" stroke="#FFFFFF" opacity=".35" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M40 68c-8 0-14-2-18-4" stroke="#5E6E63" opacity=".5" stroke-width="1.4" fill="none" stroke-linecap="round"/>',
+  courgette: '<ellipse class="gs" cx="42" cy="68" rx="30" ry="4" fill="#17251E" opacity=".08"/><path d="M12.9 60.6L6.1 66.4" stroke="#C4D4A0" stroke-width="8" stroke-linecap="round"/><path d="M12.9 60.6L6.1 66.4" stroke="#93AB76" stroke-width="2.4" stroke-linecap="round"/><path d="M21.8 64.9L73.8 20.9A9 9 0 0 0 62.2 7.1L10.2 51.1A9 9 0 0 0 21.8 64.9Z" fill="#33582A"/><path d="M19.6 61.6L69.8 19.1A7.6 7.6 0 0 0 60 7.4L9.8 49.9A7.6 7.6 0 0 0 19.6 61.6Z" fill="#456F35"/><path d="M17.5 50.6L57 17.2" stroke="#7BA35A" stroke-width="2.2" stroke-linecap="round" opacity=".8"/><g fill="#A5C77F" opacity=".85"><ellipse cx="24" cy="54" rx="1.2" ry=".7" transform="rotate(-40 24 54)"/><ellipse cx="30" cy="52" rx="1.2" ry=".7" transform="rotate(-40 30 52)"/><ellipse cx="34" cy="45" rx="1.2" ry=".7" transform="rotate(-40 34 45)"/><ellipse cx="40" cy="43" rx="1.2" ry=".7" transform="rotate(-40 40 43)"/><ellipse cx="44" cy="36" rx="1.2" ry=".7" transform="rotate(-40 44 36)"/><ellipse cx="51" cy="33" rx="1.2" ry=".7" transform="rotate(-40 51 33)"/><ellipse cx="54" cy="26" rx="1.2" ry=".7" transform="rotate(-40 54 26)"/><ellipse cx="61" cy="23" rx="1.2" ry=".7" transform="rotate(-40 61 23)"/><ellipse cx="63" cy="15" rx="1.2" ry=".7" transform="rotate(-40 63 15)"/><ellipse cx="28" cy="44" rx="1.2" ry=".7" transform="rotate(-40 28 44)"/><ellipse cx="48" cy="26" rx="1.2" ry=".7" transform="rotate(-40 48 26)"/></g><circle cx="74" cy="9" r="1.7" fill="#8A6A4B"/>',
+  egg: '<ellipse class="gs" cx="40" cy="68" rx="18" ry="3" fill="#17251E" opacity=".08"/><path d="M40 12c10 0 18 14 18 30 0 12-8 22-18 22S22 54 22 42c0-16 8-30 18-30z" fill="#EFDFC3"/><ellipse cx="48" cy="44" rx="7" ry="16" fill="#DCC7A3" opacity=".6"/><ellipse cx="33" cy="28" rx="3" ry="6" fill="#fff" opacity=".55"/><circle cx="30" cy="44" r="1" fill="#C9B08A"/><circle cx="44" cy="24" r=".9" fill="#C9B08A"/><circle cx="38" cy="56" r="1" fill="#C9B08A"/>'
+};
+function makeIcon(name) {
+  const d = document.createElement('div'); d.className = 'ico';
+  d.innerHTML = '<svg viewBox="0 0 80 80">' + ICON[name] + '</svg>';
+  $('#items').append(d);
+  return d;
+}
+
+/* An arcing throw from a recipe line into the basket, with a pop at the
+   start and a turn in the air. Coordinates are icon centres, basket space. */
+const tf = (x, y, r, sc) => 'translate(' + (x - 26).toFixed(1) + 'px,' + (y - 26).toFixed(1) + 'px) rotate(' + r.toFixed(1) + 'deg) scale(' + sc.toFixed(3) + ')';
+function throwInto(t, el, from, to, rot, dur) {
+  const N = 14, vals = [], offs = [], apex = Math.min(from[1], to[1]) - 64;
+  const ctrl = [(from[0] + to[0]) / 2, apex];
+  for (let i = 0; i <= N; i++) {
+    const u = i / N, k = u < .5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;   // gentle ease along the path
+    const x = (1 - k) * (1 - k) * from[0] + 2 * (1 - k) * k * ctrl[0] + k * k * to[0];
+    const y = (1 - k) * (1 - k) * from[1] + 2 * (1 - k) * k * ctrl[1] + k * k * to[1];
+    const pop = u < .16 ? .35 + .65 * (1 - Math.pow(1 - u / .16, 3)) : 1;
+    vals.push(tf(x, y, rot * k, pop)); offs.push(u);
+  }
+  A(t, el, 'opacity', [0, 1], 140);
+  A(t, el, 'transform', vals, dur, E.lin, offs);
+  const rest = tf(to[0], to[1], rot, 1);
+  A(t + dur, el, 'transform', [rest, rest + ' scale(1.08,.92)', rest + ' scale(.98,1.02)', rest], 300, E.out, [0, .35, .7, 1]);   // settle
+  A(t + dur, el.querySelector('.gs'), 'opacity', [0, 1], 260);   // its shadow comes back once it has landed
+  return { land: t + dur, rest: rest };
+}
+function squash(t, k) {   // k: how heavy the landing is
+  k = k || 1;
+  A(t, $('#basket'), 'transform', ['none', 'scale(' + (1 + .04 * k) + ',' + (1 - .06 * k) + ')', 'scale(.99,1.02)', 'none'], 340, E.out, [0, .3, .65, 1]);
+}
+let count = 0;
+function bumpCount(t) {
+  count++;
+  A(t, $('#badge'), 'transform', ['translateY(' + -(count - 1) * 32 + 'px)', 'translateY(' + -count * 32 + 'px)'], 320, E.back);
+}
+
+/* ---- Beat 1: add a recipe --------------------------------------------- */
+const card = $('#card'), lines = [0, 1, 2, 3, 4, 5].map(i => $('#l' + i));
+A(100, card, 'transform', ['translateY(-56px) rotate(-8deg)', 'translateY(0) rotate(-2deg)'], 820, E.back);
+A(100, card, 'opacity', [0, 1], 280);
+A(420, $('#c-title'), 'opacity', [0, 1], 320);
+A(620, $('#c-serves'), 'opacity', [0, 1], 320);
+lines.forEach((l, i) => {
+  A(820 + i * 90, l, 'opacity', [0, 1], 280);
+  A(820 + i * 90, l, 'transform', ['translateX(-8px)', 'translateX(0)'], 340);
+});
+
+/* ---- Beat 2: make it your own ----------------------------------------- */
+function tap(t, el) {
+  A(t, el, 'opacity', [0, .9, 0], 560, E.lin, [0, .25, 1]);
+  A(t, el, 'transform', ['scale(.4)', 'scale(1.35)'], 560, E.out);
+}
+tap(2550, $('#tap1'));
+A(2750, $('#r-serves'), 'transform', ['translateY(0)', 'translateY(-24px)'], 420, E.back);
+lines.forEach((l, i) => A(3000 + i * 90, l.querySelector('.col'), 'transform', ['translateY(0)', 'translateY(-24px)'], 380, E.back));
+tap(3900, $('#tap2'));
+A(4100, $('#s-kumara'), 'transform', ['scaleX(0)', 'scaleX(1)'], 260);
+A(4320, $('#s-kumara'), 'opacity', [1, 0], 220);
+A(4320, $('#kumara'), 'opacity', [1, 0], 220);
+A(4380, $('#pumpkin'), 'opacity', [0, 1], 300);
+A(4380, $('#pumpkin'), 'transform', ['translateY(4px)', 'translateY(0)'], 320);
+A(4560, $('#chip'), 'opacity', [0, 1], 200);
+A(4560, $('#chip'), 'transform', ['scale(.6)', 'scale(1)'], 340, E.back);
+tap(4800, $('#tap3'));
+A(4960, $('#s-oil'), 'transform', ['scaleX(0)', 'scaleX(1)'], 260);
+A(5060, lines[5], 'opacity', [1, .45], 300);
+A(5120, $('#gotit'), 'opacity', [0, 1], 300);
+A(5120, $('#gotit'), 'transform', ['rotate(-4deg) translateX(-6px)', 'rotate(-4deg) translateX(0)'], 320);
+
+/* ---- Beat 3: into your basket ----------------------------------------- */
+A(5600, card, 'transform', ['translateY(0) rotate(-2deg)', 'translateY(-6px) rotate(-2deg)'], 320);
+// line index, ingredient, landing spot in the basket, final tilt
+const firstRecipe = [[0, 'lamb', [100, 54], -8, 1.6], [1, 'rosemary', [42, 42], -30, .5], [2, 'garlic', [158, 52], 18, .9], [3, 'onion', [132, 48], 8, 1], [4, 'pumpkin', [68, 48], -14, 1.3]];
+let onionR1 = null, onionRest = '';
+firstRecipe.forEach((f, i) => {
+  const t = 5950 + i * 430, el = makeIcon(f[1]);
+  A(t, lines[f[0]], 'opacity', [1, .28], 220);
+  const r = throwInto(t, el, [96, -168 + 24 * f[0]], f[2], f[3], 700);
+  squash(r.land, f[4]); bumpCount(r.land);
+  if (f[1] === 'onion') { onionR1 = el; onionRest = r.rest; }
+});
+A(8200, card, 'transform', ['translateY(-6px) rotate(-2deg)', 'translate(-240px,-40px) rotate(-8deg)'], 700, E.inOut);
+A(8200, card, 'opacity', [1, 0], 520, E.inOut);
+const card2 = $('#card2'), c2lines = card2.querySelectorAll('.ln');
+A(8380, card2, 'transform', ['translate(200px,-12px) rotate(5deg)', 'translate(0,0) rotate(2deg)'], 760, E.out);
+A(8380, card2, 'opacity', [0, 1], 360);
+[[0, 'courgette', [56, 36], -34, 9150], [2, 'egg', [148, 38], 16, 9550]].forEach(f => {
+  const el = makeIcon(f[1]);
+  A(f[4], c2lines[f[0]], 'opacity', [1, .28], 220);
+  const r = throwInto(f[4], el, [78, -174 + 24 * f[0]], f[2], f[3], 700);
+  squash(r.land, .8); bumpCount(r.land);
+});
+// The second onion lands on the first: one line, not two. The count holds.
+{
+  const el = makeIcon('onion');
+  A(9950, c2lines[1], 'opacity', [1, .28], 220);
+  const r = throwInto(9950, el, [78, -150], [132, 48], 8, 700);
+  squash(r.land, .8);
+  A(r.land, el, 'opacity', [1, 0], 200);
+  A(r.land, onionR1, 'transform', [onionRest, onionRest + ' scale(1.18)', onionRest], 380, E.out);
+  A(r.land, $('#plus'), 'opacity', [0, 1, 1, 0], 950, E.lin, [0, .15, .7, 1]);
+  A(r.land, $('#plus'), 'transform', ['translateY(0)', 'translateY(-22px)'], 950, E.out);
+}
+A(10700, card2, 'transform', ['translate(0,0) rotate(2deg)', 'translate(-240px,-40px) rotate(-8deg)'], 640, E.inOut);
+A(10700, card2, 'opacity', [1, 0], 480, E.inOut);
+
+/* ---- Beat 4: go shopping ---------------------------------------------- */
+A(10950, $('#basket'), 'transform', ['none', 'translate(78px,20px) scale(.68)'], 800, E.inOut);
+const list = $('#list');
+A(11080, list, 'opacity', [0, 1], 420);
+A(11080, list, 'transform', ['translateY(48px)', 'translateY(0)'], 760, E.out);
+list.querySelectorAll('.li').forEach((li, i) => {
+  const t = 11900 + i * 300;
+  A(t, li.querySelector('.ck'), 'opacity', [0, 1], 120);
+  A(t, li.querySelector('.ck'), 'transform', ['scale(0)', 'scale(1)'], 300, E.back);
+  A(t + 80, li.querySelector('.st'), 'transform', ['scaleX(0)', 'scaleX(1)'], 240);
+  A(t + 80, li.querySelector('.tx'), 'opacity', [1, .5], 240);
+});
+A(14150, $('#stamp'), 'opacity', [0, 1], 120);
+A(14150, $('#stamp'), 'transform', ['rotate(-12deg) scale(1.7)', 'rotate(-12deg) scale(1)'], 340, E.back);
+A(0, $('#inner'), 'opacity', [0, 1], 420, E.out);
+A(16450, $('#inner'), 'opacity', [1, 0], 480, E.inOut);
+
+/* ---- Build: later animations on the same property take over from earlier
+   ones. The first on each element fills backwards (sets the starting look);
+   the rest only fill forwards, so they never reach back in time. -------- */
+function build() {
+  specs.sort((a, b) => a.t - b.t);
+  const seen = new Map();
+  anims = specs.map(sp => {
+    let set = seen.get(sp.el); if (!set) seen.set(sp.el, set = new Set());
+    const fill = set.has(sp.prop) ? 'forwards' : 'both'; set.add(sp.prop);
+    const kf = sp.values.map((v, i) => { const o = {}; o[sp.prop] = v; if (sp.offsets) o.offset = sp.offsets[i]; return o; });
+    const a = sp.el.animate(kf, { delay: sp.t, duration: sp.dur, easing: sp.easing, fill: fill });
+    a.pause();
+    return a;
+  });
+  const tick = document.createElement('i'); tick.hidden = true; document.body.append(tick);
+  clock = tick.animate([{ opacity: 0 }, { opacity: 0 }], { duration: LOOP });
+  clock.pause();
+  clock.onfinish = () => { if (running) { seek(0); playAll(); } };
+}
+
+/* ---- Playback, steps, pause ------------------------------------------- */
+let running = false, userPaused = false, inView = false, raf = 0;
+const steps = [...document.querySelectorAll('.beat')], prog = $('#prog'), pp = $('#pp');
+function seek(ms) { anims.forEach(a => { a.currentTime = ms; }); clock.currentTime = ms; ui(); }
+function playAll() { anims.forEach(a => a.play()); clock.play(); running = true; loop(); }
+function pauseAll() { anims.forEach(a => a.pause()); clock.pause(); running = false; }
+function ui() {
+  const t = clock.currentTime || 0;
+  let b = 0; BEAT_START.forEach((s, i) => { if (t >= s) b = i; });
+  steps.forEach((el, i) => { el.classList.toggle('on', i === b); if (i === b) el.setAttribute('aria-current', 'step'); else el.removeAttribute('aria-current'); });
+  prog.style.transform = 'scaleX(' + Math.min(1, t / LOOP).toFixed(4) + ')';
+}
+function loop() { if (raf) return; const f = () => { raf = 0; ui(); if (running) raf = requestAnimationFrame(f); }; raf = requestAnimationFrame(f); }
+function sync() { if (RM) return; if (inView && !userPaused && !document.hidden) { if (!running) playAll(); } else if (running) pauseAll(); }
+
+steps.forEach((el, i) => el.addEventListener('click', () => {
+  if (RM || userPaused) seek(BEAT_SHOW[i]);
+  else { seek(BEAT_START[i]); playAll(); }
+}));
+pp.addEventListener('click', () => {
+  userPaused = !userPaused;
+  pp.setAttribute('aria-pressed', String(userPaused));
+  pp.setAttribute('aria-label', userPaused ? 'Play the animation' : 'Pause the animation');
+  sync();
+});
+
+/* ---- Fit the 360 x 480 scene to the space available ------------------- */
+function fit() {
+  const s = innerWidth >= 960 ? Math.min(1.3, Math.max(1, (innerHeight - 160) / 480)) : Math.min(1.2, (document.documentElement.clientWidth - 32) / 360);
+  $('#fit').style.setProperty('--s', s.toFixed(3));
+}
+fit(); addEventListener('resize', fit);
+
+build();
+if (RM) { seek(BEAT_SHOW[3]); }        // reduced motion: no playback, the finished story as a still
+else {
+  seek(0);
+  new IntersectionObserver(es => { inView = es[0].isIntersecting; sync(); }, { threshold: .25 }).observe($('#fit'));
+  document.addEventListener('visibilitychange', sync);
+}
+})();
 </script>
 </body>
 </html>
