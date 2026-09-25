@@ -92,27 +92,26 @@ palettes are mirrored, and the site follows the OS theme because the app's
 add it to the app's tokens first, then copy it across. Spacing follows the same
 8pt grid, and the type scale mirrors the app's `type` map.
 
-The typeface is Plus Jakarta Sans (weights 500/600/700/800), the same as the
-app, loaded from Google Fonts.
+The typefaces are Fraunces (display: the headline, section headings and the
+recipe cards) and Plus Jakarta Sans (everything else, weights 400 to 800, the
+same as the app), loaded from Google Fonts.
 
 ## Placeholders still to fill
 
 Everything below is deliberately inert and marked in the source with a
 `PLACEHOLDER` comment.
 
-**App store links** — the two badges in the hero. They are real, working links
-that currently point at `#faq`, the FAQ entry explaining when the app ships; an
-`href="#"` is a dead end for a visitor and an empty link to a crawler. For each
-one:
+**The Get-the-app button** — the hero's one button, "Make it your own",
+points at the Google Play testing opt-in URL built from the Android package
+below. That link only works while a test track is open and the visitor is
+allowed to join it, so it is marked `CHECK` in the source. When there is a
+public listing:
 
-1. Replace `href="#faq"` with the real listing URL.
-2. Change `class="badge badge-primary is-placeholder"` to `class="badge
-   badge-primary"` (and the same for `badge-ghost`).
-
-Then change the "Coming soon to" kicker in each badge, and the FAQ answer to
-"When is it coming to the App Store and Google Play?", which says it is not
-published yet. Switch both badges on together, so the page never offers a link
-in one place and not the other.
+1. Point the button at the listing URL.
+2. Reword the FAQ answer to "When is it coming to the App Store and Google
+   Play?" (in both the markup and the JSON-LD, which mirror each other) and
+   the footer note. Both currently say the Android build is in testing on
+   Google Play and it is not on the App Store yet.
 
 The identifiers for building those URLs, from the app's `app.json`:
 
