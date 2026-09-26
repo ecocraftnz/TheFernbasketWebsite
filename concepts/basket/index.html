@@ -118,8 +118,7 @@ html:not(.js) .controls { display: none; }
 
 /* Basket: back (shadow, handle, inside), the items, then the woven front over them.
    Drawn at 280 x 236 and shown at 200 x 170, in the shape of the logo: the arched
-   handle, a silver-fern frond repeated across the body as its texture, and the
-   fern rising out of it. The produce and the
+   handle, the interlaced weave and the fern rising out of it. The produce and the
    wicker keep their natural colours in both colour schemes; that is what makes
    them readable. */
 .basket { position: absolute; left: 80px; top: 290px; width: 200px; height: 170px; transform-origin: 50% 100%; }
@@ -236,67 +235,42 @@ html:not(.js) .controls { display: none; }
           <div class="items" id="items"></div>
           <svg class="layer" viewBox="0 0 280 236">
             <defs>
-              <g id="fb-fern"><path d="M0 0C14 -6 30 -10 52 -16" fill="none" stroke-width="1.6" stroke-linecap="round"/><path d="M0.0 0.0L1.7 -3.6L3.4 -1.1L5.1 -3.0L6.9 -0.9L8.6 -2.4L10.3 -0.7L12.0 -1.6L13.7 -0.5L15.4 -0.4L17.2 0.0L15.4 0.4L13.7 0.5L12.0 1.6L10.3 0.7L8.6 2.4L6.9 0.9L5.1 3.0L3.4 1.1L1.7 3.6Z" transform="translate(3.0 -1.2) rotate(-79.9)"/><path d="M0.0 0.0L1.7 -3.6L3.4 -1.1L5.1 -3.0L6.9 -0.9L8.6 -2.4L10.3 -0.7L12.0 -1.6L13.7 -0.5L15.4 -0.4L17.2 0.0L15.4 0.4L13.7 0.5L12.0 1.6L10.3 0.7L8.6 2.4L6.9 0.9L5.1 3.0L3.4 1.1L1.7 3.6Z" transform="translate(3.0 -1.2) rotate(36.1)"/><path d="M0.0 0.0L1.6 -3.4L3.1 -1.0L4.7 -2.8L6.3 -0.8L7.9 -2.2L9.4 -0.7L11.0 -1.5L12.6 -0.5L14.2 -0.4L15.7 0.0L14.2 0.4L12.6 0.5L11.0 1.5L9.4 0.7L7.9 2.2L6.3 0.8L4.7 2.8L3.1 1.0L1.6 3.4Z" transform="translate(8.0 -3.2) rotate(-77.9)"/><path d="M0.0 0.0L1.6 -3.4L3.1 -1.0L4.7 -2.8L6.3 -0.8L7.9 -2.2L9.4 -0.7L11.0 -1.5L12.6 -0.5L14.2 -0.4L15.7 0.0L14.2 0.4L12.6 0.5L11.0 1.5L9.4 0.7L7.9 2.2L6.3 0.8L4.7 2.8L3.1 1.0L1.6 3.4Z" transform="translate(8.0 -3.2) rotate(38.1)"/><path d="M0.0 0.0L1.8 -3.0L3.6 -0.9L5.3 -2.3L7.1 -0.7L8.9 -1.6L10.7 -0.5L12.5 -0.4L14.2 0.0L12.5 0.4L10.7 0.5L8.9 1.6L7.1 0.7L5.3 2.3L3.6 0.9L1.8 3.0Z" transform="translate(13.4 -5.0) rotate(-76.3)"/><path d="M0.0 0.0L1.8 -3.0L3.6 -0.9L5.3 -2.3L7.1 -0.7L8.9 -1.6L10.7 -0.5L12.5 -0.4L14.2 0.0L12.5 0.4L10.7 0.5L8.9 1.6L7.1 0.7L5.3 2.3L3.6 0.9L1.8 3.0Z" transform="translate(13.4 -5.0) rotate(39.7)"/><path d="M0.0 0.0L1.6 -2.7L3.2 -0.8L4.8 -2.1L6.4 -0.6L8.0 -1.5L9.5 -0.4L11.1 -0.4L12.7 0.0L11.1 0.4L9.5 0.4L8.0 1.5L6.4 0.6L4.8 2.1L3.2 0.8L1.6 2.7Z" transform="translate(18.9 -6.8) rotate(-75.1)"/><path d="M0.0 0.0L1.6 -2.7L3.2 -0.8L4.8 -2.1L6.4 -0.6L8.0 -1.5L9.5 -0.4L11.1 -0.4L12.7 0.0L11.1 0.4L9.5 0.4L8.0 1.5L6.4 0.6L4.8 2.1L3.2 0.8L1.6 2.7Z" transform="translate(18.9 -6.8) rotate(40.9)"/><path d="M0.0 0.0L1.9 -2.2L3.7 -0.7L5.6 -1.5L7.4 -0.5L9.3 -0.4L11.1 0.0L9.3 0.4L7.4 0.5L5.6 1.5L3.7 0.7L1.9 2.2Z" transform="translate(24.8 -8.5) rotate(-74.1)"/><path d="M0.0 0.0L1.9 -2.2L3.7 -0.7L5.6 -1.5L7.4 -0.5L9.3 -0.4L11.1 0.0L9.3 0.4L7.4 0.5L5.6 1.5L3.7 0.7L1.9 2.2Z" transform="translate(24.8 -8.5) rotate(41.9)"/><path d="M0.0 0.0L1.6 -2.0L3.2 -0.6L4.7 -1.4L6.3 -0.4L7.9 -0.4L9.5 0.0L7.9 0.4L6.3 0.4L4.7 1.4L3.2 0.6L1.6 2.0Z" transform="translate(31.0 -10.3) rotate(-73.5)"/><path d="M0.0 0.0L1.6 -2.0L3.2 -0.6L4.7 -1.4L6.3 -0.4L7.9 -0.4L9.5 0.0L7.9 0.4L6.3 0.4L4.7 1.4L3.2 0.6L1.6 2.0Z" transform="translate(31.0 -10.3) rotate(42.5)"/><path d="M0.0 0.0L1.3 -1.7L2.6 -0.5L3.8 -1.2L5.1 -0.4L6.4 -0.4L7.7 0.0L6.4 0.4L5.1 0.4L3.8 1.2L2.6 0.5L1.3 1.7Z" transform="translate(37.6 -12.1) rotate(-73.2)"/><path d="M0.0 0.0L1.3 -1.7L2.6 -0.5L3.8 -1.2L5.1 -0.4L6.4 -0.4L7.7 0.0L6.4 0.4L5.1 0.4L3.8 1.2L2.6 0.5L1.3 1.7Z" transform="translate(37.6 -12.1) rotate(42.8)"/><path d="M0.0 0.0L0.9 -1.3L1.9 -0.4L2.8 -1.0L3.8 -0.3L4.7 -0.4L5.7 0.0L4.7 0.4L3.8 0.3L2.8 1.0L1.9 0.4L0.9 1.3Z" transform="translate(44.6 -14.0) rotate(-73.1)"/><path d="M0.0 0.0L0.9 -1.3L1.9 -0.4L2.8 -1.0L3.8 -0.3L4.7 -0.4L5.7 0.0L4.7 0.4L3.8 0.3L2.8 1.0L1.9 0.4L0.9 1.3Z" transform="translate(44.6 -14.0) rotate(42.9)"/></g>
               <clipPath id="fb-body"><path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z"/></clipPath>
               <linearGradient id="fb-round" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFF6DE" stop-opacity=".22"/><stop offset=".35" stop-color="#FFF6DE" stop-opacity="0"/><stop offset=".7" stop-color="#3A2614" stop-opacity="0"/><stop offset="1" stop-color="#3A2614" stop-opacity=".34"/></linearGradient>
               <linearGradient id="fb-down" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#3A2614" stop-opacity="0"/><stop offset="1" stop-color="#3A2614" stop-opacity=".3"/></linearGradient>
             </defs>
             <path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z" fill="#C9A876"/>
             <g clip-path="url(#fb-body)">
-              <g fill="#F0DDB0" stroke="#F0DDB0" opacity=".75" transform="translate(1 1)">
-                <use href="#fb-fern" transform="translate(-20 96) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(48 96) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(116 96) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(184 96) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(252 96) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(14 126) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(82 126) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(150 126) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(218 126) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(286 126) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(-20 156) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(48 156) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(116 156) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(184 156) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(252 156) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(14 186) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(82 186) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(150 186) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(218 186) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(286 186) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(-20 216) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(48 216) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(116 216) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(184 216) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(252 216) rotate(-18)"/>
-              </g>
-              <g fill="#8A6A40" stroke="#8A6A40" opacity=".72">
-                <use href="#fb-fern" transform="translate(-20 96) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(48 96) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(116 96) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(184 96) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(252 96) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(14 126) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(82 126) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(150 126) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(218 126) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(286 126) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(-20 156) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(48 156) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(116 156) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(184 156) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(252 156) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(14 186) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(82 186) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(150 186) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(218 186) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(286 186) rotate(-18) scale(1 -1)"/>
-                <use href="#fb-fern" transform="translate(-20 216) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(48 216) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(116 216) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(184 216) rotate(-18)"/>
-                <use href="#fb-fern" transform="translate(252 216) rotate(-18)"/>
-              </g>
+            <path d="M60 40L-140 240M122 40L-78 240M184 40L-16 240M246 40L46 240M308 40L108 240M370 40L170 240M432 40L232 240M494 40L294 240" stroke="#7A5B3A" stroke-width="28" fill="none"/>
+            <path d="M60 40L-140 240M122 40L-78 240M184 40L-16 240M246 40L46 240M308 40L108 240M370 40L170 240M432 40L232 240M494 40L294 240" stroke="#CBAA78" stroke-width="22" fill="none"/>
+            <path d="M60 40L-140 240M122 40L-78 240M184 40L-16 240M246 40L46 240M308 40L108 240M370 40L170 240M432 40L232 240M494 40L294 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" transform="translate(-1.2 -1.2)"/>
+            <path d="M-160 40L40 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+            <path d="M-160 40L40 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+            <path d="M-160 40L40 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+            <path d="M-98 40L102 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+            <path d="M-98 40L102 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+            <path d="M-98 40L102 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+            <path d="M-36 40L164 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+            <path d="M-36 40L164 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+            <path d="M-36 40L164 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+            <path d="M26 40L226 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+            <path d="M26 40L226 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+            <path d="M26 40L226 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+            <path d="M88 40L288 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+            <path d="M88 40L288 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+            <path d="M88 40L288 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+            <path d="M150 40L350 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+            <path d="M150 40L350 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+            <path d="M150 40L350 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+            <path d="M212 40L412 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+            <path d="M212 40L412 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+            <path d="M212 40L412 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+            <path d="M274 40L474 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+            <path d="M274 40L474 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+            <path d="M274 40L474 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+            <path d="M336 40L536 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+            <path d="M336 40L536 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+            <path d="M336 40L536 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
             </g>
             <path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z" fill="url(#fb-round)"/>
             <path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z" fill="url(#fb-down)"/>
