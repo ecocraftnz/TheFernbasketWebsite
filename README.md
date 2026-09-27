@@ -17,7 +17,6 @@ Everything that gets published lives in `public/`. Nothing else does.
 | `public/chrome.css` | The chrome every page shares: tokens, fonts, top bar, logo mark, watermarks, footer, headings. Change these here, never in a page |
 | `public/index.html` | The marketing page: links `chrome.css`, then its own `<style>` for the hero animation and content sections |
 | `public/PrivacyPolicy/index.html` | The published privacy policy (version `2026-09-27`; the app records consents against that exact string) |
-| `public/how-it-works/index.html` | The app walkthrough at `/how-it-works/`: eight screenshots (`public/assets/walkthrough/`, 600x1298, red outlines mark the tap) beside the eight steps; auto-plays until someone interacts |
 | `public/delete-account/index.html` | How to delete an account, at `/delete-account/`, which the app's policy and Google Play point to |
 | `public/styles.css` | What long-form text needs (the policy layout, tables). Only the text pages link it, after `chrome.css` |
 | `concepts/cards/template.html` | The source of the six "What the app does" card animations. `tools/build-cards.py` copies the hero's produce drawings and basket into it and writes both the prototype and the homepage's copy |
@@ -25,7 +24,7 @@ Everything that gets published lives in `public/`. Nothing else does.
 | `tools/check-chrome.mjs` | Fails if any page's top bar, watermarks, logo mark, footer or stylesheet links differ from the others. Run before every PR |
 | `public/robots.txt` | Allows everything. Pure ASCII on purpose - see below |
 | `public/sitemap.xml` | All three pages, with `lastmod` taken from git |
-| `public/assets/screens/*.webp` | App screenshots for the "screen by screen" section |
+| `public/assets/walkthrough/*.png` | The eight walkthrough screenshots on the homepage, 600x1298, red outlines marking the tap |
 | `public/assets/logo-mark.png` | The app's logo mark, copied from the app repo |
 | `public/assets/favicon.png` | The app's favicon, copied from the app repo |
 | `wrangler.jsonc` | Cloudflare Workers deployment config (not published) |
@@ -172,49 +171,25 @@ copy is ever updated to match:
 The EU representative paragraph was dropped (the draft said to delete it if
 not applicable — the app isn't offered to EU/EEA users specifically).
 
-## App screenshots
+## The walkthrough
 
-The "From recipe to shopping list, screen by screen" section uses three WebP
-files in `public/assets/screens/`, all 665x1440. A fourth, the price check,
-was removed on 27 Sep 2026 because it showed the old screen ("SORTED!", "You
-save", "CHEAPEST STORE", a distance) that the app dropped on 24 Sep 2026; add
-a fresh capture of the current price check when there is one:
+The homepage section "From a recipe link to a ticked-off shopping list"
+(`#how-it-works`) steps through the app in eight screenshots, in
+`public/assets/walkthrough/`, all 600x1298 PNG with a red outline marking
+where to tap. It auto-plays one step every four seconds while on screen and
+stops for good at the first click, tap or arrow key; it never auto-plays under
+`prefers-reduced-motion`. The eight filenames are listed as `screenshot` on
+the `MobileApplication` node in the page's JSON-LD. The step titles,
+descriptions and alt text were supplied verbatim; keep them in step with the
+app if a screen changes.
 
-| File | Screen |
-| --- | --- |
-| `capture.webp` | Home, showing the four ways to add a recipe |
-| `recipe.webp` | A recipe open, with the ingredient list read from it |
-| `basket.webp` | The basket, grouped by supermarket section |
+**Check what an export actually is before committing it.** An earlier upload
+arrived named `.png` but was WebP underneath (`RIFF....WEBPVP8L`), which
+would have been served as `image/png` with WebP bytes. `file *.png` or the
+first eight bytes will tell you.
 
-665x1440 is a ratio of 2.165, and the CSS frame is `aspect-ratio:9/19.5`
-(2.167), so nothing is cropped. A replacement close to any modern phone screen
-will also fit; `object-fit:cover` absorbs the difference. The same four
-filenames are listed as `screenshot` on the `MobileApplication` node in the
-page's JSON-LD. `screenshot` is a documented schema.org property; whether
-Google *requires* it for an app rich result was not verified here, because
-`developers.google.com` is unreachable from the build environment. Treat that
-as the reason it was added, not as a confirmed requirement.
-
-**Check what an export actually is before committing it.** The first upload of
-these four arrived named `.png` but was WebP underneath (`RIFF....WEBPVP8L`),
-which would have been served as `image/png` with WebP bytes. `file *.png` or
-the first eight bytes will tell you.
-
-**Serve them with a plain `<img>`, no `<picture>`.** There is no PNG fallback
-and none is wanted. This repo declares no browser support targets (there is no
-`package.json` and no browserslist), so the working assumption is current
-desktop and mobile browsers, all of which decode WebP — Safari has since 14,
-in 2020. That is recalled, not checked against a support table here.
-
-The reason not to add a `<picture>` + `<source>` pair *is* verified in
-Chromium: `<picture>` switches on *format support*, not on whether the file
-exists, so a `<source>` pointing at a missing `.webp` shows nothing at all
-rather than falling back to the `<img>`.
-
-**The screens show example data, not a real shop**, and the section says so in
-its opening paragraph. Keep that line if the images are ever replaced, and keep
-the app's rule that prices are estimates: the captions describe the comparison
-without quoting a figure from the screenshots.
+**The screens show an example recipe**, and the section says so under the
+walkthrough. Keep that line if the images are ever replaced.
 
 ## Keeping copy in step with the app
 

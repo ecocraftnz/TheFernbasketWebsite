@@ -155,9 +155,14 @@
       "inLanguage": "en-NZ",
       "description": "Turns a recipe link, a photo of a cookbook page, or a video into one tidy shopping list, merging repeated ingredients and sorting the list by aisle.",
       "screenshot": [
-        "https://thefernbasket.com/assets/screens/capture.webp",
-        "https://thefernbasket.com/assets/screens/recipe.webp",
-        "https://thefernbasket.com/assets/screens/basket.webp"
+        "https://thefernbasket.com/assets/walkthrough/01-home.png",
+        "https://thefernbasket.com/assets/walkthrough/02-add.png",
+        "https://thefernbasket.com/assets/walkthrough/03-ingredients.png",
+        "https://thefernbasket.com/assets/walkthrough/04-basket.png",
+        "https://thefernbasket.com/assets/walkthrough/05-check.png",
+        "https://thefernbasket.com/assets/walkthrough/06-start.png",
+        "https://thefernbasket.com/assets/walkthrough/07-shopping.png",
+        "https://thefernbasket.com/assets/walkthrough/08-done.png"
       ],
       "publisher": { "@id": "https://thefernbasket.com/#org" }
     }
@@ -422,21 +427,62 @@
   html:not(.js) .cs-fit { display:none; }
   /* cards:css end */
 
-  /* Phone screenshots. The frame carries the aspect ratio so the row cannot
-     shift as images decode, which is why these need no width/height attrs.
-     WebP, served by a plain <img>: <picture> switches on format support, not
-     on whether a file exists, so a <source> pointing at a missing fallback
-     would show nothing instead of falling back. */
-  .screens { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin:32px 0 0; }
-  .shot { margin:0; }
-  .shot .frame {
-    aspect-ratio:9/19.5; overflow:hidden;
-    background:var(--surface); border:1px solid var(--hair); border-radius:16px;
+  /* ---- The walkthrough ----------------------------------------------------
+     A phone frame showing the current screen beside the eight steps. The
+     screenshots are 600 x 1298; the frame keeps that ratio so nothing shifts
+     as they load. Steps are real buttons; the current one carries
+     aria-current="step". Images cross-fade, and nothing fades under reduced
+     motion. Spacing on the 8px grid; every target 48px. */
+  .walk { display:grid; grid-template-columns:minmax(0,1fr); gap:24px; align-items:start; justify-items:stretch; margin-top:32px; }
+  @media (min-width: 900px) { .walk { grid-template-columns:minmax(280px,360px) minmax(0,1fr); gap:56px; } }
+
+  .phone-col { display:flex; flex-direction:column; align-items:center; gap:16px; }
+  .phone { position:relative; width:100%; max-width:320px; aspect-ratio:600/1298; border-radius:36px; background:var(--surface);
+    box-shadow:var(--shadow-paper), inset 0 0 0 1.5px var(--text); padding:10px; }
+  .phone .screen { position:relative; width:100%; height:100%; border-radius:28px; overflow:hidden; background:var(--bg); }
+  .phone img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .35s ease; }
+  .phone img.on { opacity:1; }
+
+  .wt-controls { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; max-width:320px; }
+  .ctl { flex:none; width:48px; height:48px; display:grid; place-items:center; border:0; border-radius:12px; background:var(--surface); color:var(--text);
+    box-shadow:inset 0 0 0 1px var(--rule); cursor:pointer; }
+  .ctl:hover { box-shadow:inset 0 0 0 1px var(--accent); color:var(--accent); }
+  .ctl svg { width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+  .ctl .i-play, .ctl[aria-pressed="true"] .i-pause { display:none; }
+  .ctl[aria-pressed="true"] .i-play { display:block; }
+  .ctl .i-pause, .ctl .i-play { fill:currentColor; stroke:none; }
+  .count { flex:1; text-align:center; font-size:14px; line-height:20px; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums; }
+  .key { font-size:14px; line-height:20px; color:var(--muted); display:flex; align-items:center; gap:8px; }
+  .key i { flex:none; width:22px; height:14px; border-radius:5px; box-shadow:inset 0 0 0 2px #D64B3A; }
+
+  .steps { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; counter-reset:step; }
+  .step { width:100%; min-height:48px; padding:12px 16px; display:flex; gap:16px; align-items:flex-start; text-align:left;
+    border:0; border-radius:16px; background:transparent; color:inherit; font:inherit; cursor:pointer; transition:background-color .2s ease; }
+  .step .n { flex:none; width:32px; height:32px; border-radius:50%; display:grid; place-items:center; font-weight:700; font-size:14px;
+    box-shadow:inset 0 0 0 1.5px var(--muted); color:var(--muted); transition:background-color .2s ease, color .2s ease, box-shadow .2s ease; }
+  .step .t { display:block; font-weight:800; font-size:17px; line-height:24px; letter-spacing:-.01em; padding-top:4px; }
+  .step .d { display:none; margin-top:4px; color:var(--muted); font-size:15px; line-height:24px; }
+  .step:hover .n { color:var(--accent); box-shadow:inset 0 0 0 1.5px var(--accent); }
+  .step[aria-current="step"] { background:var(--surface); box-shadow:inset 0 0 0 1px var(--rule); }
+  .step[aria-current="step"] .n { background:var(--accent); color:var(--on-accent); box-shadow:none; }
+  .step[aria-current="step"] .d { display:block; }
+  /* Narrow screens: the phone, then only the current step, then the buttons */
+  @media (max-width: 899px) {
+    .phone-col { display:contents; }
+    .phone { order:1; justify-self:center; }
+    .steps { order:2; }
+    .wt-controls { order:3; justify-self:center; }
+    .key { order:4; justify-self:center; }
+    .step:not([aria-current="step"]) { display:none; }
   }
-  .band-alt .shot .frame { background:var(--bg); }
-  .shot img { display:block; width:100%; height:100%; object-fit:cover; }
-  .shot figcaption { margin:16px 0 0; }
-  .shot figcaption h3 { margin:0 0 4px; }
+
+  .notes { margin-top:32px; display:flex; flex-direction:column; gap:8px; }
+  .notes p { font-size:15px; line-height:24px; color:var(--muted); }
+
+  @media (prefers-reduced-motion: reduce) { .phone img, .step, .step .n { transition:none; } }
+  html:not(.js) .wt-controls { display:none; }
+  html:not(.js) .step .d { display:block; }
+  html:not(.js) .phone img:first-of-type { opacity:1; }
 
   .faq { display:grid; gap:8px; max-width:860px; }
   .faq details {
@@ -464,8 +510,6 @@
   }
   @media (max-width: 620px) {
     .cards { grid-template-columns:1fr; }
-    .screens { grid-template-columns:1fr; }
-    .shot { max-width:320px; margin:0 auto; width:100%; }
     .faq summary { padding:16px; }
     .faq details p { padding:0 16px 16px; }
     .cell { padding:16px; }
@@ -489,7 +533,7 @@
   <header class="topbar">
     <a class="region" href="/">The Fern Basket · Aotearoa New Zealand</a>
     <nav class="topnav" aria-label="Site">
-      <a href="/how-it-works/">How it works</a>
+      <a href="/#how-it-works">How it works</a>
       <button type="button" class="theme-toggle" id="theme-toggle">Dark</button>
     </nav>
   </header>
@@ -942,42 +986,49 @@
     </div>
   </section>
 
-  <section class="band" id="screens">
+  <section class="band" id="how-it-works">
     <div class="inner">
-      <h2>From recipe to shopping list, screen by screen</h2>
-      <p class="lead">Three screens from the app, following one shop from recipe to basket.
-      The recipes and the basket below are example data, not a real shop.</p>
+      <h2>From a recipe link to a ticked-off shopping list</h2>
+      <p class="lead">Eight taps, start to finish. Pick a step to see that screen.</p>
 
-      <div class="screens">
-        <figure class="shot">
-          <div class="frame">
-            <img src="/assets/screens/capture.webp" alt="The Fern Basket home screen, offering four ways to add a recipe: paste a link, take a photo, add a YouTube video, or type it in. Example data." width="665" height="1440" loading="lazy" decoding="async">
+      <div class="walk" id="wt-walk">
+        <div class="phone-col">
+          <div class="phone">
+            <div class="screen" id="wt-screen" aria-live="polite">
+              <img class="on" src="/assets/walkthrough/01-home.png" alt="The Home screen, with the + button in the middle of the tab bar outlined." width="600" height="1298" decoding="async">
+              <img src="/assets/walkthrough/02-add.png" alt="The Add a recipe screen with a recipe link pasted in and the Get ingredients button outlined." width="600" height="1298" loading="lazy" decoding="async">
+              <img src="/assets/walkthrough/03-ingredients.png" alt="The ingredients of a Thai green chicken curry, two amounts marked to check, and the Add 14 items to basket button outlined." width="600" height="1298" loading="lazy" decoding="async">
+              <img src="/assets/walkthrough/04-basket.png" alt="This week's basket, sorted by aisle, with the note &quot;2 amounts need a quick check&quot; outlined." width="600" height="1298" loading="lazy" decoding="async">
+              <img src="/assets/walkthrough/05-check.png" alt="The Quick check screen for Thai basil and coriander, with the That's right button outlined." width="600" height="1298" loading="lazy" decoding="async">
+              <img src="/assets/walkthrough/06-start.png" alt="The basket with the Start shopping button outlined." width="600" height="1298" loading="lazy" decoding="async">
+              <img src="/assets/walkthrough/07-shopping.png" alt="Shopping mode with four produce items ticked off: 4 of 14 found." width="600" height="1298" loading="lazy" decoding="async">
+              <img src="/assets/walkthrough/08-done.png" alt="The All done screen: you found all 14 items across 1 recipe." width="600" height="1298" loading="lazy" decoding="async">
+            </div>
           </div>
-          <figcaption>
-            <h3>Add a recipe</h3>
-            <p>Paste a link, photograph a cookbook page, share a cooking video, or type it in yourself.</p>
-          </figcaption>
-        </figure>
+          <div class="wt-controls">
+            <button type="button" class="ctl" id="wt-prev" aria-label="Previous step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <span class="count" id="wt-count">Step 1 of 8</span>
+            <button type="button" class="ctl" id="wt-pp" aria-pressed="false" aria-label="Pause"><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg></button>
+            <button type="button" class="ctl" id="wt-next" aria-label="Next step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
+          <p class="key"><i aria-hidden="true"></i>The red outline shows where to tap.</p>
+        </div>
 
-        <figure class="shot">
-          <div class="frame">
-            <img src="/assets/screens/recipe.webp" alt="A recipe open in The Fern Basket, showing the ingredient list read from the page with a quantity beside each item. Example data." width="665" height="1440" loading="lazy" decoding="async">
-          </div>
-          <figcaption>
-            <h3>Check the ingredients</h3>
-            <p>The app reads the recipe into a structured ingredient list, with quantities that scale to the number of serves.</p>
-          </figcaption>
-        </figure>
+        <ol class="steps" id="steps">
+          <li><button type="button" class="step" aria-current="step"><span class="n">1</span><span><span class="t">Tap + to add a recipe</span><span class="d">Start on Home and tap the green + button. A recipe can come from a link, a photo of a cookbook page, a YouTube or TikTok video, or text you type in.</span></span></button></li>
+          <li><button type="button" class="step"><span class="n">2</span><span><span class="t">Paste the recipe's link</span><span class="d">Copy the address of a recipe page and paste it in. Most recipe websites work. Then tap Get ingredients.</span></span></button></li>
+          <li><button type="button" class="step"><span class="n">3</span><span><span class="t">Get a shopping list</span><span class="d">The Fern Basket reads the page and lists every ingredient, in grams and millilitres or cups and spoons. Amounts the recipe didn't state exactly get a question mark. Tap Add to basket.</span></span></button></li>
+          <li><button type="button" class="step"><span class="n">4</span><span><span class="t">It all lands in your basket</span><span class="d">Your basket sorts ingredients by supermarket aisle and merges anything two recipes share. A note at the top says when an amount needs a look.</span></span></button></li>
+          <li><button type="button" class="step"><span class="n">5</span><span><span class="t">Check the uncertain amounts</span><span class="d">Keep each amount, change how many, or remove it. The app asks you rather than guessing.</span></span></button></li>
+          <li><button type="button" class="step"><span class="n">6</span><span><span class="t">Start shopping</span><span class="d">Once nothing needs checking, tap Start shopping.</span></span></button></li>
+          <li><button type="button" class="step"><span class="n">7</span><span><span class="t">Tick items off in the aisle</span><span class="d">Tick each item as it goes in your trolley. Shopping mode works without signal, so a supermarket basement is fine.</span></span></button></li>
+          <li><button type="button" class="step"><span class="n">8</span><span><span class="t">All done</span><span class="d">The last tick finishes the shop. Your recipe stays saved in Recipes for next time.</span></span></button></li>
+        </ol>
+      </div>
 
-        <figure class="shot">
-          <div class="frame">
-            <img src="/assets/screens/basket.webp" alt="A shopping basket in The Fern Basket, grouped by supermarket section, combining the items from two recipes. Example data." width="665" height="1440" loading="lazy" decoding="async">
-          </div>
-          <figcaption>
-            <h3>Build the basket</h3>
-            <p>Everything you are cooking merges into one basket, grouped by supermarket section, with repeats collapsed into single lines.</p>
-          </figcaption>
-        </figure>
+      <div class="notes">
+        <p>Adding recipes needs a free account: just your email, no password.</p>
+        <p>The screens show an example recipe.</p>
       </div>
     </div>
   </section>
@@ -1077,7 +1128,7 @@
     <span>Not on the app stores yet — links land here when it ships. Prices are estimates, not quotes.</span>
     <span class="footer-links">
       <a href="/">Home</a>
-      <a href="/how-it-works/">How it works</a>
+      <a href="/#how-it-works">How it works</a>
       <a href="/PrivacyPolicy/">Privacy</a>
       <a href="/delete-account/">Delete account</a>
       <a href="mailto:support@thefernbasket.com">Support</a>
@@ -1118,6 +1169,50 @@
 
     paint();
 
+  })();
+
+  /* The walkthrough. Auto-plays, one step every 4 seconds, from the moment
+     it is on screen; stops for good the moment someone picks a step, presses
+     a button or an arrow key; pauses while off screen or the tab is hidden.
+     Under prefers-reduced-motion it never auto-plays: step 1 waits for a tap. */
+  (function () {
+    var RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var imgs = Array.prototype.slice.call(document.querySelectorAll('#wt-screen img'));
+    var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
+    var count = document.getElementById('wt-count'), pp = document.getElementById('wt-pp'), walk = document.getElementById('wt-walk');
+    var N = steps.length, cur = 0, timer = null, userStopped = RM, inView = false;
+    var HOLD = 4000;
+
+    function show(i, focus) {
+      cur = (i + N) % N;
+      imgs.forEach(function (im, k) { im.classList.toggle('on', k === cur); if (k === cur) im.loading = 'eager'; });
+      steps.forEach(function (s, k) { if (k === cur) s.setAttribute('aria-current', 'step'); else s.removeAttribute('aria-current'); });
+      count.textContent = 'Step ' + (cur + 1) + ' of ' + N;
+      if (focus) steps[cur].focus({ preventScroll: true });
+    }
+    function tick() { timer = null; show(cur + 1); arm(); }
+    function arm() { if (!timer && inView && !userStopped && !document.hidden) timer = setTimeout(tick, HOLD); }
+    function disarm() { if (timer) { clearTimeout(timer); timer = null; } }
+    function stop() { userStopped = true; disarm(); pp.setAttribute('aria-pressed', 'true'); pp.setAttribute('aria-label', 'Play'); }
+    function go() { userStopped = false; pp.setAttribute('aria-pressed', 'false'); pp.setAttribute('aria-label', 'Pause'); arm(); }
+
+    steps.forEach(function (s, k) { s.addEventListener('click', function () { stop(); show(k); }); });
+    document.getElementById('wt-prev').addEventListener('click', function () { stop(); show(cur - 1); });
+    document.getElementById('wt-next').addEventListener('click', function () { stop(); show(cur + 1); });
+    pp.addEventListener('click', function () { if (userStopped) go(); else stop(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      var t = e.target, typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable);
+      if (typing) return;
+      if (e.key === 'ArrowRight') { stop(); show(cur + 1, true); e.preventDefault(); }
+      else if (e.key === 'ArrowLeft') { stop(); show(cur - 1, true); e.preventDefault(); }
+    });
+    // the images next to the current one are worth having ready
+    imgs.forEach(function (im, k) { if (k < 2) im.loading = 'eager'; });
+
+    if (RM) { pp.setAttribute('aria-pressed', 'true'); pp.setAttribute('aria-label', 'Play'); }
+    new IntersectionObserver(function (es) { inView = es[0].isIntersecting; if (inView) arm(); else disarm(); }, { threshold: .3 }).observe(walk);
+    document.addEventListener('visibilitychange', function () { if (document.hidden) disarm(); else arm(); });
   })();
 </script>
 <script>
