@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Card animations · prototype</title>
+<script>document.documentElement.className = 'js';</script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../public/chrome.css">
+<style>
+/* =========================================================================
+   PROTOTYPE: one small looping scene per "What the app does" card, in the
+   hero animation's language (paper cards, the app's tokens, Web Animations
+   on transform and opacity only). Each scene is drawn at 280 x 160 and
+   scaled to the card's width.
+   ========================================================================= */
+body { padding: 48px var(--page-x) 96px; }
+.inner { max-width: 1000px; margin: 0 auto; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+@media (max-width: 900px) { .cards { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .cards { grid-template-columns: 1fr; } }
+.cell { background: var(--surface); border: 1px solid var(--hair); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.cell p { margin: 0; font-size: clamp(15px, 1.25vw, 18px); line-height: 1.6; color: var(--muted); }
+
+/* The scene box: 280 x 160 drawn, scaled to the card's width */
+.fit { position: relative; width: 100%; aspect-ratio: 280 / 160; border-radius: 12px; background: var(--bg); overflow: hidden; }
+.scene { position: absolute; left: 0; top: 0; width: 280px; height: 160px; transform-origin: 0 0; }
+.scene * { position: absolute; margin: 0; }
+.scene .card, .scene .list { border-radius: 4px; background: var(--surface); box-shadow: 0 1px 0 rgba(23,37,30,.04), 0 16px 28px -18px rgba(23,37,30,.45), inset 0 0 0 1px var(--rule); }
+.scene .t { font: 800 11px/14px var(--font-body); letter-spacing: -.01em; color: var(--text); white-space: nowrap; }
+.scene .ln { height: 16px; font: 500 10px/16px var(--font-body); color: var(--text); white-space: nowrap; }
+.scene .ln b { position: static; font-weight: 700; font-variant-numeric: tabular-nums; }
+.scene .ln .m { position: static; color: var(--muted); }
+.scene .chip { height: 22px; padding: 0 8px 0 6px; border-radius: 11px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--rule); font: 700 10px/22px var(--font-body); color: var(--text); white-space: nowrap; display: flex; gap: 5px; align-items: center; }
+.scene .chip svg { position: static; width: 12px; height: 12px; fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.scene .tag { height: 16px; padding: 0 6px; border-radius: 8px; font: 700 9px/16px var(--font-body); letter-spacing: .06em; text-transform: uppercase; box-shadow: inset 0 0 0 1px var(--accent); color: var(--accent); white-space: nowrap; }
+.scene .tag.fill { background: var(--accent); color: var(--on-accent); box-shadow: none; }
+.scene .aisle { font: 700 8px/12px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.scene .bx { width: 10px; height: 10px; border-radius: 2px; box-shadow: inset 0 0 0 1.5px var(--text); }
+.scene .ck { width: 14px; height: 14px; fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.scene .strike { height: 1.5px; background: var(--text); transform-origin: left center; }
+.scene .bar { height: 10px; border-radius: 5px; background: var(--rule); transform-origin: left center; }
+.scene .bar.win { background: var(--accent); }
+.scene .amt { font: 700 10px/16px var(--font-body); font-variant-numeric: tabular-nums; color: var(--text); white-space: nowrap; }
+.scene .cap { font: 500 8px/12px var(--font-body); color: var(--muted); white-space: nowrap; }
+.scene .phone { border-radius: 10px; background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--text); }
+.scene .sig { width: 3px; border-radius: 1px; background: var(--text); }
+.scene .slash { width: 22px; height: 2px; background: var(--accent); border-radius: 1px; }
+.scene .bskt { width: 40px; height: 32px; fill: none; stroke: var(--text); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.scene .leaf { width: 12px; height: 12px; fill: var(--accent); }
+.hint { margin-top: 24px; font-size: 14px; color: var(--muted); }
+html:not(.js) .fit { display: none; }
+</style>
+</head>
+<body>
+<div class="inner">
+  <h2>What the app does</h2>
+  <div class="cards">
+
+    <!-- 1. Add a recipe: a link, a photo and a video each drop into one card -->
+    <article class="cell">
+      <div class="fit"><div class="scene" id="s1">
+        <div class="chip" id="c1-link" style="left:16px;top:20px"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>recipetineats.com</div>
+        <div class="chip" id="c1-photo" style="left:16px;top:50px"><svg viewBox="0 0 24 24"><path d="M4 7h3l2-3h6l2 3h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Photo of the card</div>
+        <div class="chip" id="c1-video" style="left:16px;top:80px"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/></svg>YouTube video</div>
+        <div class="card" id="c1-card" style="left:156px;top:26px;width:108px;height:108px">
+          <div class="t" id="c1-t" style="left:12px;top:12px">Lamb shoulder</div>
+          <div class="ln" id="c1-l0" style="left:12px;top:36px"><b>1.8</b> <span class="m">kg</span> lamb</div>
+          <div class="ln" id="c1-l1" style="left:12px;top:54px"><b>3</b> <span class="m">sprigs</span> rosemary</div>
+          <div class="ln" id="c1-l2" style="left:12px;top:72px"><b>900</b> <span class="m">g</span> kūmara</div>
+        </div>
+        <div class="cap" id="c1-cap" style="left:156px;top:140px">Any language, out in English</div>
+      </div></div>
+      <h3>Add a recipe from a link, a photo, or a video</h3>
+      <p>Paste a URL or the recipe text, take or choose a photo of a cookbook page, or send a YouTube link.</p>
+    </article>
+
+    <!-- 2. Duplicates merge: butter from two recipes becomes one line -->
+    <article class="cell">
+      <div class="fit"><div class="scene" id="s2">
+        <div class="card" id="c2-a" style="left:14px;top:16px;width:96px;height:66px">
+          <div class="t" style="left:10px;top:8px">Scones</div>
+          <div class="ln" style="left:10px;top:26px"><b>2</b> <span class="m">cups</span> flour</div>
+          <div class="ln" id="c2-ba" style="left:10px;top:42px"><b>75</b> <span class="m">g</span> butter</div>
+        </div>
+        <div class="card" id="c2-b" style="left:14px;top:90px;width:96px;height:66px">
+          <div class="t" style="left:10px;top:8px">Banana bread</div>
+          <div class="ln" id="c2-bb" style="left:10px;top:26px"><b>125</b> <span class="m">g</span> butter</div>
+          <div class="ln" style="left:10px;top:42px"><b>3</b> bananas</div>
+        </div>
+        <div class="list" id="c2-list" style="left:150px;top:24px;width:116px;height:112px">
+          <div class="t" style="left:10px;top:8px">This week</div>
+          <div class="ln" style="left:10px;top:28px"><b>2</b> <span class="m">cups</span> flour</div>
+          <div class="ln" id="c2-m" style="left:10px;top:46px"><b id="c2-n">200</b> <span class="m">g</span> butter</div>
+          <div class="ln" style="left:10px;top:64px"><b>3</b> bananas</div>
+          <div class="tag" id="c2-plus" style="left:76px;top:44px">+1</div>
+        </div>
+        <div class="ln" id="c2-fly1" style="left:24px;top:58px"><b>75</b> <span class="m">g</span> butter</div>
+        <div class="ln" id="c2-fly2" style="left:24px;top:116px"><b>125</b> <span class="m">g</span> butter</div>
+      </div></div>
+      <h3>Duplicate ingredients merge into one line</h3>
+      <p>Cook several dishes at once and shared ingredients combine automatically.</p>
+    </article>
+
+    <!-- 3. Sorted by aisle: a jumbled list groups itself -->
+    <article class="cell">
+      <div class="fit"><div class="scene" id="s3">
+        <div class="list" style="left:56px;top:10px;width:168px;height:140px">
+          <div class="aisle" id="c3-h0" style="left:12px;top:10px">Fruit and vege</div>
+          <div class="aisle" id="c3-h1" style="left:12px;top:64px">Chilled</div>
+          <div class="aisle" id="c3-h2" style="left:12px;top:100px">Meat</div>
+          <div class="ln" id="c3-i0" style="left:12px;top:24px">Onions</div>
+          <div class="ln" id="c3-i1" style="left:12px;top:42px">Butter</div>
+          <div class="ln" id="c3-i2" style="left:12px;top:60px">Lamb shoulder</div>
+          <div class="ln" id="c3-i3" style="left:12px;top:78px">Kūmara</div>
+          <div class="ln" id="c3-i4" style="left:12px;top:96px">Eggs</div>
+          <div class="tag fill" id="c3-tag" style="left:108px;top:8px">By aisle</div>
+        </div>
+      </div></div>
+      <h3>A shopping list sorted by supermarket aisle</h3>
+      <p>Shop mode groups the list the way the store is laid out, so you walk the aisles once.</p>
+    </article>
+
+    <!-- 4. Works offline: the signal goes, the ticks keep landing -->
+    <article class="cell">
+      <div class="fit"><div class="scene" id="s4">
+        <div class="phone" style="left:92px;top:10px;width:96px;height:150px">
+          <div class="sig" id="c4-s1" style="left:12px;top:10px;height:4px;margin-top:6px"></div>
+          <div class="sig" id="c4-s2" style="left:17px;top:10px;height:7px;margin-top:3px"></div>
+          <div class="sig" id="c4-s3" style="left:22px;top:10px;height:10px"></div>
+          <div class="slash" id="c4-slash" style="left:8px;top:14px;transform:rotate(-40deg)"></div>
+          <div class="t" style="left:12px;top:30px">Shop</div>
+          <div class="bx" id="c4-b0" style="left:12px;top:56px"></div><div class="ln" style="left:28px;top:53px">Milk</div>
+          <div class="bx" id="c4-b1" style="left:12px;top:78px"></div><div class="ln" style="left:28px;top:75px">Eggs</div>
+          <div class="bx" id="c4-b2" style="left:12px;top:100px"></div><div class="ln" style="left:28px;top:97px">Butter</div>
+          <div class="bx" id="c4-b3" style="left:12px;top:122px"></div><div class="ln" style="left:28px;top:119px">Bread</div>
+          <svg class="ck" id="c4-k0" viewBox="0 0 18 18" style="left:10px;top:54px"><path d="M3 9.5l4 4L15 4"/></svg>
+          <svg class="ck" id="c4-k1" viewBox="0 0 18 18" style="left:10px;top:76px"><path d="M3 9.5l4 4L15 4"/></svg>
+          <svg class="ck" id="c4-k2" viewBox="0 0 18 18" style="left:10px;top:98px"><path d="M3 9.5l4 4L15 4"/></svg>
+          <svg class="ck" id="c4-k3" viewBox="0 0 18 18" style="left:10px;top:120px"><path d="M3 9.5l4 4L15 4"/></svg>
+        </div>
+        <div class="tag" id="c4-tag" style="left:200px;top:70px">No signal</div>
+        <div class="cap" id="c4-cap" style="left:200px;top:92px">Still works</div>
+      </div></div>
+      <h3>Works offline in the supermarket</h3>
+      <p>Your library, your baskets and the shopping list itself all live on the phone.</p>
+    </article>
+
+    <!-- 5. Compare stores: three estimates, the likely cheapest marked -->
+    <article class="cell">
+      <div class="fit"><div class="scene" id="s5">
+        <div class="t" style="left:16px;top:14px">Basket total by store</div>
+        <div class="ln" style="left:16px;top:40px">Pak'nSave</div><div class="bar win" id="c5-b0" style="left:92px;top:43px;width:100px"></div><div class="amt" id="c5-a0" style="left:200px;top:40px">≈ $47.80</div>
+        <div class="ln" style="left:16px;top:70px">New World</div><div class="bar" id="c5-b1" style="left:92px;top:73px;width:100px"></div><div class="amt" id="c5-a1" style="left:200px;top:70px">≈ $52.60</div>
+        <div class="ln" style="left:16px;top:100px">Woolworths</div><div class="bar" id="c5-b2" style="left:92px;top:103px;width:100px"></div><div class="amt" id="c5-a2" style="left:200px;top:100px">≈ $57.20</div>
+        <div class="tag fill" id="c5-tag" style="left:92px;top:22px">Likely cheapest</div>
+        <div class="cap" id="c5-cap" style="left:16px;top:134px">AI estimates, not live prices</div>
+      </div></div>
+      <h3>Compare Pak'nSave, New World and Woolworths</h3>
+      <p>An estimated total for your whole basket at each store, with the likely cheapest marked.</p>
+    </article>
+
+    <!-- 6. Adapt: cream becomes coconut cream, and goes into the basket -->
+    <article class="cell">
+      <div class="fit"><div class="scene" id="s6">
+        <div class="card" style="left:16px;top:18px;width:150px;height:124px">
+          <div class="t" style="left:12px;top:10px">Thai green curry</div>
+          <div class="tag" id="c6-prem" style="left:96px;top:9px">Premium</div>
+          <div class="ln" style="left:12px;top:34px"><b>500</b> <span class="m">g</span> chicken</div>
+          <div class="ln" id="c6-old" style="left:12px;top:52px"><b>300</b> <span class="m">ml</span> cream</div>
+          <div class="strike" id="c6-strike" style="left:12px;top:60px;width:66px"></div>
+          <div class="ln" id="c6-new" style="left:12px;top:70px;color:var(--accent)"><b>300</b> <span class="m">ml</span> coconut cream</div>
+          <div class="ln" style="left:12px;top:88px"><b>2</b> <span class="m">tbsp</span> curry paste</div>
+          <div class="chip" id="c6-chip" style="left:12px;top:100px"><svg class="leaf" viewBox="0 0 24 24" style="stroke:none"><path d="M4 20c0-9 6-15 16-16-1 10-7 16-16 16z"/></svg>Vegan</div>
+        </div>
+        <svg class="bskt" id="c6-bskt" viewBox="0 0 40 32" style="left:212px;top:72px"><path d="M4 12h32l-4 17H8z"/><path d="M13 12l5-9M27 12l-5-9"/><path d="M4 12q16 6 32 0"/></svg>
+        <div class="ln" id="c6-fly" style="left:28px;top:70px;color:var(--accent)"><b>300</b> <span class="m">ml</span> coconut cream</div>
+      </div></div>
+      <h3>Adapt a recipe to how you eat</h3>
+      <p>Premium can rewrite a recipe as vegetarian, vegan or gluten-free, showing what changed and why.</p>
+    </article>
+
+  </div>
+  <p class="hint">Prototype. Each scene loops on its own, plays only while on screen, and shows its last frame when the visitor prefers reduced motion.</p>
+</div>
+
+<script>
+(function () {
+'use strict';
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const E = { out: 'cubic-bezier(.2,.7,.2,1)', inOut: 'cubic-bezier(.6,0,.3,1)', back: 'cubic-bezier(.34,1.56,.64,1)', lin: 'linear' };
+
+/* One small timeline per scene: the hero animation's engine, reduced. */
+function Scene(id, loop, show, build) {
+  const root = document.getElementById(id), $ = s => root.querySelector(s), specs = [];
+  const A = (t, el, prop, values, dur, easing, offsets) => specs.push({ t, el: typeof el === 'string' ? $(el) : el, prop, values, dur, easing: easing || E.out, offsets });
+  build(A, $, root);
+  specs.sort((a, b) => a.t - b.t);
+  const seen = new Map();
+  const anims = specs.map(sp => {
+    let set = seen.get(sp.el); if (!set) seen.set(sp.el, set = new Set());
+    const fill = set.has(sp.prop) ? 'forwards' : 'both'; set.add(sp.prop);
+    const kf = sp.values.map((v, i) => { const o = {}; o[sp.prop] = v; if (sp.offsets) o.offset = sp.offsets[i]; return o; });
+    const a = sp.el.animate(kf, { delay: sp.t, duration: sp.dur, easing: sp.easing, fill }); a.pause(); return a;
+  });
+  const tick = document.createElement('i'); tick.hidden = true; root.append(tick);
+  const clock = tick.animate([{ opacity: 0 }, { opacity: 0 }], { duration: loop }); clock.pause();
+  let running = false, inView = false;
+  const seek = ms => { anims.forEach(a => { a.currentTime = ms; }); clock.currentTime = ms; };
+  const play = () => { anims.forEach(a => a.play()); clock.play(); running = true; };
+  const pause = () => { anims.forEach(a => a.pause()); clock.pause(); running = false; };
+  clock.onfinish = () => { if (running) { seek(0); play(); } };
+  if (RM) { seek(show); return; }
+  seek(0);
+  const sync = () => { if (inView && !document.hidden) { if (!running) play(); } else if (running) pause(); };
+  new IntersectionObserver(es => { inView = es[0].isIntersecting; sync(); }, { threshold: .3 }).observe(root.parentElement);
+  document.addEventListener('visibilitychange', sync);
+}
+// The scenes are drawn at 280 wide; scale each to its box.
+function fit() { document.querySelectorAll('.fit').forEach(f => { f.firstElementChild.style.transform = 'scale(' + (f.clientWidth / 280).toFixed(4) + ')'; }); }
+fit(); addEventListener('resize', fit);
+
+/* 1. Add a recipe ------------------------------------------------------- */
+Scene('s1', 6400, 5200, (A, $, root) => {
+  A(0, '#c1-card', 'opacity', [0, 1], 300); A(0, '#c1-card', 'transform', ['translateY(8px) rotate(2deg)', 'translateY(0) rotate(2deg)'], 500);
+  ['#c1-t', '#c1-l0', '#c1-l1', '#c1-l2', '#c1-cap'].forEach(s => A(0, s, 'opacity', [0, 0], 1));
+  [['#c1-link', 900], ['#c1-photo', 1900], ['#c1-video', 2900]].forEach(([s, t], i) => {
+    A(0, s, 'opacity', [0, 1], 300); A(0, s, 'transform', ['translateX(-8px)', 'translateX(0)'], 400);
+    A(t, s, 'transform', ['translate(0,0) scale(1)', 'translate(' + (150) + 'px,' + (58 - 30 * i) + 'px) scale(.3)'], 620, E.inOut);
+    A(t + 380, s, 'opacity', [1, 0], 240);
+    A(t + 560, '#c1-card', 'transform', ['translateY(0) rotate(2deg)', 'translateY(3px) rotate(2deg) scale(1.03,.97)', 'translateY(0) rotate(2deg)'], 340, E.out, [0, .4, 1]);
+  });
+  A(1500, '#c1-t', 'opacity', [0, 1], 300);
+  [['#c1-l0', 2500], ['#c1-l1', 3500], ['#c1-l2', 3800]].forEach(([s, t]) => { A(t, s, 'opacity', [0, 1], 300); A(t, s, 'transform', ['translateX(-6px)', 'translateX(0)'], 340); });
+  A(4300, '#c1-cap', 'opacity', [0, 1], 300);
+  A(5900, root, 'opacity', [1, 0], 400, E.inOut); A(0, root, 'opacity', [0, 1], 300);
+});
+
+/* 2. Duplicates merge --------------------------------------------------- */
+Scene('s2', 6000, 4800, (A, $, root) => {
+  A(0, root, 'opacity', [0, 1], 300); A(5600, root, 'opacity', [1, 0], 400, E.inOut);
+  A(0, '#c2-list', 'opacity', [0, 1], 400); A(0, '#c2-list', 'transform', ['translateX(12px)', 'translateX(0)'], 500);
+  A(0, '#c2-m', 'opacity', [0, 0], 1); A(0, '#c2-plus', 'opacity', [0, 0], 1); A(0, '#c2-plus', 'transform', ['scale(.6)', 'scale(.6)'], 1);
+  // the two butter lines lift off their cards and fly to the list
+  A(1200, '#c2-ba', 'opacity', [1, .25], 300); A(1200, '#c2-fly1', 'opacity', [0, 1], 120); A(0, '#c2-fly1', 'opacity', [0, 0], 1);
+  A(1200, '#c2-fly1', 'transform', ['translate(0,0)', 'translate(136px,-12px)'], 700, E.inOut);
+  A(2000, '#c2-bb', 'opacity', [1, .25], 300); A(2000, '#c2-fly2', 'opacity', [0, 1], 120); A(0, '#c2-fly2', 'opacity', [0, 0], 1);
+  A(2000, '#c2-fly2', 'transform', ['translate(0,0)', 'translate(136px,-70px)'], 700, E.inOut);
+  A(1900, '#c2-fly1', 'opacity', [1, 0], 200); A(1900, '#c2-m', 'opacity', [0, 1], 200);
+  A(2700, '#c2-fly2', 'opacity', [1, 0], 200);
+  A(2700, '#c2-m', 'transform', ['scale(1)', 'scale(1.12)', 'scale(1)'], 420, E.out);
+  A(2750, '#c2-plus', 'opacity', [0, 1, 1, 0], 1400, E.lin, [0, .1, .7, 1]); A(2750, '#c2-plus', 'transform', ['scale(.6)', 'scale(1)'], 400, E.back);
+});
+
+/* 3. Sorted by aisle ---------------------------------------------------- */
+Scene('s3', 6200, 5000, (A, $, root) => {
+  A(0, root, 'opacity', [0, 1], 300); A(5800, root, 'opacity', [1, 0], 400, E.inOut);
+  // start jumbled with no headers: items sit at rows 0..4 from top 24
+  const rows = { '#c3-i0': 0, '#c3-i1': 1, '#c3-i2': 2, '#c3-i3': 3, '#c3-i4': 4 };
+  const start = {}; Object.keys(rows).forEach((k, i) => { start[k] = 10 + i * 18; });
+  ['#c3-h0', '#c3-h1', '#c3-h2', '#c3-tag'].forEach(s => A(0, s, 'opacity', [0, 0], 1));
+  Object.keys(rows).forEach(k => A(0, k, 'transform', ['translateY(' + (start[k] - (24 + rows[k] * 18)) + 'px)', 'translateY(' + (start[k] - (24 + rows[k] * 18)) + 'px)'], 1));
+  // the final layout: Fruit and vege (onions, kūmara), Chilled (butter, eggs), Meat (lamb)
+  const final = { '#c3-i0': 24, '#c3-i3': 42, '#c3-i1': 78, '#c3-i4': 96, '#c3-i2': 114 };
+  A(1400, '#c3-tag', 'opacity', [0, 1], 200); A(1400, '#c3-tag', 'transform', ['scale(.7)', 'scale(1)'], 380, E.back);
+  Object.keys(final).forEach((k, i) => {
+    const from = start[k] - (24 + rows[k] * 18), to = final[k] - (24 + rows[k] * 18);
+    A(1800 + i * 90, k, 'transform', ['translateY(' + from + 'px)', 'translateY(' + to + 'px)'], 700, E.inOut);
+  });
+  A(2400, '#c3-h0', 'opacity', [0, 1], 300); A(2500, '#c3-h1', 'opacity', [0, 1], 300); A(2600, '#c3-h2', 'opacity', [0, 1], 300);
+});
+
+/* 4. Works offline ------------------------------------------------------ */
+Scene('s4', 6400, 5200, (A, $, root) => {
+  A(0, root, 'opacity', [0, 1], 300); A(6000, root, 'opacity', [1, 0], 400, E.inOut);
+  A(0, '#c4-slash', 'opacity', [0, 0], 1); A(0, '#c4-tag', 'opacity', [0, 0], 1); A(0, '#c4-cap', 'opacity', [0, 0], 1);
+  ['#c4-k0', '#c4-k1', '#c4-k2', '#c4-k3'].forEach(s => { A(0, s, 'opacity', [0, 0], 1); A(0, s, 'transform', ['scale(0)', 'scale(0)'], 1); });
+  A(900, '#c4-k0', 'opacity', [0, 1], 120); A(900, '#c4-k0', 'transform', ['scale(0)', 'scale(1)'], 320, E.back);
+  // the signal drops
+  A(1700, '#c4-s3', 'opacity', [1, .2], 300); A(1900, '#c4-s2', 'opacity', [1, .2], 300); A(2100, '#c4-s1', 'opacity', [1, .2], 300);
+  A(2200, '#c4-slash', 'opacity', [0, 1], 200); A(2200, '#c4-slash', 'transform', ['rotate(-40deg) scaleX(0)', 'rotate(-40deg) scaleX(1)'], 300);
+  A(2300, '#c4-tag', 'opacity', [0, 1], 250); A(2300, '#c4-tag', 'transform', ['translateX(6px)', 'translateX(0)'], 350);
+  // and the ticks keep coming
+  [['#c4-k1', 3000], ['#c4-k2', 3700], ['#c4-k3', 4400]].forEach(([s, t]) => { A(t, s, 'opacity', [0, 1], 120); A(t, s, 'transform', ['scale(0)', 'scale(1)'], 320, E.back); });
+  A(3400, '#c4-cap', 'opacity', [0, 1], 300);
+});
+
+/* 5. Compare stores ----------------------------------------------------- */
+Scene('s5', 6400, 5000, (A, $, root) => {
+  A(0, root, 'opacity', [0, 1], 300); A(6000, root, 'opacity', [1, 0], 400, E.inOut);
+  A(0, '#c5-tag', 'opacity', [0, 0], 1); A(0, '#c5-cap', 'opacity', [0, 0], 1);
+  [['#c5-b0', '#c5-a0', .62], ['#c5-b1', '#c5-a1', .78], ['#c5-b2', '#c5-a2', .92]].forEach(([b, a, w], i) => {
+    A(0, b, 'transform', ['scaleX(0)', 'scaleX(0)'], 1); A(0, a, 'opacity', [0, 0], 1);
+    A(700 + i * 350, b, 'transform', ['scaleX(0)', 'scaleX(' + w + ')'], 900, E.out);
+    A(1300 + i * 350, a, 'opacity', [0, 1], 300);
+  });
+  A(3000, '#c5-tag', 'opacity', [0, 1], 200); A(3000, '#c5-tag', 'transform', ['translateY(6px) scale(.8)', 'translateY(0) scale(1)'], 420, E.back);
+  A(3600, '#c5-cap', 'opacity', [0, 1], 300);
+});
+
+/* 6. Adapt a recipe ----------------------------------------------------- */
+Scene('s6', 6800, 5600, (A, $, root) => {
+  A(0, root, 'opacity', [0, 1], 300); A(6400, root, 'opacity', [1, 0], 400, E.inOut);
+  ['#c6-prem', '#c6-new', '#c6-chip', '#c6-fly'].forEach(s => A(0, s, 'opacity', [0, 0], 1));
+  A(0, '#c6-strike', 'transform', ['scaleX(0)', 'scaleX(0)'], 1);
+  A(800, '#c6-prem', 'opacity', [0, 1], 200); A(800, '#c6-prem', 'transform', ['scale(.7)', 'scale(1)'], 380, E.back);
+  A(1500, '#c6-strike', 'transform', ['scaleX(0)', 'scaleX(1)'], 300);
+  A(1700, '#c6-old', 'opacity', [1, .35], 300);
+  A(1900, '#c6-new', 'opacity', [0, 1], 300); A(1900, '#c6-new', 'transform', ['translateY(4px)', 'translateY(0)'], 340);
+  A(2400, '#c6-chip', 'opacity', [0, 1], 250); A(2400, '#c6-chip', 'transform', ['translateX(-6px)', 'translateX(0)'], 350);
+  // the swapped ingredient goes straight into the basket
+  A(3400, '#c6-fly', 'opacity', [0, 1], 100); A(3400, '#c6-new', 'opacity', [1, .35], 200);
+  const N = 12, vals = [], offs = []; for (let i = 0; i <= N; i++) { const u = i / N; const x = 190 * u, y = -46 * 4 * u * (1 - u) + 4 * u; vals.push('translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + (1 - .5 * u).toFixed(3) + ')'); offs.push(u); }
+  A(3400, '#c6-fly', 'transform', vals, 720, E.lin, offs); A(3900, '#c6-fly', 'opacity', [1, 0], 220);
+  A(4120, '#c6-bskt', 'transform', ['scale(1)', 'scale(1.06,.94)', 'scale(1)'], 360, E.out);
+});
+})();
+</script>
+</body>
+</html>
