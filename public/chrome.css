@@ -48,7 +48,10 @@ html[data-theme="dark"] {
 
 *, *::before, *::after { box-sizing: border-box; }
 html { overflow-x: clip; -webkit-text-size-adjust: 100%; }
-html, body { margin:0; padding:0; background:var(--bg); }
+/* The page colour is on html only: it paints the canvas, under the fixed
+   watermark layer. A background on body would paint over that layer. */
+html { background:var(--bg); }
+html, body { margin:0; padding:0; }
 body { color:var(--text); font-family:var(--font-body); font-weight:500; -webkit-font-smoothing:antialiased; }
 img { display:block; max-width:100%; }
 a { color:var(--accent); text-decoration:none; }
@@ -66,11 +69,14 @@ a:hover { color:var(--accent); }
   padding:12px 16px; border:1px solid var(--hair); border-radius:10px;
 }
 
-/* ---- Watermarks: the logo mark, large and faint, behind the page. Opacity
-   stays under .07 so nothing on top loses contrast; the blur keeps them
-   reading as texture rather than as images. The container they sit in must
-   be position:relative with overflow hidden. ----------------------------- */
-.watermarks { position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0; }
+/* ---- Watermarks: the logo mark, large and faint, behind every page.
+   One fixed layer the size of the viewport, so the marks sit in the same
+   places on every page and at every scroll position, and are never cut off
+   by a section edge. z-index -1 puts it above the page background and below
+   all content; nothing else may paint its own background over it (a surface
+   band is the one deliberate exception). Opacity stays under .07 so nothing
+   on top loses contrast; the blur keeps them reading as texture. ----------- */
+.watermarks { position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:-1; }
 .watermarks img { position:absolute; max-width:none; filter:var(--logo-filter) blur(.6px); }
 .watermarks .wm-a { left:-20%; bottom:-28%; width:92vh; opacity:.055; transform:rotate(-14deg); }
 .watermarks .wm-b { right:-10%; top:-24%;  width:60vh; opacity:.05;  transform:rotate(26deg); }
@@ -121,13 +127,9 @@ h3 { margin:0 0 8px; font-weight:800; letter-spacing:-.01em; font-size:clamp(17p
 /* ---- A plain page (privacy, delete account): the same gutter, top bar and
    watermarks as the homepage's hero, then the text. ----------------------- */
 .page {
-  position:relative; overflow:hidden; background:var(--bg); color:var(--text);
+  position:relative; color:var(--text);
   padding:clamp(12px,2.4vh,30px) var(--page-x) 0;
 }
-/* The layer is one screen tall, at the top, so the marks sit where they do
-   behind the homepage's hero rather than spread down a long page. */
-.page > .watermarks { height:100vh; bottom:auto; }
-.page > main { position:relative; z-index:1; }
 .page-head { display:flex; flex-direction:column; align-items:flex-start; padding-top:clamp(20px,3vh,32px); }
 .page-head .overline { margin:clamp(16px,2vh,24px) 0 0; }
 .page-head .overline + h1 { margin-top:8px; }

@@ -198,15 +198,10 @@
      short viewport (a landscape phone) never strands content. */
   .stage {
     position:relative; min-height:100dvh; width:100%; overflow:hidden;
-    background:var(--bg); color:var(--text);
+    color:var(--text);
     display:flex; flex-direction:column;
     padding:clamp(12px,2.4vh,30px) clamp(16px,3.4vw,44px);
   }
-
-  .content .watermarks .wm-a { left:-14%; top:8%; bottom:auto; width:70vh; transform:rotate(-20deg); }
-  .content .watermarks .wm-b { right:-12%; top:38%; width:64vh; transform:rotate(18deg); }
-  .content .watermarks .wm-c { left:30%; bottom:-10%; top:auto; width:48vh; transform:rotate(-8deg); }
-  .content .watermarks .wm-d, .content .watermarks .wm-e { display:none; }
 
   /* ---- Hero: copy and the four steps on the left, the animation on the right.
      Stacked on narrow screens: copy, animation, steps. ---------------------- */
@@ -364,8 +359,7 @@
      Spacing is on the 8px grid; nothing here introduces a colour outside the
      existing tokens: --bg dominant, --surface for the structural cards,
      --primary reserved for links and accents only. */
-  .content { position:relative; background:var(--bg); color:var(--text); overflow:hidden; }
-  .content > .band { position:relative; z-index:1; }
+  .content { position:relative; color:var(--text); }
   .band { padding:clamp(48px,8vw,96px) clamp(16px,3.4vw,44px); }
   .band-alt { background:var(--surface); border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); }
   .inner { width:100%; max-width:1000px; margin:0 auto; }
@@ -661,13 +655,6 @@
 </div>
 
 <main id="content" class="content">
-  <div class="watermarks" aria-hidden="true">
-    <img class="wm-a" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
-    <img class="wm-b" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
-    <img class="wm-c" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
-    <img class="wm-d" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
-    <img class="wm-e" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
-  </div>
   <section class="band">
     <div class="inner">
       <h2>Turn any recipe into one shopping list</h2>

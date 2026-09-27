@@ -24,9 +24,8 @@ function pages(dir) {
   return out.sort();
 }
 
-// Each block: a name and how to find it. `all` blocks may appear more than
-// once on a page (the homepage has two watermark layers); the first is the
-// one compared.
+// Each block: a name and how to find it. Every occurrence on a page is
+// compared, so a page with two copies of a block differs from one with one.
 const BLOCKS = [
   ['top bar', /<header class="topbar">[\s\S]*?<\/header>/],
   ['watermarks', /<div class="watermarks"[\s\S]*?<\/div>/],
@@ -48,13 +47,14 @@ for (const file of files) {
   const html = readFileSync(file, 'utf8');
   const name = relative(root, file);
   for (const [label, re] of BLOCKS) {
-    const m = html.match(re);
-    if (!m) {
+    const all = [...html.matchAll(new RegExp(re.source, 'g'))];
+    if (!all.length) {
       console.error(`FAIL ${name}: no ${label}`);
       failed = true;
       continue;
     }
-    const got = flat(m[0]);
+    // Every occurrence, so a page cannot carry a second copy the others lack.
+    const got = all.map((m) => flat(m[0])).join(' | ');
     if (!(label in first)) {
       first[label] = { got, name };
     } else if (first[label].got !== got) {
