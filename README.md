@@ -14,10 +14,12 @@ Everything that gets published lives in `public/`. Nothing else does.
 
 | Path | What it is |
 | --- | --- |
-| `public/index.html` | The whole marketing page, self-contained (its own `<style>`) |
+| `public/chrome.css` | The chrome every page shares: tokens, fonts, top bar, logo mark, watermarks, footer, headings. Change these here, never in a page |
+| `public/index.html` | The marketing page: links `chrome.css`, then its own `<style>` for the hero animation and content sections |
 | `public/PrivacyPolicy/index.html` | The published privacy policy (version `2026-09-27`; the app records consents against that exact string) |
 | `public/delete-account/index.html` | How to delete an account, at `/delete-account/`, which the app's policy and Google Play point to |
-| `public/styles.css` | Design tokens + layout. Only the privacy and delete-account pages link it |
+| `public/styles.css` | What long-form text needs (the policy layout, tables). Only the text pages link it, after `chrome.css` |
+| `tools/check-chrome.mjs` | Fails if any page's top bar, watermarks, logo mark, footer or stylesheet links differ from the others. Run before every PR |
 | `public/robots.txt` | Allows everything. Pure ASCII on purpose - see below |
 | `public/sitemap.xml` | All three pages, with `lastmod` taken from git |
 | `public/assets/screens/*.webp` | App screenshots for the "screen by screen" section |
@@ -96,6 +98,25 @@ add it to the app's tokens first, then copy it across. Spacing follows the same
 The typefaces are Fraunces (display: the headline, section headings and the
 recipe cards) and Plus Jakarta Sans (everything else, weights 400 to 800, the
 same as the app), loaded from Google Fonts.
+
+## One chrome for every page
+
+Every page must look like the same site: the same top bar and theme toggle,
+the logo mark with its rings above the title, the same watermarks behind the
+page, the same footer, the same fonts, colours and heading sizes. That chrome
+lives in `public/chrome.css`, and the markup for it is copied verbatim into
+each page (`index.html`, `PrivacyPolicy/`, `delete-account/`).
+
+Rules:
+
+1. A change to any of those things is made in `chrome.css`, once. If it needs
+   markup, change it in every page in the same commit.
+2. A new page starts by copying `public/delete-account/index.html` and
+   replacing the content between `<div class="page-head">…</div>` and
+   `</section>`. Nothing else in the skeleton changes.
+3. Run `node tools/check-chrome.mjs` before opening a PR. It compares the top
+   bar, watermarks, logo mark, footer and stylesheet links across all pages
+   and fails on the first difference.
 
 ## Placeholders still to fill
 
