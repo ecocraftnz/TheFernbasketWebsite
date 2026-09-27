@@ -150,15 +150,17 @@ not applicable — the app isn't offered to EU/EEA users specifically).
 
 ## App screenshots
 
-The "From recipe to shopping list, screen by screen" section uses four WebP
-files in `public/assets/screens/`, all 665x1440:
+The "From recipe to shopping list, screen by screen" section uses three WebP
+files in `public/assets/screens/`, all 665x1440. A fourth, the price check,
+was removed on 27 Sep 2026 because it showed the old screen ("SORTED!", "You
+save", "CHEAPEST STORE", a distance) that the app dropped on 24 Sep 2026; add
+a fresh capture of the current price check when there is one:
 
 | File | Screen |
 | --- | --- |
 | `capture.webp` | Home, showing the four ways to add a recipe |
 | `recipe.webp` | A recipe open, with the ingredient list read from it |
 | `basket.webp` | The basket, grouped by supermarket section |
-| `price-check.webp` | The store comparison |
 
 665x1440 is a ratio of 2.165, and the CSS frame is `aspect-ratio:9/19.5`
 (2.167), so nothing is cropped. A replacement close to any modern phone screen
