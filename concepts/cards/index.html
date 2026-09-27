@@ -10,9 +10,12 @@
 <style>
 /* =========================================================================
    PROTOTYPE: one small looping scene per "What the app does" card, in the
-   hero animation's language (paper cards, the app's tokens, Web Animations
-   on transform and opacity only). Each scene is drawn at 280 x 160 and
-   scaled to the card's width.
+   hero animation's language: the same paper cards with rule lines and the
+   deep paper shadow, the same produce drawings and woven basket, the same
+   easings, settles and squashes, Web Animations on transform and opacity
+   only. Each scene is drawn at 280 x 180 and scaled to the card's width.
+   The produce drawings and the basket are copied from index.html by the
+   build step, never redrawn here.
    ========================================================================= */
 body { padding: 48px var(--page-x) 96px; }
 .inner { max-width: 1000px; margin: 0 auto; }
@@ -22,32 +25,47 @@ body { padding: 48px var(--page-x) 96px; }
 .cell { background: var(--surface); border: 1px solid var(--hair); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
 .cell p { margin: 0; font-size: clamp(15px, 1.25vw, 18px); line-height: 1.6; color: var(--muted); }
 
-/* The scene box: 280 x 160 drawn, scaled to the card's width */
-.fit { position: relative; width: 100%; aspect-ratio: 280 / 160; border-radius: 12px; background: var(--bg); overflow: hidden; }
-.scene { position: absolute; left: 0; top: 0; width: 280px; height: 160px; transform-origin: 0 0; }
+.fit { position: relative; width: 100%; aspect-ratio: 280 / 180; border-radius: 12px; background: var(--bg); overflow: hidden; }
+.scene { position: absolute; left: 0; top: 0; width: 280px; height: 180px; transform-origin: 0 0; }
 .scene * { position: absolute; margin: 0; }
-.scene .card, .scene .list { border-radius: 4px; background: var(--surface); box-shadow: 0 1px 0 rgba(23,37,30,.04), 0 16px 28px -18px rgba(23,37,30,.45), inset 0 0 0 1px var(--rule); }
-.scene .t { font: 800 11px/14px var(--font-body); letter-spacing: -.01em; color: var(--text); white-space: nowrap; }
-.scene .ln { height: 16px; font: 500 10px/16px var(--font-body); color: var(--text); white-space: nowrap; }
-.scene .ln b { position: static; font-weight: 700; font-variant-numeric: tabular-nums; }
-.scene .ln .m { position: static; color: var(--muted); }
-.scene .chip { height: 22px; padding: 0 8px 0 6px; border-radius: 11px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--rule); font: 700 10px/22px var(--font-body); color: var(--text); white-space: nowrap; display: flex; gap: 5px; align-items: center; }
-.scene .chip svg { position: static; width: 12px; height: 12px; fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.scene .tag { height: 16px; padding: 0 6px; border-radius: 8px; font: 700 9px/16px var(--font-body); letter-spacing: .06em; text-transform: uppercase; box-shadow: inset 0 0 0 1px var(--accent); color: var(--accent); white-space: nowrap; }
-.scene .tag.fill { background: var(--accent); color: var(--on-accent); box-shadow: none; }
-.scene .aisle { font: 700 8px/12px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
-.scene .bx { width: 10px; height: 10px; border-radius: 2px; box-shadow: inset 0 0 0 1.5px var(--text); }
-.scene .ck { width: 14px; height: 14px; fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-.scene .strike { height: 1.5px; background: var(--text); transform-origin: left center; }
-.scene .bar { height: 10px; border-radius: 5px; background: var(--rule); transform-origin: left center; }
-.scene .bar.win { background: var(--accent); }
-.scene .amt { font: 700 10px/16px var(--font-body); font-variant-numeric: tabular-nums; color: var(--text); white-space: nowrap; }
-.scene .cap { font: 500 8px/12px var(--font-body); color: var(--muted); white-space: nowrap; }
-.scene .phone { border-radius: 10px; background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--text); }
-.scene .sig { width: 3px; border-radius: 1px; background: var(--text); }
-.scene .slash { width: 22px; height: 2px; background: var(--accent); border-radius: 1px; }
-.scene .bskt { width: 40px; height: 32px; fill: none; stroke: var(--text); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.scene .leaf { width: 12px; height: 12px; fill: var(--accent); }
+.scene .paper, .scene .ln, .scene .t, .scene .cap, .scene .chip, .scene .stamp, .scene .ico, .scene .tick, .scene .strike, .scene .plus, .scene .bar, .scene .amt, .scene .aisle, .scene .bx { will-change: transform, opacity; }
+
+/* Paper, as in the hero: ruled lines, the deep soft shadow */
+.paper { border-radius: 4px; background: var(--surface); background-image: repeating-linear-gradient(transparent 0 17px, var(--rule) 17px 18px); background-position: 0 9px; box-shadow: var(--shadow-paper), inset 0 0 0 1px var(--rule); }
+.t { font: 800 13px/18px var(--font-body); letter-spacing: -.01em; color: var(--text); white-space: nowrap; }
+.ln { height: 18px; font: 500 12px/18px var(--font-body); color: var(--text); white-space: nowrap; }
+.ln b { position: static; font-weight: 700; font-variant-numeric: tabular-nums; }
+.ln .m { position: static; color: var(--muted); }
+.ln .sw { color: var(--accent); font-weight: 700; }
+.roll { position: static; display: inline-block; height: 18px; overflow: hidden; vertical-align: top; }
+.roll .col { position: static; display: flex; flex-direction: column; }
+.roll .col > span { position: static; height: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.cap { font: 500 10px/14px var(--font-body); color: var(--muted); white-space: nowrap; }
+.aisle { font: 700 9px/14px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.strike { height: 1.5px; background: var(--text); transform-origin: left center; }
+.strike.soft { background: var(--checked); }
+.bx { width: 12px; height: 12px; border-radius: 3px; box-shadow: inset 0 0 0 1.5px var(--text); }
+.tick { width: 16px; height: 16px; fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.ico { width: 24px; height: 24px; }
+.ico svg { position: static; display: block; width: 24px; height: 24px; overflow: visible; }
+
+/* Source chips (a link, a photo, a video): the hero's Premium chip, filled */
+.src { height: 24px; padding: 0 10px 0 8px; border-radius: 12px; background: var(--surface); box-shadow: var(--shadow), inset 0 0 0 1px var(--rule); font: 700 11px/24px var(--font-body); color: var(--text); white-space: nowrap; display: flex; gap: 6px; align-items: center; transform-origin: 50% 50%; }
+.src svg { position: static; width: 13px; height: 13px; fill: none; stroke: var(--accent); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+/* The hero's chip and stamp */
+.chip { height: 16px; padding: 0 6px; border-radius: 8px; font: 700 10px/16px var(--font-body); letter-spacing: .06em; text-transform: uppercase; box-shadow: inset 0 0 0 1px var(--accent); color: var(--accent); white-space: nowrap; display: flex; gap: 4px; align-items: center; }
+.chip svg { position: static; width: 10px; height: 10px; fill: var(--accent); }
+.stamp { padding: 0 8px; border-radius: 6px; box-shadow: inset 0 0 0 2px var(--accent); color: var(--accent); font: 800 10px/22px var(--font-body); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; transform-origin: 50% 50%; }
+.plus { font: 700 13px/18px var(--font-body); color: var(--accent); }
+.bar { height: 10px; border-radius: 5px; background: var(--rule); transform-origin: left center; }
+.bar.win { background: var(--accent); }
+.amt { font: 700 12px/18px var(--font-body); font-variant-numeric: tabular-nums; color: var(--text); white-space: nowrap; }
+.phone { border-radius: 16px; background: var(--surface); box-shadow: var(--shadow-paper), inset 0 0 0 2px var(--text); }
+.phone .notch { left: 38px; top: 6px; width: 28px; height: 5px; border-radius: 3px; background: var(--text); }
+.sig { width: 3px; border-radius: 1px; background: var(--text); }
+.slash { width: 24px; height: 2px; background: var(--accent); border-radius: 1px; transform-origin: left center; }
+.mini-basket { transform-origin: 50% 100%; }
+.mini-basket svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .hint { margin-top: 24px; font-size: 14px; color: var(--muted); }
 html:not(.js) .fit { display: none; }
 </style>
@@ -57,124 +75,208 @@ html:not(.js) .fit { display: none; }
   <h2>What the app does</h2>
   <div class="cards">
 
-    <!-- 1. Add a recipe: a link, a photo and a video each drop into one card -->
+    <!-- 1. Add a recipe -->
     <article class="cell">
       <div class="fit"><div class="scene" id="s1">
-        <div class="chip" id="c1-link" style="left:16px;top:20px"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>recipetineats.com</div>
-        <div class="chip" id="c1-photo" style="left:16px;top:50px"><svg viewBox="0 0 24 24"><path d="M4 7h3l2-3h6l2 3h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Photo of the card</div>
-        <div class="chip" id="c1-video" style="left:16px;top:80px"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/></svg>YouTube video</div>
-        <div class="card" id="c1-card" style="left:156px;top:26px;width:108px;height:108px">
-          <div class="t" id="c1-t" style="left:12px;top:12px">Lamb shoulder</div>
-          <div class="ln" id="c1-l0" style="left:12px;top:36px"><b>1.8</b> <span class="m">kg</span> lamb</div>
-          <div class="ln" id="c1-l1" style="left:12px;top:54px"><b>3</b> <span class="m">sprigs</span> rosemary</div>
-          <div class="ln" id="c1-l2" style="left:12px;top:72px"><b>900</b> <span class="m">g</span> kūmara</div>
+        <div class="src" id="c1-link" style="left:14px;top:22px"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>recipetineats.com</div>
+        <div class="src" id="c1-photo" style="left:14px;top:60px"><svg viewBox="0 0 24 24"><path d="M4 7h3l2-3h6l2 3h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Photo of the card</div>
+        <div class="src" id="c1-video" style="left:14px;top:98px"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/></svg>YouTube video</div>
+        <div class="paper" id="c1-card" style="left:142px;top:16px;width:128px;height:140px;transform:rotate(2deg)">
+          <div class="t" id="c1-t" style="left:12px;top:9px">Lamb shoulder</div>
+          <div class="ico" id="c1-i0" style="left:10px;top:33px"></div><div class="ln" id="c1-l0" style="left:36px;top:36px"><b>1.8</b> <span class="m">kg</span> lamb</div>
+          <div class="ico" id="c1-i1" style="left:10px;top:51px"></div><div class="ln" id="c1-l1" style="left:36px;top:54px"><b>3</b> <span class="m">sprigs</span> rosemary</div>
+          <div class="ico" id="c1-i2" style="left:10px;top:69px"></div><div class="ln" id="c1-l2" style="left:36px;top:72px"><b>3</b> onions</div>
         </div>
-        <div class="cap" id="c1-cap" style="left:156px;top:140px">Any language, out in English</div>
+        <div class="cap" id="c1-cap" style="left:142px;top:164px">Any language, out in English.</div>
       </div></div>
       <h3>Add a recipe from a link, a photo, or a video</h3>
       <p>Paste a URL or the recipe text, take or choose a photo of a cookbook page, or send a YouTube link.</p>
     </article>
 
-    <!-- 2. Duplicates merge: butter from two recipes becomes one line -->
+    <!-- 2. Duplicates merge -->
     <article class="cell">
       <div class="fit"><div class="scene" id="s2">
-        <div class="card" id="c2-a" style="left:14px;top:16px;width:96px;height:66px">
-          <div class="t" style="left:10px;top:8px">Scones</div>
-          <div class="ln" style="left:10px;top:26px"><b>2</b> <span class="m">cups</span> flour</div>
-          <div class="ln" id="c2-ba" style="left:10px;top:42px"><b>75</b> <span class="m">g</span> butter</div>
+        <div class="paper" id="c2-a" style="left:12px;top:14px;width:112px;height:68px;transform:rotate(-2deg)">
+          <div class="t" style="left:10px;top:9px">Scones</div>
+          <div class="ln" style="left:10px;top:36px"><b>2</b> <span class="m">cups</span> flour</div>
+          <div class="ln" id="c2-ba" style="left:10px;top:54px"><b>75</b> <span class="m">g</span> butter</div>
         </div>
-        <div class="card" id="c2-b" style="left:14px;top:90px;width:96px;height:66px">
-          <div class="t" style="left:10px;top:8px">Banana bread</div>
-          <div class="ln" id="c2-bb" style="left:10px;top:26px"><b>125</b> <span class="m">g</span> butter</div>
-          <div class="ln" style="left:10px;top:42px"><b>3</b> bananas</div>
+        <div class="paper" id="c2-b" style="left:12px;top:100px;width:112px;height:68px;transform:rotate(1.5deg)">
+          <div class="t" style="left:10px;top:9px">Banana bread</div>
+          <div class="ln" id="c2-bb" style="left:10px;top:36px"><b>125</b> <span class="m">g</span> butter</div>
+          <div class="ln" style="left:10px;top:54px"><b>3</b> bananas</div>
         </div>
-        <div class="list" id="c2-list" style="left:150px;top:24px;width:116px;height:112px">
-          <div class="t" style="left:10px;top:8px">This week</div>
-          <div class="ln" style="left:10px;top:28px"><b>2</b> <span class="m">cups</span> flour</div>
-          <div class="ln" id="c2-m" style="left:10px;top:46px"><b id="c2-n">200</b> <span class="m">g</span> butter</div>
-          <div class="ln" style="left:10px;top:64px"><b>3</b> bananas</div>
-          <div class="tag" id="c2-plus" style="left:76px;top:44px">+1</div>
+        <div class="paper" id="c2-list" style="left:156px;top:20px;width:112px;height:132px">
+          <div class="t" style="left:10px;top:9px">This week</div>
+          <div class="ln" style="left:10px;top:36px"><b>2</b> <span class="m">cups</span> flour</div>
+          <div class="ln" id="c2-m" style="left:10px;top:54px"><span class="roll"><span class="col" id="c2-roll"><span>75</span><span>200</span></span></span> <span class="m">g</span> butter</div>
+          <div class="ln" style="left:10px;top:72px"><b>3</b> bananas</div>
+          <div class="plus" id="c2-plus" style="left:82px;top:50px">+1</div>
         </div>
-        <div class="ln" id="c2-fly1" style="left:24px;top:58px"><b>75</b> <span class="m">g</span> butter</div>
-        <div class="ln" id="c2-fly2" style="left:24px;top:116px"><b>125</b> <span class="m">g</span> butter</div>
+        <div class="ico" id="c2-i1" style="left:90px;top:60px"></div>
+        <div class="ico" id="c2-i2" style="left:90px;top:128px"></div>
+        <div class="cap" id="c2-cap" style="left:156px;top:164px">Two recipes, one line.</div>
       </div></div>
       <h3>Duplicate ingredients merge into one line</h3>
       <p>Cook several dishes at once and shared ingredients combine automatically.</p>
     </article>
 
-    <!-- 3. Sorted by aisle: a jumbled list groups itself -->
+    <!-- 3. Sorted by aisle -->
     <article class="cell">
       <div class="fit"><div class="scene" id="s3">
-        <div class="list" style="left:56px;top:10px;width:168px;height:140px">
-          <div class="aisle" id="c3-h0" style="left:12px;top:10px">Fruit and vege</div>
-          <div class="aisle" id="c3-h1" style="left:12px;top:64px">Chilled</div>
-          <div class="aisle" id="c3-h2" style="left:12px;top:100px">Meat</div>
-          <div class="ln" id="c3-i0" style="left:12px;top:24px">Onions</div>
-          <div class="ln" id="c3-i1" style="left:12px;top:42px">Butter</div>
-          <div class="ln" id="c3-i2" style="left:12px;top:60px">Lamb shoulder</div>
-          <div class="ln" id="c3-i3" style="left:12px;top:78px">Kūmara</div>
-          <div class="ln" id="c3-i4" style="left:12px;top:96px">Eggs</div>
-          <div class="tag fill" id="c3-tag" style="left:108px;top:8px">By aisle</div>
+        <div class="paper" style="left:56px;top:10px;width:168px;height:160px">
+          <div class="t" style="left:12px;top:9px">This week</div>
+          <div class="aisle" id="c3-h0" style="left:12px;top:34px">Fruit and vege</div>
+          <div class="aisle" id="c3-h1" style="left:12px;top:70px">Chilled</div>
+          <div class="aisle" id="c3-h2" style="left:12px;top:124px">Meat</div>
+          <div class="bx" id="c3-x0" style="left:12px;top:49px"></div><div class="ln" id="c3-i0" style="left:30px;top:46px">Onions</div>
+          <div class="bx" id="c3-x1" style="left:12px;top:85px"></div><div class="ln" id="c3-i1" style="left:30px;top:82px">Butter</div>
+          <div class="bx" id="c3-x2" style="left:12px;top:139px"></div><div class="ln" id="c3-i2" style="left:30px;top:136px">Lamb shoulder</div>
+          <div class="bx" id="c3-x3" style="left:12px;top:103px"></div><div class="ln" id="c3-i3" style="left:30px;top:100px">Eggs</div>
+          <svg class="tick" id="c3-k0" viewBox="0 0 18 18" style="left:10px;top:47px"><path d="M3 9.5l4 4L15 4"/></svg>
+          <svg class="tick" id="c3-k1" viewBox="0 0 18 18" style="left:10px;top:83px"><path d="M3 9.5l4 4L15 4"/></svg>
+          <div class="strike soft" id="c3-s0" style="left:29px;top:55px;width:40px"></div>
+          <div class="strike soft" id="c3-s1" style="left:29px;top:91px;width:36px"></div>
         </div>
+        <div class="stamp" id="c3-stamp" style="left:150px;top:14px;transform:rotate(-8deg)">By aisle</div>
       </div></div>
       <h3>A shopping list sorted by supermarket aisle</h3>
       <p>Shop mode groups the list the way the store is laid out, so you walk the aisles once.</p>
     </article>
 
-    <!-- 4. Works offline: the signal goes, the ticks keep landing -->
+    <!-- 4. Works offline -->
     <article class="cell">
       <div class="fit"><div class="scene" id="s4">
-        <div class="phone" style="left:92px;top:10px;width:96px;height:150px">
-          <div class="sig" id="c4-s1" style="left:12px;top:10px;height:4px;margin-top:6px"></div>
-          <div class="sig" id="c4-s2" style="left:17px;top:10px;height:7px;margin-top:3px"></div>
-          <div class="sig" id="c4-s3" style="left:22px;top:10px;height:10px"></div>
-          <div class="slash" id="c4-slash" style="left:8px;top:14px;transform:rotate(-40deg)"></div>
-          <div class="t" style="left:12px;top:30px">Shop</div>
-          <div class="bx" id="c4-b0" style="left:12px;top:56px"></div><div class="ln" style="left:28px;top:53px">Milk</div>
-          <div class="bx" id="c4-b1" style="left:12px;top:78px"></div><div class="ln" style="left:28px;top:75px">Eggs</div>
-          <div class="bx" id="c4-b2" style="left:12px;top:100px"></div><div class="ln" style="left:28px;top:97px">Butter</div>
-          <div class="bx" id="c4-b3" style="left:12px;top:122px"></div><div class="ln" style="left:28px;top:119px">Bread</div>
-          <svg class="ck" id="c4-k0" viewBox="0 0 18 18" style="left:10px;top:54px"><path d="M3 9.5l4 4L15 4"/></svg>
-          <svg class="ck" id="c4-k1" viewBox="0 0 18 18" style="left:10px;top:76px"><path d="M3 9.5l4 4L15 4"/></svg>
-          <svg class="ck" id="c4-k2" viewBox="0 0 18 18" style="left:10px;top:98px"><path d="M3 9.5l4 4L15 4"/></svg>
-          <svg class="ck" id="c4-k3" viewBox="0 0 18 18" style="left:10px;top:120px"><path d="M3 9.5l4 4L15 4"/></svg>
+        <div class="phone" style="left:88px;top:8px;width:104px;height:164px">
+          <div class="notch"></div>
+          <div class="sig" id="c4-s1" style="left:14px;top:22px;height:4px;margin-top:6px"></div>
+          <div class="sig" id="c4-s2" style="left:19px;top:22px;height:7px;margin-top:3px"></div>
+          <div class="sig" id="c4-s3" style="left:24px;top:22px;height:10px"></div>
+          <div class="slash" id="c4-slash" style="left:10px;top:34px;transform:rotate(-38deg)"></div>
+          <div class="t" style="left:14px;top:40px">Shop</div>
+          <div class="bx" id="c4-b0" style="left:14px;top:67px"></div><div class="ln" style="left:32px;top:64px">Milk</div>
+          <div class="bx" id="c4-b1" style="left:14px;top:89px"></div><div class="ln" style="left:32px;top:86px">Eggs</div>
+          <div class="bx" id="c4-b2" style="left:14px;top:111px"></div><div class="ln" style="left:32px;top:108px">Butter</div>
+          <div class="bx" id="c4-b3" style="left:14px;top:133px"></div><div class="ln" style="left:32px;top:130px">Bread</div>
+          <svg class="tick" id="c4-k0" viewBox="0 0 18 18" style="left:12px;top:65px"><path d="M3 9.5l4 4L15 4"/></svg>
+          <svg class="tick" id="c4-k1" viewBox="0 0 18 18" style="left:12px;top:87px"><path d="M3 9.5l4 4L15 4"/></svg>
+          <svg class="tick" id="c4-k2" viewBox="0 0 18 18" style="left:12px;top:109px"><path d="M3 9.5l4 4L15 4"/></svg>
+          <svg class="tick" id="c4-k3" viewBox="0 0 18 18" style="left:12px;top:131px"><path d="M3 9.5l4 4L15 4"/></svg>
+          <div class="strike soft" id="c4-t0" style="left:31px;top:73px;width:26px"></div>
+          <div class="strike soft" id="c4-t1" style="left:31px;top:95px;width:28px"></div>
+          <div class="strike soft" id="c4-t2" style="left:31px;top:117px;width:36px"></div>
+          <div class="strike soft" id="c4-t3" style="left:31px;top:139px;width:34px"></div>
         </div>
-        <div class="tag" id="c4-tag" style="left:200px;top:70px">No signal</div>
-        <div class="cap" id="c4-cap" style="left:200px;top:92px">Still works</div>
+        <div class="stamp" id="c4-tag" style="left:200px;top:60px;transform:rotate(6deg)">No signal</div>
+        <div class="cap" id="c4-cap" style="left:200px;top:96px">The list lives on<br>the phone.</div>
       </div></div>
       <h3>Works offline in the supermarket</h3>
       <p>Your library, your baskets and the shopping list itself all live on the phone.</p>
     </article>
 
-    <!-- 5. Compare stores: three estimates, the likely cheapest marked -->
+    <!-- 5. Compare stores -->
     <article class="cell">
       <div class="fit"><div class="scene" id="s5">
-        <div class="t" style="left:16px;top:14px">Basket total by store</div>
-        <div class="ln" style="left:16px;top:40px">Pak'nSave</div><div class="bar win" id="c5-b0" style="left:92px;top:43px;width:100px"></div><div class="amt" id="c5-a0" style="left:200px;top:40px">≈ $47.80</div>
-        <div class="ln" style="left:16px;top:70px">New World</div><div class="bar" id="c5-b1" style="left:92px;top:73px;width:100px"></div><div class="amt" id="c5-a1" style="left:200px;top:70px">≈ $52.60</div>
-        <div class="ln" style="left:16px;top:100px">Woolworths</div><div class="bar" id="c5-b2" style="left:92px;top:103px;width:100px"></div><div class="amt" id="c5-a2" style="left:200px;top:100px">≈ $57.20</div>
-        <div class="tag fill" id="c5-tag" style="left:92px;top:22px">Likely cheapest</div>
-        <div class="cap" id="c5-cap" style="left:16px;top:134px">AI estimates, not live prices</div>
+        <div class="ln" style="left:16px;top:52px">Pak'nSave</div><div class="bar win" id="c5-b0" style="left:100px;top:56px;width:104px"></div><div class="amt" id="c5-a0" style="left:212px;top:52px">≈ $47.80</div>
+        <div class="ln" style="left:16px;top:82px">New World</div><div class="bar" id="c5-b1" style="left:100px;top:86px;width:104px"></div><div class="amt" id="c5-a1" style="left:212px;top:82px">≈ $52.60</div>
+        <div class="ln" style="left:16px;top:112px">Woolworths</div><div class="bar" id="c5-b2" style="left:100px;top:116px;width:104px"></div><div class="amt" id="c5-a2" style="left:212px;top:112px">≈ $57.20</div>
+        <div class="stamp" id="c5-stamp" style="left:98px;top:18px;transform:rotate(-4deg)">Likely cheapest</div>
+        <div class="cap" id="c5-cap" style="left:16px;top:148px">AI estimates, not live store prices.</div>
       </div></div>
       <h3>Compare Pak'nSave, New World and Woolworths</h3>
       <p>An estimated total for your whole basket at each store, with the likely cheapest marked.</p>
     </article>
 
-    <!-- 6. Adapt: cream becomes coconut cream, and goes into the basket -->
+    <!-- 6. Adapt a recipe -->
     <article class="cell">
       <div class="fit"><div class="scene" id="s6">
-        <div class="card" style="left:16px;top:18px;width:150px;height:124px">
-          <div class="t" style="left:12px;top:10px">Thai green curry</div>
-          <div class="tag" id="c6-prem" style="left:96px;top:9px">Premium</div>
-          <div class="ln" style="left:12px;top:34px"><b>500</b> <span class="m">g</span> chicken</div>
-          <div class="ln" id="c6-old" style="left:12px;top:52px"><b>300</b> <span class="m">ml</span> cream</div>
-          <div class="strike" id="c6-strike" style="left:12px;top:60px;width:66px"></div>
-          <div class="ln" id="c6-new" style="left:12px;top:70px;color:var(--accent)"><b>300</b> <span class="m">ml</span> coconut cream</div>
-          <div class="ln" style="left:12px;top:88px"><b>2</b> <span class="m">tbsp</span> curry paste</div>
-          <div class="chip" id="c6-chip" style="left:12px;top:100px"><svg class="leaf" viewBox="0 0 24 24" style="stroke:none"><path d="M4 20c0-9 6-15 16-16-1 10-7 16-16 16z"/></svg>Vegan</div>
+        <div class="paper" style="left:14px;top:14px;width:154px;height:136px;transform:rotate(-1.5deg)">
+          <div class="t" style="left:12px;top:9px">Green curry</div>
+          <div class="chip" id="c6-prem" style="left:92px;top:10px">Premium</div>
+          <div class="ln" style="left:12px;top:36px"><b>500</b> <span class="m">g</span> chicken</div>
+          <div class="ln" id="c6-old" style="left:12px;top:54px"><b>300</b> <span class="m">ml</span> cream</div>
+          <div class="strike" id="c6-strike" style="left:12px;top:63px;width:76px"></div>
+          <div class="ln" id="c6-new" style="left:12px;top:72px"><b>300</b> <span class="m">ml</span> <span class="sw">coconut cream</span></div>
+          <div class="ln" style="left:12px;top:90px"><b>2</b> <span class="m">tbsp</span> curry paste</div>
+          <div class="chip" id="c6-chip" style="left:12px;top:114px"><svg viewBox="0 0 24 24"><path d="M4 20c0-9 6-15 16-16-1 10-7 16-16 16z"/></svg>Vegan</div>
         </div>
-        <svg class="bskt" id="c6-bskt" viewBox="0 0 40 32" style="left:212px;top:72px"><path d="M4 12h32l-4 17H8z"/><path d="M13 12l5-9M27 12l-5-9"/><path d="M4 12q16 6 32 0"/></svg>
-        <div class="ln" id="c6-fly" style="left:28px;top:70px;color:var(--accent)"><b>300</b> <span class="m">ml</span> coconut cream</div>
+        <div class="mini-basket" id="c6-bskt" style="left:190px;top:86px;width:80px;height:68px"><svg class="layer" viewBox="0 0 280 236">
+<ellipse cx="140" cy="214" rx="122" ry="10" fill="#17251E" opacity=".14"/>
+<ellipse cx="140" cy="84" rx="130" ry="22" fill="#5A4330"/>
+<ellipse cx="140" cy="86" rx="118" ry="16" fill="#3B2B1F"/>
+<g fill="none" stroke="#4A7556" stroke-width="3" stroke-linecap="round">
+<path d="M150 110C172 62 206 26 258 4"/>
+</g>
+<g fill="#6E9A76" stroke="#4A7556" stroke-width="1.4" stroke-linejoin="round">
+<path d="M0 0C8.5 -11.6 25.5 -10.4 34.0 0C25.5 10.4 8.5 11.6 0 0Z" transform="translate(163.7 78.8) rotate(-96.6)"/>
+<path d="M0 0C8.5 -11.6 25.5 -10.4 34.0 0C25.5 10.4 8.5 11.6 0 0Z" transform="translate(163.7 78.8) rotate(-12.6)"/>
+<path d="M0 0C7.7 -10.5 23.1 -9.4 30.8 0C23.1 9.4 7.7 10.5 0 0Z" transform="translate(174.4 64.9) rotate(-92.1)"/>
+<path d="M0 0C7.7 -10.5 23.1 -9.4 30.8 0C23.1 9.4 7.7 10.5 0 0Z" transform="translate(174.4 64.9) rotate(-8.1)"/>
+<path d="M0 0C6.9 -9.4 20.7 -8.4 27.6 0C20.7 8.4 6.9 9.4 0 0Z" transform="translate(186.2 51.9) rotate(-87.4)"/>
+<path d="M0 0C6.9 -9.4 20.7 -8.4 27.6 0C20.7 8.4 6.9 9.4 0 0Z" transform="translate(186.2 51.9) rotate(-3.4)"/>
+<path d="M0 0C6.1 -8.3 18.3 -7.5 24.4 0C18.3 7.5 6.1 8.3 0 0Z" transform="translate(199.1 39.8) rotate(-82.5)"/>
+<path d="M0 0C6.1 -8.3 18.3 -7.5 24.4 0C18.3 7.5 6.1 8.3 0 0Z" transform="translate(199.1 39.8) rotate(1.5)"/>
+<path d="M0 0C5.3 -7.2 15.9 -6.5 21.2 0C15.9 6.5 5.3 7.2 0 0Z" transform="translate(213.3 28.7) rotate(-77.5)"/>
+<path d="M0 0C5.3 -7.2 15.9 -6.5 21.2 0C15.9 6.5 5.3 7.2 0 0Z" transform="translate(213.3 28.7) rotate(6.5)"/>
+<path d="M0 0C4.5 -6.1 13.5 -5.5 18.0 0C13.5 5.5 4.5 6.1 0 0Z" transform="translate(228.9 18.6) rotate(-72.6)"/>
+<path d="M0 0C4.5 -6.1 13.5 -5.5 18.0 0C13.5 5.5 4.5 6.1 0 0Z" transform="translate(228.9 18.6) rotate(11.4)"/>
+<path d="M0 0C3.7 -5.0 11.1 -4.5 14.8 0C11.1 4.5 3.7 5.0 0 0Z" transform="translate(242.9 11.0) rotate(-68.7)"/>
+<path d="M0 0C3.7 -5.0 11.1 -4.5 14.8 0C11.1 4.5 3.7 5.0 0 0Z" transform="translate(242.9 11.0) rotate(15.3)"/>
+<path d="M0 0C4 -4 10 -5 16 0C10 5 4 4 0 0Z" transform="translate(258.0 4.0) rotate(-22.9)"/>
+</g>
+</svg>
+<svg class="layer" viewBox="0 0 280 236">
+<defs>
+<clipPath id="fb-body"><path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z"/></clipPath>
+<linearGradient id="fb-round" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFF6DE" stop-opacity=".22"/><stop offset=".35" stop-color="#FFF6DE" stop-opacity="0"/><stop offset=".7" stop-color="#3A2614" stop-opacity="0"/><stop offset="1" stop-color="#3A2614" stop-opacity=".34"/></linearGradient>
+<linearGradient id="fb-down" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#3A2614" stop-opacity="0"/><stop offset="1" stop-color="#3A2614" stop-opacity=".3"/></linearGradient>
+</defs>
+<path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z" fill="#C9A876"/>
+<g clip-path="url(#fb-body)">
+<path d="M60 40L-140 240M122 40L-78 240M184 40L-16 240M246 40L46 240M308 40L108 240M370 40L170 240M432 40L232 240M494 40L294 240" stroke="#7A5B3A" stroke-width="28" fill="none"/>
+<path d="M60 40L-140 240M122 40L-78 240M184 40L-16 240M246 40L46 240M308 40L108 240M370 40L170 240M432 40L232 240M494 40L294 240" stroke="#CBAA78" stroke-width="22" fill="none"/>
+<path d="M60 40L-140 240M122 40L-78 240M184 40L-16 240M246 40L46 240M308 40L108 240M370 40L170 240M432 40L232 240M494 40L294 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" transform="translate(-1.2 -1.2)"/>
+<path d="M-160 40L40 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+<path d="M-160 40L40 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+<path d="M-160 40L40 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+<path d="M-98 40L102 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+<path d="M-98 40L102 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+<path d="M-98 40L102 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+<path d="M-36 40L164 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+<path d="M-36 40L164 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+<path d="M-36 40L164 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+<path d="M26 40L226 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+<path d="M26 40L226 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+<path d="M26 40L226 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+<path d="M88 40L288 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+<path d="M88 40L288 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+<path d="M88 40L288 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+<path d="M150 40L350 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+<path d="M150 40L350 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+<path d="M150 40L350 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+<path d="M212 40L412 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+<path d="M212 40L412 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+<path d="M212 40L412 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+<path d="M274 40L474 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+<path d="M274 40L474 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+<path d="M274 40L474 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+<path d="M336 40L536 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+<path d="M336 40L536 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
+<path d="M336 40L536 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
+</g>
+<path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z" fill="url(#fb-round)"/>
+<path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z" fill="url(#fb-down)"/>
+<path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z" fill="none" stroke="#5E4632" stroke-width="1.5" opacity=".6"/>
+<path d="M14 98Q140 136 266 98" stroke="#5E4632" stroke-width="2" fill="none" opacity=".45"/>
+<path d="M10 82Q140 120 270 82" stroke="#7A5B3A" stroke-width="12" fill="none" stroke-linecap="round"/>
+<path d="M10 82Q140 120 270 82" stroke="#D3B57E" stroke-width="7" fill="none" stroke-linecap="round"/>
+<path d="M10 80Q140 118 270 80" stroke="#EBD3A3" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+<path d="M28 98C28 -8 252 -8 252 98" stroke="#7A5B3A" stroke-width="13" fill="none" stroke-linecap="round"/>
+<path d="M28 98C28 -8 252 -8 252 98" stroke="#CBAA78" stroke-width="8" fill="none" stroke-linecap="round"/>
+<path d="M28 96C28 -10 252 -10 252 96" stroke="#EBD3A3" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".8"/>
+<path d="M21 78h14M21 84h14M21 90h14M245 78h14M245 84h14M245 90h14" stroke="#5E4632" stroke-width="2.5" stroke-linecap="round"/>
+</svg></div>
+        <div class="ico" id="c6-can" style="left:132px;top:66px"></div>
       </div></div>
       <h3>Adapt a recipe to how you eat</h3>
       <p>Premium can rewrite a recipe as vegetarian, vegan or gluten-free, showing what changed and why.</p>
@@ -190,6 +292,22 @@ html:not(.js) .fit { display: none; }
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const E = { out: 'cubic-bezier(.2,.7,.2,1)', inOut: 'cubic-bezier(.6,0,.3,1)', back: 'cubic-bezier(.34,1.56,.64,1)', lin: 'linear' };
 
+/* The hero's produce drawings, copied in by the build step. */
+const ICON = {
+  lamb: '<path d="M52 40l14-16" stroke="#E4DAC6" stroke-width="7" stroke-linecap="round"/><circle cx="67" cy="23" r="5" fill="#EFE7D6"/><circle cx="67" cy="23" r="2" fill="#D9A79C"/><path d="M12 44c0-15 13-25 30-25 12 0 20 5 22 14 2 10-6 24-24 26C22 61 12 56 12 44z" fill="#EAD9C1"/><path d="M17 45c0-12 11-20 25-20 10 0 16 4 17 11 1 8-6 19-20 21-13 1-22-3-22-12z" fill="#B24E45"/><path d="M22 46c1-9 9-15 19-15 8 0 12 3 13 8 0 7-6 14-16 15-9 1-16-2-16-8z" fill="#C5645A"/><path d="M27 41c6 0 10 6 19 4M29 51c5-2 9-4 15-3M43 35c3 1 5 3 6 6" stroke="#EFC9BF" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".9"/><path d="M20 38c3-5 9-9 16-10" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round" opacity=".45"/>',
+  rosemary: '<path d="M40 76V12" stroke="#6E5238" stroke-width="2.2" stroke-linecap="round"/><g stroke-width="2.3" stroke-linecap="round" fill="none"><path d="M40 70l-9-9M40 65l9-10M40 60l-10-9M40 55l10-10M40 50l-10-10M40 45l10-10M40 40l-10-9M40 35l9-10M40 30l-9-9M40 25l8-10M40 20l-6-9M40 16l5-9" stroke="#3E6B48"/><path d="M40 68l-8-9M40 62l8-9M40 57l-9-9M40 52l9-10M40 47l-9-10M40 42l9-10M40 37l-8-9M40 32l8-9M40 27l-7-9M40 22l6-9" stroke="#6C9A6F"/><path d="M40 73l-7-6M40 72l7-8M40 12l-3-6M40 12l3-6" stroke="#9CBE93"/></g>',
+  garlic: '<path d="M33 66l-3 6M40 67v6M47 66l3 6M36 67l-1 6M44 67l1 6" stroke="#B9AA8C" stroke-width="1.4" stroke-linecap="round"/><path d="M40 20c3 7 24 10 24 30 0 12-11 19-24 19S16 62 16 50c0-20 21-23 24-30z" fill="#EFE8DA"/><path d="M40 28c-5 8-8 18-6 40M40 28c5 8 8 18 6 40M40 28c-11 5-15 17-16 35M40 28c11 5 15 17 16 35" stroke="#D5C8AE" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M26 44c-2 6-2 14 0 20M54 44c2 6 2 14 0 20" stroke="#C7B6D2" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".7"/><path d="M36 22c0-6 2-11 4-14 2 3 4 8 4 14-3-1-5-1-8 0z" fill="#D9CFB4"/><path d="M40 8v14" stroke="#C9BC9C" stroke-width="1.2" stroke-linecap="round"/><path d="M27 40c2-6 6-10 11-12" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round" opacity=".6"/>',
+  onion: '<path d="M34 68l-2 5M40 68v6M46 68l2 5" stroke="#8C6A45" stroke-width="1.4" stroke-linecap="round"/><path d="M40 16c6 8 22 12 22 30 0 13-10 22-22 22S18 59 18 46c0-18 16-22 22-30z" fill="#C98F52"/><path d="M40 22c-8 8-12 20-10 42M40 22c8 8 12 20 10 42M40 22c-13 8-17 20-18 36M40 22c13 8 17 20 18 36" stroke="#A9702F" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M30 40c1-8 5-14 9-18" stroke="#EBBE86" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M36 18c0-6 2-10 4-12 2 2 4 6 4 12z" fill="#A9702F"/><path d="M44 12c3-2 6-2 8 1" stroke="#A9702F" stroke-width="1.6" fill="none" stroke-linecap="round"/>',
+  pumpkin: '<path d="M35 30c0-5 2-9 5-11 3 2 5 6 5 11-3-1-7-1-10 0z" fill="#8F8A6C"/><path d="M40 19v11" stroke="#6E6A52" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="40" cy="48" rx="33" ry="19" fill="#6F8074"/><ellipse cx="18" cy="48" rx="10" ry="17" fill="#93A395" stroke="#6F8074" stroke-width="1.2"/><ellipse cx="62" cy="48" rx="10" ry="17" fill="#93A395" stroke="#6F8074" stroke-width="1.2"/><ellipse cx="28" cy="48" rx="11" ry="19" fill="#A5B4A6" stroke="#6F8074" stroke-width="1.2"/><ellipse cx="52" cy="48" rx="11" ry="19" fill="#A5B4A6" stroke="#6F8074" stroke-width="1.2"/><ellipse cx="40" cy="48" rx="11" ry="20" fill="#B3C0B2" stroke="#6F8074" stroke-width="1.2"/><path d="M34 36c-2 5-2 12 0 18" stroke="#FFFFFF" opacity=".35" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M40 68c-8 0-14-2-18-4" stroke="#5E6E63" opacity=".5" stroke-width="1.4" fill="none" stroke-linecap="round"/>',
+  courgette: '<path d="M12.9 60.6L6.1 66.4" stroke="#C4D4A0" stroke-width="8" stroke-linecap="round"/><path d="M12.9 60.6L6.1 66.4" stroke="#93AB76" stroke-width="2.4" stroke-linecap="round"/><path d="M21.8 64.9L73.8 20.9A9 9 0 0 0 62.2 7.1L10.2 51.1A9 9 0 0 0 21.8 64.9Z" fill="#33582A"/><path d="M19.6 61.6L69.8 19.1A7.6 7.6 0 0 0 60 7.4L9.8 49.9A7.6 7.6 0 0 0 19.6 61.6Z" fill="#456F35"/><path d="M17.5 50.6L57 17.2" stroke="#7BA35A" stroke-width="2.2" stroke-linecap="round" opacity=".8"/><g fill="#A5C77F" opacity=".85"><ellipse cx="24" cy="54" rx="1.2" ry=".7" transform="rotate(-40 24 54)"/><ellipse cx="30" cy="52" rx="1.2" ry=".7" transform="rotate(-40 30 52)"/><ellipse cx="34" cy="45" rx="1.2" ry=".7" transform="rotate(-40 34 45)"/><ellipse cx="40" cy="43" rx="1.2" ry=".7" transform="rotate(-40 40 43)"/><ellipse cx="44" cy="36" rx="1.2" ry=".7" transform="rotate(-40 44 36)"/><ellipse cx="51" cy="33" rx="1.2" ry=".7" transform="rotate(-40 51 33)"/><ellipse cx="54" cy="26" rx="1.2" ry=".7" transform="rotate(-40 54 26)"/><ellipse cx="61" cy="23" rx="1.2" ry=".7" transform="rotate(-40 61 23)"/><ellipse cx="63" cy="15" rx="1.2" ry=".7" transform="rotate(-40 63 15)"/><ellipse cx="28" cy="44" rx="1.2" ry=".7" transform="rotate(-40 28 44)"/><ellipse cx="48" cy="26" rx="1.2" ry=".7" transform="rotate(-40 48 26)"/></g><circle cx="74" cy="9" r="1.7" fill="#8A6A4B"/>',
+  egg: '<path d="M40 12c10 0 18 14 18 30 0 12-8 22-18 22S22 54 22 42c0-16 8-30 18-30z" fill="#EFDFC3"/><ellipse cx="48" cy="44" rx="7" ry="16" fill="#DCC7A3" opacity=".6"/><ellipse cx="33" cy="28" rx="3" ry="6" fill="#fff" opacity=".55"/><circle cx="30" cy="44" r="1" fill="#C9B08A"/><circle cx="44" cy="24" r=".9" fill="#C9B08A"/><circle cx="38" cy="56" r="1" fill="#C9B08A"/>'
+};
+const EXTRA = {
+  butter: '<path d="M10 34l8-10h44l-8 10z" fill="#F3DF9C"/><path d="M10 34h44v18H10z" fill="#F6E7B0"/><path d="M54 34l8-10v18l-8 10z" fill="#E4C97A"/><path d="M14 36h36M14 40h36" stroke="#FFFFFF" stroke-width="1.5" opacity=".7" stroke-linecap="round"/><path d="M10 34h44v18H10zM54 34l8-10v18l-8 10zM10 34l8-10h44" fill="none" stroke="#B89A48" stroke-width="1.2"/>',
+  can: '<path d="M18 18v42c0 4 10 6 22 6s22-2 22-6V18" fill="#F2EEE4"/><ellipse cx="40" cy="18" rx="22" ry="6" fill="#D9D3C5"/><ellipse cx="40" cy="18" rx="16" ry="3.5" fill="#EFEBE2"/><path d="M18 30h44v18H18z" fill="#2E7D5B"/><path d="M24 39h32" stroke="#F3F8F2" stroke-width="2.5" stroke-linecap="round"/><path d="M40 33c4 0 7 3 7 6M40 33c-4 0-7 3-7 6" stroke="#F3F8F2" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M18 18v42c0 4 10 6 22 6s22-2 22-6V18" fill="none" stroke="#9C9686" stroke-width="1.2"/>'
+};
+function icon(el, name) { el.innerHTML = '<svg viewBox="0 0 80 80">' + (ICON[name] || EXTRA[name]) + '</svg>'; }
+
 /* One small timeline per scene: the hero animation's engine, reduced. */
 function Scene(id, loop, show, build) {
   const root = document.getElementById(id), $ = s => root.querySelector(s), specs = [];
@@ -198,6 +316,7 @@ function Scene(id, loop, show, build) {
   specs.sort((a, b) => a.t - b.t);
   const seen = new Map();
   const anims = specs.map(sp => {
+    if (!sp.el) throw new Error(id + ': missing element');
     let set = seen.get(sp.el); if (!set) seen.set(sp.el, set = new Set());
     const fill = set.has(sp.prop) ? 'forwards' : 'both'; set.add(sp.prop);
     const kf = sp.values.map((v, i) => { const o = {}; o[sp.prop] = v; if (sp.offsets) o.offset = sp.offsets[i]; return o; });
@@ -216,103 +335,146 @@ function Scene(id, loop, show, build) {
   new IntersectionObserver(es => { inView = es[0].isIntersecting; sync(); }, { threshold: .3 }).observe(root.parentElement);
   document.addEventListener('visibilitychange', sync);
 }
-// The scenes are drawn at 280 wide; scale each to its box.
 function fit() { document.querySelectorAll('.fit').forEach(f => { f.firstElementChild.style.transform = 'scale(' + (f.clientWidth / 280).toFixed(4) + ')'; }); }
 fit(); addEventListener('resize', fit);
 
+/* The hero's throw: an arc with a pop at the start, a turn in the air, and a
+   settle on landing. `base` is the element's resting transform (rotation),
+   from/to are offsets from where it sits. */
+function arc(A, t, el, from, to, dur, opt) {
+  opt = opt || {}; const N = 14, vals = [], offs = [], apex = Math.min(from[1], to[1]) - (opt.lift || 40), ctrl = [(from[0] + to[0]) / 2, apex], rot = opt.rot || 0, end = opt.scale == null ? 1 : opt.scale;
+  for (let i = 0; i <= N; i++) {
+    const u = i / N, k = u < .5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+    const x = (1 - k) * (1 - k) * from[0] + 2 * (1 - k) * k * ctrl[0] + k * k * to[0];
+    const y = (1 - k) * (1 - k) * from[1] + 2 * (1 - k) * k * ctrl[1] + k * k * to[1];
+    const pop = u < .16 ? .4 + .6 * (1 - Math.pow(1 - u / .16, 3)) : 1;
+    vals.push('translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) rotate(' + (rot * k).toFixed(1) + 'deg) scale(' + (pop * (1 + (end - 1) * k)).toFixed(3) + ')'); offs.push(u);
+  }
+  A(t, el, 'transform', vals, dur, E.lin, offs);
+  const rest = vals[vals.length - 1];
+  if (opt.settle !== false) A(t + dur, el, 'transform', [rest, rest + ' scale(1.08,.92)', rest + ' scale(.98,1.02)', rest], 300, E.out, [0, .35, .7, 1]);
+  return t + dur;
+}
+const tick = (A, t, sel) => { A(t, sel, 'opacity', [0, 1], 120); A(t, sel, 'transform', ['scale(0)', 'scale(1)'], 320, E.back); };
+const hide = (A, sels) => sels.forEach(s => A(0, s, 'opacity', [0, 0], 1));
+const fadeLoop = (A, root, end) => { A(0, root, 'opacity', [0, 1], 360, E.out); A(end, root, 'opacity', [1, 0], 440, E.inOut); };
+
 /* 1. Add a recipe ------------------------------------------------------- */
-Scene('s1', 6400, 5200, (A, $, root) => {
-  A(0, '#c1-card', 'opacity', [0, 1], 300); A(0, '#c1-card', 'transform', ['translateY(8px) rotate(2deg)', 'translateY(0) rotate(2deg)'], 500);
-  ['#c1-t', '#c1-l0', '#c1-l1', '#c1-l2', '#c1-cap'].forEach(s => A(0, s, 'opacity', [0, 0], 1));
-  [['#c1-link', 900], ['#c1-photo', 1900], ['#c1-video', 2900]].forEach(([s, t], i) => {
-    A(0, s, 'opacity', [0, 1], 300); A(0, s, 'transform', ['translateX(-8px)', 'translateX(0)'], 400);
-    A(t, s, 'transform', ['translate(0,0) scale(1)', 'translate(' + (150) + 'px,' + (58 - 30 * i) + 'px) scale(.3)'], 620, E.inOut);
-    A(t + 380, s, 'opacity', [1, 0], 240);
-    A(t + 560, '#c1-card', 'transform', ['translateY(0) rotate(2deg)', 'translateY(3px) rotate(2deg) scale(1.03,.97)', 'translateY(0) rotate(2deg)'], 340, E.out, [0, .4, 1]);
+Scene('s1', 7400, 5400, (A, $, root) => {
+  fadeLoop(A, root, 6900);
+  icon($('#c1-i0'), 'lamb'); icon($('#c1-i1'), 'rosemary'); icon($('#c1-i2'), 'onion');
+  hide(A, ['#c1-t', '#c1-l0', '#c1-l1', '#c1-l2', '#c1-i0', '#c1-i1', '#c1-i2', '#c1-cap']);
+  A(0, '#c1-card', 'transform', ['translateY(-24px) rotate(6deg)', 'translateY(0) rotate(2deg)'], 800, E.back);
+  A(500, '#c1-t', 'opacity', [0, 1], 320);
+  const srcs = [['#c1-link', 1100, 0], ['#c1-photo', 2500, 1], ['#c1-video', 3900, 2]];
+  srcs.forEach(([s, t, i]) => {
+    A(200 + i * 150, s, 'opacity', [0, 1], 300); A(200 + i * 150, s, 'transform', ['translateX(-10px)', 'translateX(0)'], 420);
+    // from the chip to the card's line, arcing up, shrinking as it goes
+    arc(A, t, s, [0, 0], [142, 30 - 20 * i], 700, { lift: 46, rot: 8, scale: .25, settle: false });
+    A(t + 480, s, 'opacity', [1, 0], 220);
+    A(t + 640, '#c1-card', 'transform', ['translateY(0) rotate(2deg)', 'translateY(3px) rotate(2deg) scale(1.03,.97)', 'translateY(0) rotate(2deg)'], 360, E.out, [0, .4, 1]);
+    const line = '#c1-l' + i, ic = '#c1-i' + i;
+    A(t + 720, line, 'opacity', [0, 1], 300); A(t + 720, line, 'transform', ['translateX(-8px)', 'translateX(0)'], 380);
+    A(t + 760, ic, 'opacity', [0, 1], 240); A(t + 760, ic, 'transform', ['scale(.4)', 'scale(1)'], 420, E.back);
   });
-  A(1500, '#c1-t', 'opacity', [0, 1], 300);
-  [['#c1-l0', 2500], ['#c1-l1', 3500], ['#c1-l2', 3800]].forEach(([s, t]) => { A(t, s, 'opacity', [0, 1], 300); A(t, s, 'transform', ['translateX(-6px)', 'translateX(0)'], 340); });
-  A(4300, '#c1-cap', 'opacity', [0, 1], 300);
-  A(5900, root, 'opacity', [1, 0], 400, E.inOut); A(0, root, 'opacity', [0, 1], 300);
+  A(5300, '#c1-cap', 'opacity', [0, 1], 360);
 });
 
 /* 2. Duplicates merge --------------------------------------------------- */
-Scene('s2', 6000, 4800, (A, $, root) => {
-  A(0, root, 'opacity', [0, 1], 300); A(5600, root, 'opacity', [1, 0], 400, E.inOut);
-  A(0, '#c2-list', 'opacity', [0, 1], 400); A(0, '#c2-list', 'transform', ['translateX(12px)', 'translateX(0)'], 500);
-  A(0, '#c2-m', 'opacity', [0, 0], 1); A(0, '#c2-plus', 'opacity', [0, 0], 1); A(0, '#c2-plus', 'transform', ['scale(.6)', 'scale(.6)'], 1);
-  // the two butter lines lift off their cards and fly to the list
-  A(1200, '#c2-ba', 'opacity', [1, .25], 300); A(1200, '#c2-fly1', 'opacity', [0, 1], 120); A(0, '#c2-fly1', 'opacity', [0, 0], 1);
-  A(1200, '#c2-fly1', 'transform', ['translate(0,0)', 'translate(136px,-12px)'], 700, E.inOut);
-  A(2000, '#c2-bb', 'opacity', [1, .25], 300); A(2000, '#c2-fly2', 'opacity', [0, 1], 120); A(0, '#c2-fly2', 'opacity', [0, 0], 1);
-  A(2000, '#c2-fly2', 'transform', ['translate(0,0)', 'translate(136px,-70px)'], 700, E.inOut);
-  A(1900, '#c2-fly1', 'opacity', [1, 0], 200); A(1900, '#c2-m', 'opacity', [0, 1], 200);
-  A(2700, '#c2-fly2', 'opacity', [1, 0], 200);
-  A(2700, '#c2-m', 'transform', ['scale(1)', 'scale(1.12)', 'scale(1)'], 420, E.out);
-  A(2750, '#c2-plus', 'opacity', [0, 1, 1, 0], 1400, E.lin, [0, .1, .7, 1]); A(2750, '#c2-plus', 'transform', ['scale(.6)', 'scale(1)'], 400, E.back);
+Scene('s2', 7400, 5600, (A, $, root) => {
+  fadeLoop(A, root, 6900);
+  icon($('#c2-i1'), 'butter'); icon($('#c2-i2'), 'butter');
+  hide(A, ['#c2-m', '#c2-plus', '#c2-cap']);
+  A(0, '#c2-a', 'transform', ['translateX(-20px) rotate(-2deg)', 'translateX(0) rotate(-2deg)'], 600, E.out);
+  A(120, '#c2-b', 'transform', ['translateX(-20px) rotate(1.5deg)', 'translateX(0) rotate(1.5deg)'], 600, E.out);
+  A(240, '#c2-list', 'transform', ['translateX(20px)', 'translateX(0)'], 600, E.out);
+  A(0, '#c2-roll', 'transform', ['translateY(0)', 'translateY(0)'], 1);
+  // butter from Scones flies to the list; its line appears there
+  A(1200, '#c2-ba', 'opacity', [1, .3], 300);
+  const l1 = arc(A, 1250, '#c2-i1', [0, 0], [84, 14], 700, { lift: 50, rot: -18, scale: .7 });
+  A(l1 - 60, '#c2-i1', 'opacity', [1, 0], 200); A(l1, '#c2-m', 'opacity', [0, 1], 260); A(l1, '#c2-m', 'transform', ['translateX(-6px)', 'translateX(0)'], 340);
+  A(l1, '#c2-list', 'transform', ['translateX(0)', 'translate(0,2px) scale(1.02,.98)', 'translateX(0)'], 340, E.out, [0, .4, 1]);
+  // butter from Banana bread lands on the same line: the amount rolls, +1
+  A(2800, '#c2-bb', 'opacity', [1, .3], 300);
+  const l2 = arc(A, 2850, '#c2-i2', [0, 0], [84, -54], 760, { lift: 56, rot: 16, scale: .7 });
+  A(l2 - 60, '#c2-i2', 'opacity', [1, 0], 200);
+  A(l2, '#c2-roll', 'transform', ['translateY(0)', 'translateY(-18px)'], 460, E.back);
+  A(l2, '#c2-m', 'transform', ['scale(1)', 'scale(1.1)', 'scale(1)'], 460, E.out);
+  A(l2, '#c2-list', 'transform', ['translateX(0)', 'translate(0,2px) scale(1.02,.98)', 'translateX(0)'], 340, E.out, [0, .4, 1]);
+  A(l2 + 40, '#c2-plus', 'opacity', [0, 1, 1, 0], 1200, E.lin, [0, .12, .7, 1]); A(l2 + 40, '#c2-plus', 'transform', ['translateY(0) scale(.6)', 'translateY(-16px) scale(1)'], 1200, E.out);
+  A(4800, '#c2-cap', 'opacity', [0, 1], 360);
 });
 
 /* 3. Sorted by aisle ---------------------------------------------------- */
-Scene('s3', 6200, 5000, (A, $, root) => {
-  A(0, root, 'opacity', [0, 1], 300); A(5800, root, 'opacity', [1, 0], 400, E.inOut);
-  // start jumbled with no headers: items sit at rows 0..4 from top 24
-  const rows = { '#c3-i0': 0, '#c3-i1': 1, '#c3-i2': 2, '#c3-i3': 3, '#c3-i4': 4 };
-  const start = {}; Object.keys(rows).forEach((k, i) => { start[k] = 10 + i * 18; });
-  ['#c3-h0', '#c3-h1', '#c3-h2', '#c3-tag'].forEach(s => A(0, s, 'opacity', [0, 0], 1));
-  Object.keys(rows).forEach(k => A(0, k, 'transform', ['translateY(' + (start[k] - (24 + rows[k] * 18)) + 'px)', 'translateY(' + (start[k] - (24 + rows[k] * 18)) + 'px)'], 1));
-  // the final layout: Fruit and vege (onions, kūmara), Chilled (butter, eggs), Meat (lamb)
-  const final = { '#c3-i0': 24, '#c3-i3': 42, '#c3-i1': 78, '#c3-i4': 96, '#c3-i2': 114 };
-  A(1400, '#c3-tag', 'opacity', [0, 1], 200); A(1400, '#c3-tag', 'transform', ['scale(.7)', 'scale(1)'], 380, E.back);
-  Object.keys(final).forEach((k, i) => {
-    const from = start[k] - (24 + rows[k] * 18), to = final[k] - (24 + rows[k] * 18);
-    A(1800 + i * 90, k, 'transform', ['translateY(' + from + 'px)', 'translateY(' + to + 'px)'], 700, E.inOut);
+Scene('s3', 7400, 5800, (A, $, root) => {
+  fadeLoop(A, root, 6900);
+  hide(A, ['#c3-h0', '#c3-h1', '#c3-h2', '#c3-stamp', '#c3-k0', '#c3-k1']);
+  A(0, '#c3-s0', 'transform', ['scaleX(0)', 'scaleX(0)'], 1); A(0, '#c3-s1', 'transform', ['scaleX(0)', 'scaleX(0)'], 1);
+  // jumbled at first, in four rows from top 34; the markup holds the final places
+  const finalTop = { i1: 82, i2: 136, i0: 46, i3: 100 }, order = ['i1', 'i2', 'i0', 'i3'];
+  order.forEach((k, r) => {
+    const d = (34 + r * 18) - finalTop[k];
+    ['#c3-' + k, '#c3-x' + k.slice(1)].forEach(s => A(0, s, 'transform', ['translateY(' + d + 'px)', 'translateY(' + d + 'px)'], 1));
   });
-  A(2400, '#c3-h0', 'opacity', [0, 1], 300); A(2500, '#c3-h1', 'opacity', [0, 1], 300); A(2600, '#c3-h2', 'opacity', [0, 1], 300);
+  A(1300, '#c3-stamp', 'opacity', [0, 1], 120); A(1300, '#c3-stamp', 'transform', ['rotate(-8deg) scale(1.7)', 'rotate(-8deg) scale(1)'], 380, E.back);
+  order.forEach((k, r) => {
+    const d = (34 + r * 18) - finalTop[k];
+    ['#c3-' + k, '#c3-x' + k.slice(1)].forEach(s => A(1900 + r * 110, s, 'transform', ['translateY(' + d + 'px)', 'translateY(0)'], 820, E.inOut));
+  });
+  A(2500, '#c3-h0', 'opacity', [0, 1], 360); A(2650, '#c3-h1', 'opacity', [0, 1], 360); A(2800, '#c3-h2', 'opacity', [0, 1], 360);
+  tick(A, 4200, '#c3-k0'); A(4280, '#c3-s0', 'transform', ['scaleX(0)', 'scaleX(1)'], 260); A(4280, '#c3-i0', 'opacity', [1, .5], 260);
+  tick(A, 4800, '#c3-k1'); A(4880, '#c3-s1', 'transform', ['scaleX(0)', 'scaleX(1)'], 260); A(4880, '#c3-i1', 'opacity', [1, .5], 260);
 });
 
 /* 4. Works offline ------------------------------------------------------ */
-Scene('s4', 6400, 5200, (A, $, root) => {
-  A(0, root, 'opacity', [0, 1], 300); A(6000, root, 'opacity', [1, 0], 400, E.inOut);
-  A(0, '#c4-slash', 'opacity', [0, 0], 1); A(0, '#c4-tag', 'opacity', [0, 0], 1); A(0, '#c4-cap', 'opacity', [0, 0], 1);
-  ['#c4-k0', '#c4-k1', '#c4-k2', '#c4-k3'].forEach(s => { A(0, s, 'opacity', [0, 0], 1); A(0, s, 'transform', ['scale(0)', 'scale(0)'], 1); });
-  A(900, '#c4-k0', 'opacity', [0, 1], 120); A(900, '#c4-k0', 'transform', ['scale(0)', 'scale(1)'], 320, E.back);
-  // the signal drops
-  A(1700, '#c4-s3', 'opacity', [1, .2], 300); A(1900, '#c4-s2', 'opacity', [1, .2], 300); A(2100, '#c4-s1', 'opacity', [1, .2], 300);
-  A(2200, '#c4-slash', 'opacity', [0, 1], 200); A(2200, '#c4-slash', 'transform', ['rotate(-40deg) scaleX(0)', 'rotate(-40deg) scaleX(1)'], 300);
-  A(2300, '#c4-tag', 'opacity', [0, 1], 250); A(2300, '#c4-tag', 'transform', ['translateX(6px)', 'translateX(0)'], 350);
-  // and the ticks keep coming
-  [['#c4-k1', 3000], ['#c4-k2', 3700], ['#c4-k3', 4400]].forEach(([s, t]) => { A(t, s, 'opacity', [0, 1], 120); A(t, s, 'transform', ['scale(0)', 'scale(1)'], 320, E.back); });
-  A(3400, '#c4-cap', 'opacity', [0, 1], 300);
+Scene('s4', 7400, 5800, (A, $, root) => {
+  fadeLoop(A, root, 6900);
+  hide(A, ['#c4-slash', '#c4-tag', '#c4-cap', '#c4-k0', '#c4-k1', '#c4-k2', '#c4-k3']);
+  ['#c4-t0', '#c4-t1', '#c4-t2', '#c4-t3'].forEach(s => A(0, s, 'transform', ['scaleX(0)', 'scaleX(0)'], 1));
+  A(0, $('.phone'), 'transform', ['translateY(16px)', 'translateY(0)'], 700, E.out);
+  const done = (t, i) => { tick(A, t, '#c4-k' + i); A(t + 80, '#c4-t' + i, 'transform', ['scaleX(0)', 'scaleX(1)'], 240); };
+  done(1000, 0);
+  // the signal goes
+  A(1900, '#c4-s3', 'opacity', [1, .18], 300); A(2100, '#c4-s2', 'opacity', [1, .18], 300); A(2300, '#c4-s1', 'opacity', [1, .18], 300);
+  A(2400, '#c4-slash', 'opacity', [0, 1], 160); A(2400, '#c4-slash', 'transform', ['rotate(-38deg) scaleX(0)', 'rotate(-38deg) scaleX(1)'], 320);
+  A(2500, '#c4-tag', 'opacity', [0, 1], 120); A(2500, '#c4-tag', 'transform', ['rotate(6deg) scale(1.6)', 'rotate(6deg) scale(1)'], 380, E.back);
+  // and the ticks keep landing
+  done(3300, 1); done(4000, 2); done(4700, 3);
+  A(3700, '#c4-cap', 'opacity', [0, 1], 360);
 });
 
 /* 5. Compare stores ----------------------------------------------------- */
-Scene('s5', 6400, 5000, (A, $, root) => {
-  A(0, root, 'opacity', [0, 1], 300); A(6000, root, 'opacity', [1, 0], 400, E.inOut);
-  A(0, '#c5-tag', 'opacity', [0, 0], 1); A(0, '#c5-cap', 'opacity', [0, 0], 1);
+Scene('s5', 7400, 5600, (A, $, root) => {
+  fadeLoop(A, root, 6900);
+  hide(A, ['#c5-stamp', '#c5-cap']);
   [['#c5-b0', '#c5-a0', .62], ['#c5-b1', '#c5-a1', .78], ['#c5-b2', '#c5-a2', .92]].forEach(([b, a, w], i) => {
     A(0, b, 'transform', ['scaleX(0)', 'scaleX(0)'], 1); A(0, a, 'opacity', [0, 0], 1);
-    A(700 + i * 350, b, 'transform', ['scaleX(0)', 'scaleX(' + w + ')'], 900, E.out);
-    A(1300 + i * 350, a, 'opacity', [0, 1], 300);
+    A(700 + i * 380, b, 'transform', ['scaleX(0)', 'scaleX(' + w + ')'], 1000, E.out);
+    A(1400 + i * 380, a, 'opacity', [0, 1], 320); A(1400 + i * 380, a, 'transform', ['translateX(-6px)', 'translateX(0)'], 380);
   });
-  A(3000, '#c5-tag', 'opacity', [0, 1], 200); A(3000, '#c5-tag', 'transform', ['translateY(6px) scale(.8)', 'translateY(0) scale(1)'], 420, E.back);
-  A(3600, '#c5-cap', 'opacity', [0, 1], 300);
+  A(3400, '#c5-stamp', 'opacity', [0, 1], 120); A(3400, '#c5-stamp', 'transform', ['rotate(-4deg) scale(1.7)', 'rotate(-4deg) scale(1)'], 380, E.back);
+  A(3500, '#c5-b0', 'transform', ['scaleX(.62)', 'scaleX(.62) scaleY(1.25)', 'scaleX(.62)'], 420, E.out);
+  A(4200, '#c5-cap', 'opacity', [0, 1], 360);
 });
 
 /* 6. Adapt a recipe ----------------------------------------------------- */
-Scene('s6', 6800, 5600, (A, $, root) => {
-  A(0, root, 'opacity', [0, 1], 300); A(6400, root, 'opacity', [1, 0], 400, E.inOut);
-  ['#c6-prem', '#c6-new', '#c6-chip', '#c6-fly'].forEach(s => A(0, s, 'opacity', [0, 0], 1));
+Scene('s6', 8000, 6200, (A, $, root) => {
+  fadeLoop(A, root, 7500);
+  icon($('#c6-can'), 'can');
+  hide(A, ['#c6-prem', '#c6-new', '#c6-chip', '#c6-can']);
   A(0, '#c6-strike', 'transform', ['scaleX(0)', 'scaleX(0)'], 1);
-  A(800, '#c6-prem', 'opacity', [0, 1], 200); A(800, '#c6-prem', 'transform', ['scale(.7)', 'scale(1)'], 380, E.back);
-  A(1500, '#c6-strike', 'transform', ['scaleX(0)', 'scaleX(1)'], 300);
-  A(1700, '#c6-old', 'opacity', [1, .35], 300);
-  A(1900, '#c6-new', 'opacity', [0, 1], 300); A(1900, '#c6-new', 'transform', ['translateY(4px)', 'translateY(0)'], 340);
-  A(2400, '#c6-chip', 'opacity', [0, 1], 250); A(2400, '#c6-chip', 'transform', ['translateX(-6px)', 'translateX(0)'], 350);
+  A(0, $('.paper'), 'transform', ['translateY(-20px) rotate(-5deg)', 'translateY(0) rotate(-1.5deg)'], 800, E.back);
+  A(0, '#c6-bskt', 'transform', ['translateY(12px)', 'translateY(0)'], 700, E.out);
+  A(900, '#c6-prem', 'opacity', [0, 1], 200); A(900, '#c6-prem', 'transform', ['scale(.6)', 'scale(1)'], 380, E.back);
+  A(1700, '#c6-strike', 'transform', ['scaleX(0)', 'scaleX(1)'], 300);
+  A(1900, '#c6-old', 'opacity', [1, .35], 300);
+  A(2100, '#c6-new', 'opacity', [0, 1], 300); A(2100, '#c6-new', 'transform', ['translateY(5px)', 'translateY(0)'], 360);
+  A(2700, '#c6-chip', 'opacity', [0, 1], 250); A(2700, '#c6-chip', 'transform', ['translateX(-6px) scale(.8)', 'translateX(0) scale(1)'], 380, E.back);
   // the swapped ingredient goes straight into the basket
-  A(3400, '#c6-fly', 'opacity', [0, 1], 100); A(3400, '#c6-new', 'opacity', [1, .35], 200);
-  const N = 12, vals = [], offs = []; for (let i = 0; i <= N; i++) { const u = i / N; const x = 190 * u, y = -46 * 4 * u * (1 - u) + 4 * u; vals.push('translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + (1 - .5 * u).toFixed(3) + ')'); offs.push(u); }
-  A(3400, '#c6-fly', 'transform', vals, 720, E.lin, offs); A(3900, '#c6-fly', 'opacity', [1, 0], 220);
-  A(4120, '#c6-bskt', 'transform', ['scale(1)', 'scale(1.06,.94)', 'scale(1)'], 360, E.out);
+  A(3800, '#c6-can', 'opacity', [0, 1], 120); A(3800, '#c6-new', 'opacity', [1, .35], 240);
+  const land = arc(A, 3800, '#c6-can', [0, 0], [94, 36], 760, { lift: 54, rot: 22, scale: .85, settle: false });
+  A(land - 40, '#c6-can', 'opacity', [1, 0], 160);
+  A(land, '#c6-bskt', 'transform', ['translateY(0)', 'scale(1.06,.92)', 'scale(.99,1.02)', 'translateY(0)'], 380, E.out, [0, .3, .65, 1]);
 });
 })();
 </script>
