@@ -94,6 +94,11 @@ a:hover { color:var(--accent); }
 }
 .topbar .region { position:relative; color:var(--muted); }
 .topbar .region:hover { color:var(--accent); }
+/* The site's few links and the theme toggle, on the right */
+.topnav { display:flex; align-items:baseline; gap:24px; flex:none; }
+.topnav a { position:relative; color:var(--muted); }
+.topnav a:hover { color:var(--accent); }
+.topnav a::before { content:""; position:absolute; left:-8px; right:-8px; top:50%; transform:translateY(-50%); height:48px; }
 .theme-toggle {
   position:relative; font:inherit; letter-spacing:.18em; text-transform:uppercase; color:var(--muted);
   background:none; border:none; padding:0; cursor:pointer;
@@ -109,6 +114,7 @@ a:hover { color:var(--accent); }
 @media (max-width: 560px) {
   .topbar { gap:10px; }
   .topbar .region { min-width:0; }
+  .topnav { gap:16px; }
 }
 
 /* ---- The logo mark with its rings, above every page's title ------------- */
