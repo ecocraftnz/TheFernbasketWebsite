@@ -380,3 +380,28 @@ html[data-theme="dark"] { --muted:#9DB0A6; --line:rgba(111,199,155,.26); --hair:
 .policy-meta {
   margin-top: var(--sp-sm) !important;
 }
+
+/* A phone screenshot beside a step (the delete-account page). Never wider
+   than 320px; the border and radius match the homepage's screenshot frames. */
+.policy .step-shot {
+  margin: var(--sp-md) 0 var(--sp-sm);
+  max-width: 320px;
+}
+
+.policy .step-shot img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--r-lg);
+}
+
+.policy .step-shot figcaption {
+  margin-top: var(--sp-sm);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--text-muted);
+}
+
+.policy li > p {
+  margin-top: var(--sp-sm);
+}
