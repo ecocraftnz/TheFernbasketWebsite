@@ -17,6 +17,7 @@ Everything that gets published lives in `public/`. Nothing else does.
 | `public/chrome.css` | The chrome every page shares: tokens, fonts, top bar, logo mark, watermarks, footer, headings. Change these here, never in a page |
 | `public/index.html` | The marketing page: links `chrome.css`, then its own `<style>` for the hero animation and content sections |
 | `public/PrivacyPolicy/index.html` | The published privacy policy (version `2026-09-27`; the app records consents against that exact string) |
+| `public/how-it-works/index.html` | The app walkthrough at `/how-it-works/`: eight screenshots (`public/assets/walkthrough/`, 600x1298, red outlines mark the tap) beside the eight steps; auto-plays until someone interacts |
 | `public/delete-account/index.html` | How to delete an account, at `/delete-account/`, which the app's policy and Google Play point to |
 | `public/styles.css` | What long-form text needs (the policy layout, tables). Only the text pages link it, after `chrome.css` |
 | `concepts/cards/template.html` | The source of the six "What the app does" card animations. `tools/build-cards.py` copies the hero's produce drawings and basket into it and writes both the prototype and the homepage's copy |
