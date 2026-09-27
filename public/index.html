@@ -427,6 +427,13 @@
   html:not(.js) .cs-fit { display:none; }
   /* cards:css end */
 
+  /* The top bar's How it works points at a section of this page, so the
+     page glides there rather than jumping; a landing from another page is
+     unaffected. Not under reduced motion. The section keeps a little air
+     above its heading when scrolled to. */
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior:smooth; } }
+  #how-it-works { scroll-margin-top:24px; }
+
   /* ---- The walkthrough ----------------------------------------------------
      A phone frame showing the current screen beside the eight steps. The
      screenshots are 600 x 1298; the frame keeps that ratio so nothing shifts
