@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delete your account · The Fern Basket</title>
+<meta name="description" content="How to delete your The Fern Basket account and the data linked to it, in the app or by email.">
+<meta name="theme-color" content="#F6F1E8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1713" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/assets/favicon.png" type="image/png">
+<link rel="canonical" href="https://thefernbasket.com/delete-account/">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="The Fern Basket">
+<meta property="og:locale" content="en_NZ">
+<meta property="og:url" content="https://thefernbasket.com/delete-account/">
+<meta property="og:title" content="Delete your account · The Fern Basket">
+<meta property="og:description" content="How to delete your The Fern Basket account and the data linked to it, in the app or by email.">
+<meta property="og:image" content="https://thefernbasket.com/assets/logo-mark.png">
+<meta name="twitter:card" content="summary">
+
+<!-- Same key and behaviour as index.html: a theme chosen on the landing page
+     must carry across, and must apply before first paint. Keep inline. -->
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('fb-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) { /* storage blocked - fall through to the OS preference */ }
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <a class="region" href="/">The Fern Basket · Aotearoa New Zealand</a>
+  <button type="button" class="theme-toggle" id="theme-toggle">Dark</button>
+</header>
+
+<main id="main">
+  <section class="policy" id="top">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="overline">Account</p>
+        <h1>Delete your account</h1>
+      </div>
+
+      <p>
+        You can delete your The Fern Basket account, and the data linked to
+        it, at any time.
+      </p>
+
+      <h2>In the app</h2>
+      <ol>
+        <li>Open The Fern Basket and go to Settings → Data &amp; privacy.</li>
+        <li>Tap "Delete my account and data", then confirm.</li>
+      </ol>
+      <p>
+        This wipes the app on that phone and deletes your account. Everything
+        is gone from our systems within 30 days, and from backups soon after.
+      </p>
+
+      <h2>Without the app</h2>
+      <p>
+        Email
+        <a href="mailto:support@thefernbasket.com?subject=Delete%20my%20account">support@thefernbasket.com</a>
+        from the email address you sign in with, with the subject "Delete my
+        account". We'll confirm by email and delete your account within 30
+        days. We only act on requests sent from the account's own address, so
+        nobody else can delete it for you.
+      </p>
+
+      <h2>What's deleted</h2>
+      <ul>
+        <li>Your account and its email address</li>
+        <li>Your synced recipes, basket and settings, including your name, suburb, default store and any diet setting</li>
+        <li>Your consent records and monthly import counts</li>
+        <li>Your subscriber record with RevenueCat, our payments partner</li>
+      </ul>
+      <p>
+        Recipes we saved from your imports can no longer be connected to you
+        once your account is gone, and are deleted within 14 days. Copies in
+        our providers' backups age out on their own schedule, usually within
+        7 to 35 days.
+      </p>
+
+      <h2>What we keep</h2>
+      <p>
+        A record that you asked us to delete your account, and that we did.
+        It holds only an ID that no longer points to anyone.
+      </p>
+
+      <h2>Subscriptions</h2>
+      <p>
+        Deleting your account doesn't cancel a Premium subscription. Cancel it
+        in the store you bought it from:
+      </p>
+      <ul>
+        <li>Google Play: open the Play Store, tap your profile picture, then Payments &amp; subscriptions → Subscriptions.</li>
+        <li>App Store: open Settings, tap your name, then Subscriptions.</li>
+      </ul>
+
+      <p>
+        Questions? Email
+        <a href="mailto:support@thefernbasket.com">support@thefernbasket.com</a>.
+        Read our <a href="/PrivacyPolicy/">Privacy Policy</a>.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>© <span id="year">2026</span> The Fern Basket. Aotearoa New Zealand.</span>
+    <span class="footer-links">
+      <a href="/">Home</a>
+      <a href="/PrivacyPolicy/">Privacy</a>
+      <a href="mailto:support@thefernbasket.com">Support</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = String(new Date().getFullYear());
+
+  (function () {
+    var btn = document.getElementById('theme-toggle');
+    function current() {
+      var set = document.documentElement.dataset.theme;
+      if (set) return set;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function paint() {
+      var next = current() === 'dark' ? 'light' : 'dark';
+      btn.textContent = next === 'dark' ? 'Dark' : 'Light';
+      btn.setAttribute('aria-label', 'Switch to ' + next + ' theme');
+    }
+    btn.addEventListener('click', function () {
+      var next = current() === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      try { localStorage.setItem('fb-theme', next); } catch (e) { /* private mode */ }
+      paint();
+    });
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
+      if (!document.documentElement.dataset.theme) paint();
+    });
+    paint();
+  })();
+</script>
+</body>
+</html>

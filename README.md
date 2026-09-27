@@ -15,10 +15,11 @@ Everything that gets published lives in `public/`. Nothing else does.
 | Path | What it is |
 | --- | --- |
 | `public/index.html` | The whole marketing page, self-contained (its own `<style>`) |
-| `public/PrivacyPolicy/index.html` | The published privacy policy |
-| `public/styles.css` | Design tokens + layout. Only the privacy page links it |
+| `public/PrivacyPolicy/index.html` | The published privacy policy (version `2026-09-27`; the app records consents against that exact string) |
+| `public/delete-account/index.html` | How to delete an account, at `/delete-account/`, which the app's policy and Google Play point to |
+| `public/styles.css` | Design tokens + layout. Only the privacy and delete-account pages link it |
 | `public/robots.txt` | Allows everything. Pure ASCII on purpose - see below |
-| `public/sitemap.xml` | Both pages, with `lastmod` taken from git |
+| `public/sitemap.xml` | All three pages, with `lastmod` taken from git |
 | `public/assets/screens/*.webp` | App screenshots for the "screen by screen" section |
 | `public/assets/logo-mark.png` | The app's logo mark, copied from the app repo |
 | `public/assets/favicon.png` | The app's favicon, copied from the app repo |
