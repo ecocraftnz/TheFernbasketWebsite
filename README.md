@@ -19,6 +19,8 @@ Everything that gets published lives in `public/`. Nothing else does.
 | `public/PrivacyPolicy/index.html` | The published privacy policy (version `2026-09-27`; the app records consents against that exact string) |
 | `public/delete-account/index.html` | How to delete an account, at `/delete-account/`, which the app's policy and Google Play point to |
 | `public/styles.css` | What long-form text needs (the policy layout, tables). Only the text pages link it, after `chrome.css` |
+| `concepts/cards/template.html` | The source of the six "What the app does" card animations. `tools/build-cards.py` copies the hero's produce drawings and basket into it and writes both the prototype and the homepage's copy |
+| `tools/build-cards.py` | Rebuilds the card animations after a change to the template: `python3 tools/build-cards.py`, then commit both outputs. Never edit the generated blocks in `index.html` by hand |
 | `tools/check-chrome.mjs` | Fails if any page's top bar, watermarks, logo mark, footer or stylesheet links differ from the others. Run before every PR |
 | `public/robots.txt` | Allows everything. Pure ASCII on purpose - see below |
 | `public/sitemap.xml` | All three pages, with `lastmod` taken from git |
