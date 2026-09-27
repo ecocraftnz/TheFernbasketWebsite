@@ -26,6 +26,7 @@
     try {
       var t = localStorage.getItem('fb-theme');
       if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+      document.documentElement.className = 'js';   // the animation's controls show only with JavaScript
     } catch (e) { /* storage blocked - fall through to the OS preference */ }
   })();
 </script>
@@ -34,23 +35,41 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
+<link rel="stylesheet" href="/chrome.css">
 <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 
-<header class="topbar">
-  <a class="region" href="/">The Fern Basket · Aotearoa New Zealand</a>
-  <button type="button" class="theme-toggle" id="theme-toggle">Dark</button>
-</header>
+<div class="page">
+
+  <div class="watermarks" aria-hidden="true">
+    <img class="wm-a" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
+    <img class="wm-b" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
+    <img class="wm-c" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
+    <img class="wm-d" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
+    <img class="wm-e" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
+  </div>
+
+  <header class="topbar">
+    <a class="region" href="/">The Fern Basket · Aotearoa New Zealand</a>
+    <button type="button" class="theme-toggle" id="theme-toggle">Dark</button>
+  </header>
 
 <main id="main">
   <section class="policy" id="top">
     <div class="wrap">
-      <div class="section-head">
+      <div class="page-head">
+        <div class="mark">
+          <span class="ring" aria-hidden="true"></span>
+          <span class="ring" aria-hidden="true"></span>
+          <span class="ring" aria-hidden="true"></span>
+          <img src="/assets/logo-mark.png" alt="The Fern Basket logo: a woven basket with a fern frond." width="450" height="434" decoding="async">
+        </div>
         <p class="overline">Account</p>
         <h1>Delete your account</h1>
       </div>
+
 
       <p>
         You can delete your The Fern Basket account, and the data linked to
@@ -130,21 +149,21 @@
     </div>
   </section>
 </main>
+</div>
 
-<footer class="site-footer">
+<footer class="footer">
   <div class="footer-inner">
-    <span>© <span id="year">2026</span> The Fern Basket. Aotearoa New Zealand.</span>
+    <span>Not on the app stores yet — links land here when it ships. Prices are estimates, not quotes.</span>
     <span class="footer-links">
       <a href="/">Home</a>
       <a href="/PrivacyPolicy/">Privacy</a>
+      <a href="/delete-account/">Delete account</a>
       <a href="mailto:support@thefernbasket.com">Support</a>
     </span>
   </div>
 </footer>
 
 <script>
-  document.getElementById('year').textContent = String(new Date().getFullYear());
-
   (function () {
     var btn = document.getElementById('theme-toggle');
     function current() {

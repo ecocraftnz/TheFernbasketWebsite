@@ -1,5 +1,9 @@
 /*
- * The Fern Basket — website styles.
+ * The Fern Basket — the text pages (privacy policy, delete account).
+ *
+ * Everything shared with the homepage (tokens, fonts, top bar, logo mark,
+ * watermarks, footer, headings) is in /chrome.css, linked before this file.
+ * This file holds only what long-form text needs.
  *
  * Every colour below is copied verbatim from the app's single source of
  * truth: src/theme/tokens.ts in ecocraftnz/basket-trans-tasman (which is
@@ -57,10 +61,9 @@
 }
 
 /* ---- Tokens: dark (tokens.ts → color.dark) ------------------------------
-   The app's userInterfaceStyle is "automatic", so the site follows the OS
-   the same way. Only the values that differ are restated.                  */
-@media (prefers-color-scheme: dark) {
-  :root {
+   Follows the theme toggle first and the OS second, exactly as chrome.css
+   does for the shared tokens. Only the values that differ are restated.   */
+html[data-theme="dark"] {
     --primary: #2E7D5B;
     --primary-pressed: #256A4C;
     --on-primary: #F3F8F2;
@@ -81,49 +84,39 @@
     --warn-border: #40361E;
     --premium-gold: #F3D98A;
   }
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) {
+      --primary: #2E7D5B;
+      --primary-pressed: #256A4C;
+      --on-primary: #F3F8F2;
+      --ocean: #6FC79B;
+      --accent: #6FC79B;
+      --bg: #0E1713;
+      --surface: #17211C;
+      --surface-border: #26332B;
+      --surface-nav: #12201A;
+      --text: #EAF0EC;
+      --text-muted: #8A968F;
+      --text-faint: #828E86;
+      --success-bg: #152A20;
+      --success-border: #1F3A2C;
+      --success-text: #8FB49F;
+      --warn: #E9C572;
+      --warn-bg: #241E12;
+      --warn-border: #40361E;
+      --premium-gold: #F3D98A;
+    }
 }
 
 /* ---- Base --------------------------------------------------------------- */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font);
-  font-weight: 500;
   /* tokens.ts type.body — 15/24 */
   font-size: 15px;
   line-height: 24px;
-  -webkit-font-smoothing: antialiased;
-}
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
-a {
-  color: var(--ocean);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 3px;
-  border-radius: var(--r-sm);
 }
 
 .wrap {
@@ -133,54 +126,7 @@ a:hover {
   padding: 0 var(--gutter);
 }
 
-.skip-link {
-  position: absolute;
-  left: -9999px;
-}
-
-.skip-link:focus {
-  left: var(--gutter);
-  top: var(--sp-lg);
-  z-index: 10;
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--min-touch);
-  background: var(--surface);
-  color: var(--text);
-  padding: var(--sp-md) var(--sp-lg);
-  border: 1px solid var(--surface-border);
-  border-radius: var(--r-md);
-}
-
 /* ---- Type scale (tokens.ts `type`) -------------------------------------- */
-h1,
-h2,
-h3 {
-  margin: 0;
-  font-weight: 800;
-  color: var(--text);
-}
-
-h1 {
-  /* display: 27/32, -0.54 — scaled up for the desktop hero */
-  font-size: clamp(32px, 6vw, 52px);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-}
-
-h2 {
-  /* title: 23/28, -0.46 */
-  font-size: clamp(23px, 3.4vw, 30px);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
-
-h3 {
-  /* heading: 16/20 */
-  font-size: 16px;
-  line-height: 20px;
-}
-
 p {
   margin: 0;
 }
@@ -206,113 +152,6 @@ p {
   color: var(--text-faint);
 }
 
-/* ---- Page chrome -------------------------------------------------------
-   Mirrors the topbar and footer on index.html so the two pages read as one
-   site. Values are copied from there deliberately: index.html is
-   self-contained by design, so this is the one place they have to be kept in
-   step. Everything the old v1 landing page needed (hero, store badges, cards,
-   grids, steps, feature list, premium, callout) was removed — the current
-   landing page carries its own styles and nothing here referenced them. */
-
-/* --muted/--line/--hair exist on index.html but not in tokens.ts; defined
-   here with the same values so the chrome matches exactly. */
-:root { --muted:#5A6B62; --line:rgba(23,81,59,.18); --hair:rgba(23,37,30,.12); }
-html[data-theme="dark"] { --muted:#9DB0A6; --line:rgba(111,199,155,.26); --hair:rgba(234,240,236,.14); }
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme="light"]) { --muted:#9DB0A6; --line:rgba(111,199,155,.26); --hair:rgba(234,240,236,.14); }
-}
-
-.topbar {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 24px var(--gutter) clamp(8px, 1.4vh, 14px);
-  border-bottom: 1px solid var(--hair);
-  font-size: clamp(10px, .95vw, 13px);
-  font-weight: 700;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.topbar .region { color: var(--muted); }
-.topbar .region:hover { color: var(--accent); text-decoration: none; }
-
-.theme-toggle {
-  position: relative;
-  font: inherit;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--muted);
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  border-bottom: 1px solid var(--line);
-}
-
-.theme-toggle:hover { color: var(--accent); }
-
-/* These two labels are small by design. The hit area is widened to the 44px
-   minimum with an overlay rather than padding, so the touch target is
-   compliant without the topbar growing taller. */
-.theme-toggle::before,
-.topbar .region::before {
-  content: "";
-  position: absolute;
-  left: -8px;
-  right: -8px;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 44px;
-}
-
-.topbar .region { position: relative; }
-
-/* ---- Footer ------------------------------------------------------------- */
-.site-footer {
-  border-top: 1px solid var(--hair);
-  background: var(--bg);
-  padding: 24px 0 32px;
-}
-
-.footer-inner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-  font-size: clamp(10px, .95vw, 13px);
-  font-weight: 600;
-  letter-spacing: .04em;
-  color: var(--muted);
-}
-
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(12px, 1.6vw, 22px);
-}
-
-.footer-links a {
-  color: var(--muted);
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: var(--min-touch);
-  min-width: var(--min-touch); /* height was set, width was not: measured 29px */
-  padding: 0 var(--sp-sm);
-}
-
-.footer-links a:hover { color: var(--accent); }
-
 /* ---- Policy page (long-form legal text, e.g. Privacy Policy) ------------ */
 .policy {
   padding: var(--sp-xxl) 0 calc(var(--sp-xxl) * 2);
@@ -320,6 +159,20 @@ html[data-theme="dark"] { --muted:#9DB0A6; --line:rgba(111,199,155,.26); --hair:
 
 .policy .wrap {
   max-width: 760px;
+  padding: 0;
+}
+
+/* Body text at the homepage's size, in the full text colour: this is legal
+   text people have to be able to read. */
+.policy p,
+.policy li {
+  font-size: clamp(15px, 1.25vw, 18px);
+  line-height: 1.6;
+}
+
+.policy a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .policy h2 {
