@@ -71,7 +71,7 @@
         </div>
         <p class="overline">Privacy</p>
         <h1>Privacy Policy</h1>
-        <p class="page-meta policy-meta">Policy version 2026-09-27 · Last updated 27 September 2026 · Effective 27 September 2026</p>
+        <p class="page-meta policy-meta">Policy version 2026-10-04 · Last updated 4 October 2026 · Effective 11 October 2026</p>
       </div>
 
 
@@ -91,9 +91,11 @@
         The app works on your device by default. There are no analytics, no
         ads, and we never sell or share your data for marketing. You only get
         an account if you choose to sign in. Three features send data off
-        your device when you use them: importing a recipe, finding stores
-        near you, and importing a recipe from a photo or a video. You can
-        export or delete everything at any time.
+        your device when you use them: importing a recipe, finding your
+        store, and importing a recipe from a photo or a video. A fourth is
+        your choice and off unless you turn it on: sharing what a shop cost,
+        without your name or account, to improve the price estimates for
+        everyone. You can export or delete everything at any time.
       </p>
 
       <h2>What we process, why, and our lawful basis</h2>
@@ -151,15 +153,27 @@
             <td>Contract</td>
           </tr>
           <tr>
+            <td>What a shop cost (the total, the supermarket chain, the date, how many items)</td>
+            <td>Only if you enter it when you finish a shop</td>
+            <td>Shown back to you beside later price checks. Stored on your device only; not synced to your account</td>
+            <td>Contract</td>
+          </tr>
+          <tr>
+            <td>A shared shop total: the supermarket chain, the week, the total, our estimate for the same basket, and how many items it had</td>
+            <td>Only if you turn on "Share it anonymously" (or "Share shop totals" in Settings) and are signed in</td>
+            <td>Correcting price estimates against what people really paid. Stored without your account, name, suburb or the items you bought</td>
+            <td>Consent — off by default, withdrawable in one tap</td>
+          </tr>
+          <tr>
             <td>Your precise location (GPS)</td>
-            <td>Only when you tap "Use my location", after the OS permission prompt</td>
-            <td>Sent to our server and on to OpenStreetMap to find the nearest PAK'nSAVE, Woolworths and New World</td>
+            <td>Not by the current app, which never asks for it. Builds made before 10 October 2026 had a "Use my location" button: only when you tapped it, after the OS permission prompt</td>
+            <td>Was sent to our server and on to OpenStreetMap to find the nearest Pak'nSave, Woolworths and New World</td>
             <td>Consent (the OS prompt)</td>
           </tr>
           <tr>
-            <td>A suburb or town you type</td>
-            <td>When you search for stores by name instead of GPS</td>
-            <td>Same as above, without needing the permission</td>
+            <td>A suburb, postcode or store name you type</td>
+            <td>When you search for your store</td>
+            <td>Sent to our server and on to OpenStreetMap to find Pak'nSave, Woolworths and New World branches nearby</td>
             <td>Contract</td>
           </tr>
           <tr>
@@ -223,13 +237,14 @@
       <h3>What we deliberately don't collect</h3>
       <p>
         No analytics, no advertising identifiers, no contacts, no device
-        identifiers, no background or continuous location, and no IP
-        addresses or user agents in our own consent records. We ask for
-        exactly two OS permissions — location and photo library / camera —
-        and only at the moment you use the feature that needs them.
-        Declining either leaves the rest of the app fully working: you can
-        type a suburb instead of using GPS, and import recipes by link or
-        text instead of by photo.
+        identifiers, no location from your phone, and no IP addresses or
+        user agents in our own consent records. We ask for photo library /
+        camera access only at the moment you use the feature that needs it,
+        and declining leaves the rest of the app fully working: you can
+        import recipes by link or text instead of by photo. We ask to show
+        notifications only when you set a cooking timer or the weekly
+        reminder, and the app works without them. (Builds made before 10
+        October 2026 could also ask for location, for "Use my location".)
       </p>
 
       <h3>Things that stay on your phone</h3>
@@ -244,11 +259,27 @@
           stay on the device.
         </li>
         <li>The specific store branch you picked, and your basket text size.</li>
+        <li>
+          What your shops cost, if you enter it. It is included in your data
+          export and removed when you delete your data. Sharing a total is a
+          separate choice, described above, and what is shared does not
+          include who you are.
+        </li>
       </ul>
       <p>
         This is an architectural decision, not an accident. If it ever
         changes, this policy changes with it and we would ask for your
         explicit consent first.
+      </p>
+
+      <h3>Where price estimates come from</h3>
+      <p>
+        Store prices in the app are estimates made by an AI provider, not
+        live shelf prices. Since version 2026-10-04 the estimate is guided by
+        Stats NZ's monthly average retail prices for everyday foods.
+        Estimates include Stats NZ's data, which are licensed by Stats NZ for
+        reuse under the Creative Commons Attribution 4.0 International
+        licence. Stats NZ receives nothing from the app.
       </p>
 
       <h3>A note on shopping lists</h3>
@@ -277,7 +308,7 @@
         <tbody>
           <tr>
             <td>Supabase</td>
-            <td>Account email, synced recipes/basket/settings, consent records; also creates your sign-in codes</td>
+            <td>Account email, synced recipes/basket/settings, consent records, and shared shop totals (stored without an account identifier); also creates your sign-in codes</td>
             <td>Authentication and database</td>
             <td>Sydney, Australia (ap-southeast-2)</td>
           </tr>
@@ -295,7 +326,7 @@
           </tr>
           <tr>
             <td>OpenStreetMap (Overpass, Nominatim)</td>
-            <td>Your coordinates or the place name you typed. No account identifier is attached</td>
+            <td>What you typed into the store search (a suburb, postcode or store name) and the coordinates of that place. From builds made before 10 October 2026, your own coordinates if you tapped "Use my location". No account identifier is attached</td>
             <td>Finding nearby supermarkets</td>
             <td>Europe, community-run</td>
           </tr>
@@ -344,7 +375,8 @@
         OpenStreetMap is the exception worth naming. It is a volunteer
         project with no company to contract with, so there is no formal data
         processing agreement or standard transfer clause. What reaches it is
-        only a coordinate or a place name, with nothing identifying attached.
+        what you typed into the store search and the coordinates of that
+        place, with nothing identifying attached.
       </p>
 
       <h2>How long we keep it</h2>
@@ -370,9 +402,20 @@
           the estimate, not linked to you, deleted within a day.
         </li>
         <li>
-          <strong>Store searches:</strong> your position rounded to about a
-          kilometre, or the suburb you typed, with the stores found there.
-          Not linked to you, deleted after 30 days.
+          <strong>What a shop cost:</strong> on your device until you delete
+          your data or uninstall the app. The app keeps the last 100.
+        </li>
+        <li>
+          <strong>Shared shop totals:</strong> kept without a time limit. A
+          shared total holds nothing that identifies you (no account, name,
+          suburb, items or time finer than the week), which also means we
+          cannot find yours again to delete it. Turning sharing off stops any
+          more being sent.
+        </li>
+        <li>
+          <strong>Store searches:</strong> what you typed, where that is, and
+          the stores found around it (kept against a position rounded to
+          about a kilometre). Not linked to you, deleted after 30 days.
         </li>
         <li>
           <strong>What AI and map providers receive:</strong> the provider's
@@ -433,8 +476,9 @@
         <li><strong>Correction:</strong> edit anything directly in the app.</li>
         <li>
           <strong>Withdraw consent:</strong> sign out to stop sync; clear
-          your dietary default; turn off "Product news"; revoke location or
-          photo access in your phone's settings at any time.
+          your dietary default; turn off "Product news"; turn off "Share
+          shop totals" in Settings; revoke photo access in your phone's
+          settings at any time.
         </li>
       </ul>
       <p>
@@ -493,6 +537,7 @@
       <a href="/">Home</a>
       <a href="/#how-it-works">How it works</a>
       <a href="/PrivacyPolicy/">Privacy</a>
+      <a href="/TermsOfUse/">Terms</a>
       <a href="/delete-account/">Delete account</a>
       <a href="mailto:support@thefernbasket.com">Support</a>
     </span>
