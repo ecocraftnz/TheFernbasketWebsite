@@ -69,7 +69,7 @@
           "name": "Which New Zealand supermarkets does it compare?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Pak'nSave, New World and Woolworths. You can set a default store during setup and change it any time, and the app can find nearby branches using your location or a suburb you type in."
+            "text": "Pak'nSave, New World and Woolworths. You can set a default store during setup and change it any time, and the app finds nearby branches when you search by suburb, postcode or store name. It never asks for your phone's location."
           }
         },
         {
@@ -77,7 +77,7 @@
           "name": "Are the supermarket prices accurate?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "They are AI estimates, not live store prices, and the app says so on the screen. No New Zealand supermarket publishes a public price feed, so the comparison is there to help you choose where to shop rather than to predict your receipt. Totals are shown as approximate, the winning store is marked as likely cheapest, and what you pay at the shelf can differ."
+            "text": "They are AI estimates, not live store prices, and the app says so on the screen. No New Zealand supermarket publishes a public price feed, so the comparison is there to help you choose where to shop rather than to predict your receipt. Everyday items start from Stats NZ's monthly average retail prices, used under its Creative Commons Attribution 4.0 licence, and the rest is estimated. Totals are shown as approximate, the winning store is marked as likely cheapest, and what you pay at the shelf can differ. When you finish a shop you can tell the app what it cost; that stays on your phone and is shown beside later estimates, and you can choose to share the total anonymously to help improve them."
           }
         },
         {
@@ -85,7 +85,7 @@
           "name": "Can I add a recipe from a YouTube video?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. Send a YouTube link and the app reads the description, then any recipe page it links to, and watches the video if it has to. Links to recipe pages, plain pasted text, and photos of cookbook pages or recipe cards all work too, and a recipe in any language comes out in English. Instagram links cannot be read by apps, so for those the app asks you to copy the caption and paste it as text."
+            "text": "Yes. Send a YouTube link and the app reads the description, then any recipe page it links to, and watches the video if it has to. Links to recipe pages, plain pasted text, and photos of cookbook pages or recipe cards all work too, and a recipe in any language comes out in English. Instagram links cannot be read by apps, so for those the app asks you to copy the caption and paste it as text. If you have nothing in mind yet, the Find on YouTube and Search the web shortcuts on the Add a recipe screen start with New Zealand recipes."
           }
         },
         {
@@ -94,6 +94,14 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Yes. Browsing your saved recipes, building and editing baskets, shop mode and sharing a list are all local to your phone by design. A connection is needed to add a new recipe, compare prices or find stores."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it help with the cooking too?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. A recipe you import comes with its cooking steps, one per line, in the same units as the ingredient list, and a note at the top of the recipe points you to them. Tap a step to tick it off as you go. A step that states a time, such as simmer for 10 minutes, offers a timer that rings even with the app closed. You can also turn on a weekly reminder in Settings to plan the week's shop; it is off until you choose a day and time."
           }
         },
         {
@@ -109,7 +117,7 @@
           "name": "Is The Fern Basket free?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes, with a monthly allowance. A free account gets 20 recipe imports from links, photos and text, and 2 video imports, each calendar month. Every recipe you save, with no limit, your basket, quick check and shop mode, price estimates at Pak'nSave, New World and Woolworths, and sync across your devices are all free. Premium removes the import limit and adds the recipe rewriting: healthier and lower-calorie versions, and vegetarian, vegan and gluten-free versions. It starts with a seven-day free trial on a monthly or annual plan, and you can cancel any time in Settings. Prices are shown in the app."
+            "text": "Yes, with a monthly allowance. A free account gets 20 recipe imports from links, photos and text, and 2 video imports, each calendar month. Every recipe you save, with no limit, your basket, quick check and shop mode, cooking steps and timers, price estimates at Pak'nSave, New World and Woolworths, and sync across your devices are all free. Premium removes the monthly import limit, videos included, and adds the recipe rewriting: healthier and lower-calorie versions, and vegetarian, vegan and gluten-free versions. It is a monthly or annual subscription through Google Play or the App Store; if a free trial is offered to you, its length is shown before you start it, and you can cancel any time in the store, which Settings takes you to. Prices are shown in the app."
           }
         },
         {
@@ -125,7 +133,7 @@
           "name": "What data does the app collect?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No analytics, no advertising identifiers, no contacts, no device identifiers and no background location. It asks for exactly two permissions — location, and photo library or camera — and only at the moment you use the feature needing them. Dietary and allergy tags stay on your device even when you are signed in. The full privacy policy sets out the detail, and there is a page on how to delete your account."
+            "text": "No analytics, no advertising identifiers, no contacts, no device identifiers, and it never asks for your location: you find your store by typing a suburb, postcode or store name. It asks for the photo library or camera only when you import a recipe from a photo, and for notifications only when you set a cooking timer or the weekly reminder. Dietary and allergy tags stay on your device even when you are signed in. The full privacy policy sets out the detail, and there is a page on how to delete your account."
           }
         },
         {
@@ -889,8 +897,8 @@
           <!-- cards:scene end -->
           <h3>Compare Pak'nSave, New World and Woolworths</h3>
           <p>An estimated total for your whole basket at each store, with the likely cheapest marked,
-          and your nearest branches by location or suburb. They are AI estimates, not live store
-          prices, and the app says so on the screen.</p>
+          and nearby branches found by suburb, postcode or store name. They are AI estimates guided
+          by Stats NZ average prices, not live store prices, and the app says so on the screen.</p>
         </article>
         <article class="cell">
           <!-- cards:scene start -->
@@ -1047,26 +1055,31 @@
 
         <details>
           <summary><h3>Which New Zealand supermarkets does it compare?</h3></summary>
-          <p>Pak'nSave, New World and Woolworths. You can set a default store during setup and
-          change it any time, and the app can find nearby branches using your location or a suburb
-          you type in.</p>
+          <p>Pak'nSave, New World and Woolworths. You can set a default store during setup and change it any
+          time, and the app finds nearby branches when you search by suburb, postcode or store name. It
+          never asks for your phone's location.</p>
         </details>
 
         <details>
           <summary><h3>Are the supermarket prices accurate?</h3></summary>
-          <p>They are AI estimates, not live store prices, and the app says so on the screen. No New
-          Zealand supermarket publishes a public price feed, so the comparison is there to help you
-          choose where to shop rather than to predict your receipt. Totals are shown as approximate,
-          the winning store is marked as likely cheapest, and what you pay at the shelf can differ.</p>
+          <p>They are AI estimates, not live store prices, and the app says so on the screen. No New Zealand
+          supermarket publishes a public price feed, so the comparison is there to help you choose where to
+          shop rather than to predict your receipt. Everyday items start from Stats NZ's monthly average
+          retail prices, used under its Creative Commons Attribution 4.0 licence, and the rest is estimated.
+          Totals are shown as approximate, the winning store is marked as likely cheapest, and what you pay
+          at the shelf can differ. When you finish a shop you can tell the app what it cost; that stays on
+          your phone and is shown beside later estimates, and you can choose to share the total anonymously
+          to help improve them.</p>
         </details>
 
         <details>
           <summary><h3>Can I add a recipe from a YouTube video?</h3></summary>
-          <p>Yes. Send a YouTube link and the app reads the description, then any recipe page it links
-          to, and watches the video if it has to. Links to recipe pages, plain pasted text, and photos
-          of cookbook pages or recipe cards all work too, and a recipe in any language comes out in
-          English. Instagram links cannot be read by apps, so for those the app asks you to copy the
-          caption and paste it as text.</p>
+          <p>Yes. Send a YouTube link and the app reads the description, then any recipe page it links to, and
+          watches the video if it has to. Links to recipe pages, plain pasted text, and photos of cookbook
+          pages or recipe cards all work too, and a recipe in any language comes out in English. Instagram
+          links cannot be read by apps, so for those the app asks you to copy the caption and paste it as
+          text. If you have nothing in mind yet, the Find on YouTube and Search the web shortcuts on the Add
+          a recipe screen start with New Zealand recipes.</p>
         </details>
 
         <details>
@@ -1074,6 +1087,15 @@
           <p>Yes. Browsing your saved recipes, building and editing baskets, shop mode and sharing a
           list are all local to your phone by design. A connection is needed to add a new recipe,
           compare prices or find stores.</p>
+        </details>
+
+        <details>
+          <summary><h3>Does it help with the cooking too?</h3></summary>
+          <p>Yes. A recipe you import comes with its cooking steps, one per line, in the same units as the
+          ingredient list, and a note at the top of the recipe points you to them. Tap a step to tick it off
+          as you go. A step that states a time, such as simmer for 10 minutes, offers a timer that rings
+          even with the app closed. You can also turn on a weekly reminder in Settings to plan the week's
+          shop; it is off until you choose a day and time.</p>
         </details>
 
         <details>
@@ -1086,13 +1108,15 @@
 
         <details>
           <summary><h3>Is The Fern Basket free?</h3></summary>
-          <p>Yes, with a monthly allowance. A free account gets 20 recipe imports from links, photos and
-          text, and 2 video imports, each calendar month. Every recipe you save, with no limit, your
-          basket, quick check and shop mode, price estimates at Pak'nSave, New World and Woolworths,
-          and sync across your devices are all free. Premium removes the import limit and adds the
-          recipe rewriting: healthier and lower-calorie versions, and vegetarian, vegan and
-          gluten-free versions. It starts with a seven-day free trial on a monthly or annual plan,
-          and you can cancel any time in Settings. Prices are shown in the app.</p>
+          <p>Yes, with a monthly allowance. A free account gets 20 recipe imports from links, photos and text,
+          and 2 video imports, each calendar month. Every recipe you save, with no limit, your basket, quick
+          check and shop mode, cooking steps and timers, price estimates at Pak'nSave, New World and
+          Woolworths, and sync across your devices are all free. Premium removes the monthly import limit,
+          videos included, and adds the recipe rewriting: healthier and lower-calorie versions, and
+          vegetarian, vegan and gluten-free versions. It is a monthly or annual subscription through Google
+          Play or the App Store; if a free trial is offered to you, its length is shown before you start it,
+          and you can cancel any time in the store, which Settings takes you to. Prices are shown in the
+          app.</p>
         </details>
 
         <details>
@@ -1105,10 +1129,11 @@
 
         <details>
           <summary><h3>What data does the app collect?</h3></summary>
-          <p>No analytics, no advertising identifiers, no contacts, no device identifiers and no
-          background location. It asks for exactly two permissions — location, and photo library or
-          camera — and only at the moment you use the feature needing them. Dietary and allergy tags
-          stay on your device even when you are signed in. The full
+          <p>No analytics, no advertising identifiers, no contacts, no device identifiers, and it never asks
+          for your location: you find your store by typing a suburb, postcode or store name. It asks for the
+          photo library or camera only when you import a recipe from a photo, and for notifications only
+          when you set a cooking timer or the weekly reminder. Dietary and allergy tags stay on your device
+          even when you are signed in. The full
           <a href="/PrivacyPolicy/">privacy policy</a> sets out the detail, and there is a page on
           <a href="/delete-account/">how to delete your account</a>.</p>
         </details>
@@ -1137,6 +1162,7 @@
       <a href="/">Home</a>
       <a href="/#how-it-works">How it works</a>
       <a href="/PrivacyPolicy/">Privacy</a>
+      <a href="/TermsOfUse/">Terms</a>
       <a href="/delete-account/">Delete account</a>
       <a href="mailto:support@thefernbasket.com">Support</a>
     </span>
