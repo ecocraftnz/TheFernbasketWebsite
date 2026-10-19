@@ -204,12 +204,15 @@ first eight bytes will tell you.
 **The screens show an example recipe**, and the section says so under the
 walkthrough. Keep that line if the images are ever replaced.
 
-**The screenshots are from 27 September 2026.** Since then the app changed
-its watermark (a tree fern, 8 and 11 Oct), redesigned Add a recipe (10 Oct)
-and added "What did the shop cost?" to the Done screen (4 Oct), so the
-screens are due a re-shoot from a current build. Same for the three on
-`/delete-account/`: Settings gained a Reminders section and a "Share shop
-totals" switch, and Data & privacy gained new cards.
+**The screenshots are from 27 September 2026 and the app is at 1.3.0.**
+Since then the app changed its watermark (a tree fern, 8 and 11 Oct),
+redesigned Add a recipe (10 Oct), added "What did the shop cost?" to the Done
+screen (4 Oct), Home's heading became "What's for tea?" (13 Oct) and the
+Recipes screen gained crates in its title (17 Oct), so the screens are due a
+re-shoot from a current build. Same for the three on `/delete-account/`:
+Settings gained a Reminders section and a "Share shop totals" switch, its
+"Privacy & data" section is now "Privacy", and Data & privacy gained new
+cards.
 
 ## Keeping copy in step with the app
 

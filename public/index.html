@@ -85,7 +85,7 @@
           "name": "Can I add a recipe from a YouTube video?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. Send a YouTube link and the app reads the description, then any recipe page it links to, and watches the video if it has to. Links to recipe pages, plain pasted text, and photos of cookbook pages or recipe cards all work too, and a recipe in any language comes out in English. Instagram links cannot be read by apps, so for those the app asks you to copy the caption and paste it as text. If you have nothing in mind yet, the Find on YouTube and Search the web shortcuts on the Add a recipe screen start with New Zealand recipes."
+            "text": "Yes. Send a YouTube link and the app reads the description, then any recipe page it links to, and watches the video if it has to. Links to recipe pages, plain pasted text, and photos of cookbook pages or recipe cards all work too, and a recipe in any language comes out in English. Instagram links cannot be read by apps, so for those the app asks you to copy the caption and paste it as text. If you have nothing in mind yet, Find on YouTube starts with New Zealand cooking channels, and Search the web searches twelve New Zealand recipe sites the app is known to read, with a list of more to browse."
           }
         },
         {
@@ -101,15 +101,23 @@
           "name": "Does it help with the cooking too?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. A recipe you import comes with its cooking steps, one per line, in the same units as the ingredient list, and a note at the top of the recipe points you to them. Tap a step to tick it off as you go. A step that states a time, such as simmer for 10 minutes, offers a timer that rings even with the app closed. You can also turn on a weekly reminder in Settings to plan the week's shop; it is off until you choose a day and time."
+            "text": "Yes. A recipe you import comes with its cooking steps, one per line, in the same units as the ingredient list, and a note at the top of the recipe points you to them. Tap a step to tick it off as you go. A step that states a time, such as simmer for 10 minutes, offers a timer: while it runs, a countdown sits in your phone's notifications with the step it belongs to, and tapping it takes you back to that step. It rings even with the app closed. You can also turn on a weekly reminder in Settings to plan the week's shop; it is off until you choose a day and time."
           }
         },
         {
           "@type": "Question",
-          "name": "Can it adapt recipes for vegetarian, vegan or gluten-free diets?",
+          "name": "Can I organise my recipes?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes, as part of Premium. The app swaps ingredients one at a time so you can accept or skip each change, and it tells you honestly when a dish changes so much that it is really a different meal. Swapped ingredients go straight into your basket. You can also record preferences such as dairy-free, nut-free, halal, kosher, low-FODMAP, keto and others."
+            "text": "Yes. Recipes sort into crates: named collections such as Favourites or Weeknights. The app makes Favourites for you; add your own from the Recipes screen, and put a recipe in as many crates as you like. Removing a crate keeps its recipes, and every change can be undone. Crates sync with your recipes when you are signed in."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can it adapt recipes for vegetarian, vegan, gluten-free or dairy-free diets?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, as part of Premium. The app swaps ingredients one at a time so you can accept or skip each change, and it tells you honestly when a dish changes so much that it is really a different meal. Swapped ingredients go straight into your basket, and where the recipe has cooking steps they are rewritten for your swaps and checked for mistakes, with the original steps kept too. You can also record preferences such as nut-free, halal, kosher, low-FODMAP, keto and others."
           }
         },
         {
@@ -117,7 +125,7 @@
           "name": "Is The Fern Basket free?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes, with a monthly allowance. A free account gets 20 recipe imports from links, photos and text, and 2 video imports, each calendar month. Every recipe you save, with no limit, your basket, quick check and shop mode, cooking steps and timers, price estimates at Pak'nSave, New World and Woolworths, and sync across your devices are all free. Premium removes the monthly import limit, videos included, and adds the recipe rewriting: healthier and lower-calorie versions, and vegetarian, vegan and gluten-free versions. It is a monthly or annual subscription through Google Play or the App Store; if a free trial is offered to you, its length is shown before you start it, and you can cancel any time in the store, which Settings takes you to. Prices are shown in the app."
+            "text": "Yes, with a monthly allowance. A free account gets 20 recipe imports from links, photos and text, and 2 video imports, each calendar month. Every recipe you save, with no limit, crates to sort them into, your basket, Quick check and Shopping, all working offline, cooking steps and timers, price estimates at Pak'nSave, New World and Woolworths, and sync across your devices are all free. Premium removes the monthly import limit, videos included, and adds the recipe rewriting: healthier and lower-calorie versions, vegetarian, vegan, gluten-free and dairy-free versions, with the cooking steps rewritten to match. It is a monthly or annual subscription through Google Play or the App Store; if a free trial is offered to you, its length is shown before you start it, and you can cancel any time in the store, which Settings takes you to. Prices are shown in the app."
           }
         },
         {
@@ -740,7 +748,7 @@
     <div class="how">
       <ol class="beats" id="steps">
         <li><button class="beat on" type="button" data-beat="0"><span class="n">1</span><span><b>Add a recipe</b><span class="d">From a link, a photo of the card, or a YouTube video. Any language comes out in English.</span></span></button></li>
-        <li><button class="beat" type="button" data-beat="1"><span class="n">2</span><span><b>Make it your own</b><span class="d">Change the serves and every amount follows. Grams or cups, your call. Leave out what you’ve got. Premium can suggest swaps.</span></span></button></li>
+        <li><button class="beat" type="button" data-beat="1"><span class="n">2</span><span><b>Make it your own</b><span class="d">Change the serves and every amount follows. Grams or cups, your call. Tap any amount to correct it. Premium can suggest swaps.</span></span></button></li>
         <li><button class="beat" type="button" data-beat="2"><span class="n">3</span><span><b>Into your basket</b><span class="d">Everything you’re cooking goes in one basket. Doubles merge into one line.</span></span></button></li>
         <li><button class="beat" type="button" data-beat="3"><span class="n">4</span><span><b>Go shopping</b><span class="d">Sorted by aisle. Tick it off as you go, even without signal.</span></span></button></li>
       </ol>
@@ -768,7 +776,8 @@
       <h2>Turn any recipe into one shopping list</h2>
       <p class="lead">The Fern Basket is a grocery app for New Zealand. Paste a recipe link,
       photograph a cookbook page, or share a cooking video, and it reads the ingredients into a
-      structured list you can check and edit. Add everything you are cooking this week and the
+      structured list you can check and edit, and keeps every recipe in crates you name. Add
+      everything you are cooking this week and the
       repeats collapse into single lines, so three recipes calling for butter become one entry
       rather than three. The finished grocery list is sorted by supermarket aisle and works on your phone
       without a signal, because the part of the shop that matters happens in a building with
@@ -993,9 +1002,10 @@
           </div></div>
           <!-- cards:scene end -->
           <h3>Adapt a recipe to how you eat</h3>
-          <p>Set dietary preferences once. Premium can rewrite a recipe as vegetarian, vegan or
-          gluten-free, or produce a healthier or lower-calorie version, showing what changed and why.
-          Swapped ingredients go straight into your basket.</p>
+          <p>Set dietary preferences once. Premium can rewrite a recipe as vegetarian, vegan,
+          gluten-free or dairy-free, or produce a healthier or lower-calorie version, showing what
+          changed and why. Where the recipe has cooking steps, they are rewritten to match your
+          swaps. Swapped ingredients go straight into your basket.</p>
         </article>
       </div>
     </div>
@@ -1078,8 +1088,9 @@
           watches the video if it has to. Links to recipe pages, plain pasted text, and photos of cookbook
           pages or recipe cards all work too, and a recipe in any language comes out in English. Instagram
           links cannot be read by apps, so for those the app asks you to copy the caption and paste it as
-          text. If you have nothing in mind yet, the Find on YouTube and Search the web shortcuts on the Add
-          a recipe screen start with New Zealand recipes.</p>
+          text. If you have nothing in mind yet, Find on YouTube starts with New Zealand cooking channels,
+          and Search the web searches twelve New Zealand recipe sites the app is known to read, with a list
+          of more to browse.</p>
         </details>
 
         <details>
@@ -1093,30 +1104,40 @@
           <summary><h3>Does it help with the cooking too?</h3></summary>
           <p>Yes. A recipe you import comes with its cooking steps, one per line, in the same units as the
           ingredient list, and a note at the top of the recipe points you to them. Tap a step to tick it off
-          as you go. A step that states a time, such as simmer for 10 minutes, offers a timer that rings
-          even with the app closed. You can also turn on a weekly reminder in Settings to plan the week's
-          shop; it is off until you choose a day and time.</p>
+          as you go. A step that states a time, such as simmer for 10 minutes, offers a timer: while it
+          runs, a countdown sits in your phone's notifications with the step it belongs to, and tapping it
+          takes you back to that step. It rings even with the app closed. You can also turn on a weekly
+          reminder in Settings to plan the week's shop; it is off until you choose a day and time.</p>
         </details>
 
         <details>
-          <summary><h3>Can it adapt recipes for vegetarian, vegan or gluten-free diets?</h3></summary>
-          <p>Yes, as part of Premium. The app swaps ingredients one at a time so you can accept or
-          skip each change, and it tells you honestly when a dish changes so much that it is really
-          a different meal. Swapped ingredients go straight into your basket. You can also record
-          preferences such as dairy-free, nut-free, halal, kosher, low-FODMAP, keto and others.</p>
+          <summary><h3>Can I organise my recipes?</h3></summary>
+          <p>Yes. Recipes sort into crates: named collections such as Favourites or Weeknights. The app makes
+          Favourites for you; add your own from the Recipes screen, and put a recipe in as many crates as
+          you like. Removing a crate keeps its recipes, and every change can be undone. Crates sync with
+          your recipes when you are signed in.</p>
+        </details>
+
+        <details>
+          <summary><h3>Can it adapt recipes for vegetarian, vegan, gluten-free or dairy-free diets?</h3></summary>
+          <p>Yes, as part of Premium. The app swaps ingredients one at a time so you can accept or skip each
+          change, and it tells you honestly when a dish changes so much that it is really a different meal.
+          Swapped ingredients go straight into your basket, and where the recipe has cooking steps they are
+          rewritten for your swaps and checked for mistakes, with the original steps kept too. You can also
+          record preferences such as nut-free, halal, kosher, low-FODMAP, keto and others.</p>
         </details>
 
         <details>
           <summary><h3>Is The Fern Basket free?</h3></summary>
           <p>Yes, with a monthly allowance. A free account gets 20 recipe imports from links, photos and text,
-          and 2 video imports, each calendar month. Every recipe you save, with no limit, your basket, quick
-          check and shop mode, cooking steps and timers, price estimates at Pak'nSave, New World and
-          Woolworths, and sync across your devices are all free. Premium removes the monthly import limit,
-          videos included, and adds the recipe rewriting: healthier and lower-calorie versions, and
-          vegetarian, vegan and gluten-free versions. It is a monthly or annual subscription through Google
-          Play or the App Store; if a free trial is offered to you, its length is shown before you start it,
-          and you can cancel any time in the store, which Settings takes you to. Prices are shown in the
-          app.</p>
+          and 2 video imports, each calendar month. Every recipe you save, with no limit, crates to sort
+          them into, your basket, Quick check and Shopping, all working offline, cooking steps and timers,
+          price estimates at Pak'nSave, New World and Woolworths, and sync across your devices are all free.
+          Premium removes the monthly import limit, videos included, and adds the recipe rewriting:
+          healthier and lower-calorie versions, vegetarian, vegan, gluten-free and dairy-free versions, with
+          the cooking steps rewritten to match. It is a monthly or annual subscription through Google Play
+          or the App Store; if a free trial is offered to you, its length is shown before you start it, and
+          you can cancel any time in the store, which Settings takes you to. Prices are shown in the app.</p>
         </details>
 
         <details>
