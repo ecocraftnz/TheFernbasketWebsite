@@ -16,14 +16,15 @@ Everything that gets published lives in `public/`. Nothing else does.
 | --- | --- |
 | `public/chrome.css` | The chrome every page shares: tokens, fonts, top bar, logo mark, watermarks, footer, headings. Change these here, never in a page |
 | `public/index.html` | The marketing page: links `chrome.css`, then its own `<style>` for the hero animation and content sections |
-| `public/PrivacyPolicy/index.html` | The published privacy policy (version `2026-09-27`; the app records consents against that exact string) |
+| `public/PrivacyPolicy/index.html` | The published privacy policy (version `2026-10-04`; the app records consents against that exact string, `POLICY_VERSION` in its `src/data/policy.ts`) |
+| `public/TermsOfUse/index.html` | The published Terms of Use, at `/TermsOfUse/`, which the app's Premium screen links to (`TERMS_OF_USE_URL`). Published from the app repo's `TERMS_OF_USE.md`, naming the operator only as a sole trader |
 | `public/delete-account/index.html` | How to delete an account, at `/delete-account/`, which the app's policy and Google Play point to |
 | `public/styles.css` | What long-form text needs (the policy layout, tables). Only the text pages link it, after `chrome.css` |
 | `concepts/cards/template.html` | The source of the six "What the app does" card animations. `tools/build-cards.py` copies the hero's produce drawings and basket into it and writes both the prototype and the homepage's copy |
 | `tools/build-cards.py` | Rebuilds the card animations after a change to the template: `python3 tools/build-cards.py`, then commit both outputs. Never edit the generated blocks in `index.html` by hand |
 | `tools/check-chrome.mjs` | Fails if any page's top bar, watermarks, logo mark, footer or stylesheet links differ from the others. Run before every PR |
 | `public/robots.txt` | Allows everything. Pure ASCII on purpose - see below |
-| `public/sitemap.xml` | All three pages, with `lastmod` taken from git |
+| `public/sitemap.xml` | All four pages, with `lastmod` taken from git |
 | `public/assets/walkthrough/*.png` | The eight walkthrough screenshots on the homepage, 600x1298, red outlines marking the tap |
 | `public/assets/logo-mark.png` | The app's logo mark, copied from the app repo |
 | `public/assets/favicon.png` | The app's favicon, copied from the app repo |
@@ -97,9 +98,9 @@ palettes are mirrored, and the site follows the OS theme because the app's
 add it to the app's tokens first, then copy it across. Spacing follows the same
 8pt grid, and the type scale mirrors the app's `type` map.
 
-The typefaces are Fraunces (display: the headline, section headings and the
-recipe cards) and Plus Jakarta Sans (everything else, weights 400 to 800, the
-same as the app), loaded from Google Fonts.
+The one typeface is Plus Jakarta Sans, in the four weights the app loads
+(500, 600, 700 and 800), from Google Fonts. Headings are 800 with the app's
+negative tracking. There is no display face.
 
 ## One chrome for every page
 
@@ -107,7 +108,7 @@ Every page must look like the same site: the same top bar and theme toggle,
 the logo mark with its rings above the title, the same watermarks behind the
 page, the same footer, the same fonts, colours and heading sizes. That chrome
 lives in `public/chrome.css`, and the markup for it is copied verbatim into
-each page (`index.html`, `PrivacyPolicy/`, `delete-account/`).
+each page (`index.html`, `PrivacyPolicy/`, `TermsOfUse/`, `delete-account/`).
 
 Rules:
 
@@ -144,9 +145,9 @@ The identifiers for building those URLs, from the app's `app.json`:
 | iOS bundle id | `nz.co.ecocraft.baskettranstasman` |
 | Android package | `nz.co.ecocraft.baskettranstasman` |
 
-**Footer links** — Terms and Support still carry `is-placeholder-link`; give
-each a real `href` and drop that class once those pages exist. Privacy policy
-and the contact email are done.
+**Footer links** — all real: Home, How it works, Privacy, Terms, Delete
+account and Support (the contact email). The footer is part of the chrome, so
+a new link goes into every page in the same commit.
 
 **Legal entity and contact email** — the published policy deliberately does
 NOT carry the operator's personal name or street address. It is a residential
@@ -159,9 +160,15 @@ restore a full identity block.
 
 **The privacy policy page itself** — done. `public/PrivacyPolicy/index.html`
 publishes the app's `PRIVACY_POLICY.md` (from `ecocraftnz/basket-trans-tasman`)
-with its placeholders filled in. Two things from that source doc were
-resolved as part of publishing it, and should stay in sync if the app repo's
-copy is ever updated to match:
+with its placeholders filled in. The version string in the page's meta line
+must equal the app's `POLICY_VERSION` character for character: when the app
+bumps it, republish the page the same day, and keep the identity wording
+above. The published page also says the app asks for notifications only for a
+cooking timer or the weekly reminder, which the app does but the source doc
+did not yet say when `2026-10-04` was published; mirror that sentence back
+into the source. Two things from that source doc were resolved as part of
+publishing it, and should stay in sync if the app repo's copy is ever updated
+to match:
 - Children's minimum age: stated as **16**. The draft offered "16 / the age of
   digital consent where you are"; the app repo's `PRIVACY_POLICY.md` now says 16
   too, so the two are in sync.
@@ -170,6 +177,12 @@ copy is ever updated to match:
 
 The EU representative paragraph was dropped (the draft said to delete it if
 not applicable — the app isn't offered to EU/EEA users specifically).
+
+**The Terms of Use page** — done. `public/TermsOfUse/index.html` publishes the
+app's `TERMS_OF_USE.md` word for word, with the operator named only as "The
+Fern Basket", a sole trader in New Zealand, for the same reason as the policy.
+Its date line is the source's "Last updated". The app's Premium screen opens
+this exact address, so the path never changes.
 
 ## The walkthrough
 
@@ -191,6 +204,16 @@ first eight bytes will tell you.
 **The screens show an example recipe**, and the section says so under the
 walkthrough. Keep that line if the images are ever replaced.
 
+**The eight walkthrough screens are from a 1.3.0 build (19 October 2026). The three on `/delete-account/` are still from 27 September.**
+Since then the app changed its watermark (a tree fern, 8 and 11 Oct),
+redesigned Add a recipe (10 Oct), added "What did the shop cost?" to the Done
+screen (4 Oct), Home's heading became "What's for tea?" (13 Oct) and the
+Recipes screen gained crates in its title (17 Oct), so the screens are due a
+re-shoot from a current build. Same for the three on `/delete-account/`:
+Settings gained a Reminders section and a "Share shop totals" switch, its
+"Privacy & data" section is now "Privacy", and Data & privacy gained new
+cards.
+
 ## Keeping copy in step with the app
 
 Some text on the page is quoted from the app rather than written for the web,
@@ -210,6 +233,15 @@ paywall's `BENEFITS`, but in longer, search-friendly headings. An earlier
 version of the page used those two lists word for word; this one does not, so
 there is nothing to keep verbatim. Keep the *claims* in step instead: if a
 feature changes or moves behind Premium, the card describing it must change.
+
+The sixth card, "Make it your own", is the recipe screen's own controls drawn
+small: the serves pill with its −/+ stepper, the "Grams & ml / Cups & spoons"
+switch, and the six version chips (Healthier, Lower calorie, Vegetarian,
+Vegan, Gluten-free, Dairy-free) under a Premium chip. Its numbers follow the
+app's `src/data/units.ts`: serves 4 → 6 scales 300 ml of cream to 450 ml, and
+450 ml in a 250 ml NZ cup rounds to 1 ¾ cups (within 3%, so no ≈). If a chip
+is added or renamed in the app, change the scene in
+`concepts/cards/template.html` and rebuild.
 
 Store names: the app spells it both `PAK'nSAVE` and `Pak'nSave`; this site
 uses `Pak'nSave` throughout. Pick one if that ever matters, and change every
