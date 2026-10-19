@@ -234,6 +234,15 @@ version of the page used those two lists word for word; this one does not, so
 there is nothing to keep verbatim. Keep the *claims* in step instead: if a
 feature changes or moves behind Premium, the card describing it must change.
 
+The sixth card, "Make it your own", is the recipe screen's own controls drawn
+small: the serves pill with its −/+ stepper, the "Grams & ml / Cups & spoons"
+switch, and the six version chips (Healthier, Lower calorie, Vegetarian,
+Vegan, Gluten-free, Dairy-free) under a Premium chip. Its numbers follow the
+app's `src/data/units.ts`: serves 4 → 6 scales 300 ml of cream to 450 ml, and
+450 ml in a 250 ml NZ cup rounds to 1 ¾ cups (within 3%, so no ≈). If a chip
+is added or renamed in the app, change the scene in
+`concepts/cards/template.html` and rebuild.
+
 Store names: the app spells it both `PAK'nSAVE` and `Pak'nSave`; this site
 uses `Pak'nSave` throughout. Pick one if that ever matters, and change every
 occurrence, including the FAQ, whose answers also feed the FAQPage JSON-LD.

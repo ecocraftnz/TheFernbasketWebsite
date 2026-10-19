@@ -409,7 +409,7 @@
   .cs-ln { height: 18px; font: 500 12px/18px var(--font-body); color: var(--text); white-space: nowrap; }
   .cs-ln b { position: static; font-weight: 700; font-variant-numeric: tabular-nums; }
   .cs-ln .cs-m { position: static; color: var(--muted); }
-  .cs-ln .cs-sw { color: var(--accent); font-weight: 700; }
+  .cs-ln .cs-sw { position: static; color: var(--accent); font-weight: 700; }
   .cs-roll { position: static; display: inline-block; height: 18px; overflow: hidden; vertical-align: top; }
   .cs-roll .cs-col { position: static; display: flex; flex-direction: column; }
   .cs-roll .cs-col > span { position: static; height: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
@@ -437,6 +437,22 @@
   .cs-phone .cs-notch { left: 38px; top: 6px; width: 28px; height: 5px; border-radius: 3px; background: var(--text); }
   .cs-sig { width: 3px; border-radius: 1px; background: var(--text); }
   .cs-slash { width: 24px; height: 2px; background: var(--accent); border-radius: 1px; transform-origin: left center; }
+  /* 6. Make it your own: the recipe screen's own controls, drawn small. The
+     serves pill, the units switch and the six version chips are the recipe
+     screen's; a "selected" state is a filled twin faded in, so every
+     animation stays on transform and opacity. */
+  .cs-sv { height: 16px; padding: 0 6px; border-radius: 8px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); font: 700 9.5px/16px var(--font-body); color: var(--accent); white-space: nowrap; display: flex; gap: 5px; align-items: center; }
+  .cs-sv > span { position: static; }
+  .cs-sv .cs-roll { height: 16px; } .cs-sv .cs-roll .cs-col > span { height: 16px; font-size: 9.5px; line-height: 16px; }
+  .cs-sv .cs-stp { position: static; width: 11px; height: 11px; border-radius: 50%; box-shadow: inset 0 0 0 1px var(--accent); font: 800 10px/11px var(--font-body); text-align: center; color: var(--accent); }
+  .cs-seg { height: 20px; border-radius: 10px; box-shadow: inset 0 0 0 1px var(--rule); background: var(--surface); }
+  .cs-seg .cs-th { top: 2px; height: 16px; border-radius: 8px; background: var(--accent); transform-origin: left center; }
+  .cs-seg .cs-sl { top: 2px; height: 16px; font: 700 8.5px/16px var(--font-body); text-align: center; color: var(--muted); white-space: nowrap; }
+  .cs-seg .cs-sl.cs-on { color: var(--on-accent); }
+  .cs-mk { font: 800 10px/14px var(--font-body); letter-spacing: -.01em; color: var(--text); white-space: nowrap; }
+  .cs-opt { height: 16px; padding: 0 7px; border-radius: 8px; box-shadow: inset 0 0 0 1px var(--line); font: 700 9.5px/16px var(--font-body); color: var(--text); white-space: nowrap; transform-origin: 50% 50%; }
+  .cs-opt.cs-on { background: var(--accent); color: var(--on-accent); box-shadow: none; }
+  .cs-scene .cs-sv, .cs-scene .cs-seg .cs-th, .cs-scene .cs-seg .cs-sl, .cs-scene .cs-opt, .cs-scene .cs-mk { will-change: transform, opacity; }
   .cs-mini-basket { transform-origin: 50% 100%; }
   .cs-mini-basket svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
   .cs-hint { margin-top: 24px; font-size: 14px; color: var(--muted); }
@@ -835,9 +851,9 @@
           </div></div>
           <!-- cards:scene end -->
           <h3>Duplicate ingredients merge into one line</h3>
-          <p>Cook several dishes at once and shared ingredients combine automatically. Quantities
-          scale when you change how many people you are cooking for. Show each recipe in grams and
-          millilitres or in cups and spoons, and tap any amount to correct it.</p>
+          <p>Cook several dishes at once and shared ingredients combine automatically, so three
+          recipes calling for butter become one line in the list, not three. Add a recipe twice
+          and the app notices that too.</p>
         </article>
         <article class="cell">
           <!-- cards:scene start -->
@@ -912,100 +928,36 @@
         <article class="cell">
           <!-- cards:scene start -->
           <div class="cs-fit"><div class="cs-scene" id="s6">
-            <div class="cs-paper" style="left:14px;top:14px;width:154px;height:136px;transform:rotate(-1.5deg)">
-              <div class="cs-t" style="left:12px;top:9px">Green curry</div>
-              <div class="cs-chip" id="c6-prem" style="left:92px;top:10px">Premium</div>
-              <div class="cs-ln" style="left:12px;top:36px"><b>500</b> <span class="cs-m">g</span> chicken</div>
-              <div class="cs-ln" id="c6-old" style="left:12px;top:54px"><b>300</b> <span class="cs-m">ml</span> cream</div>
-              <div class="cs-strike" id="c6-strike" style="left:12px;top:63px;width:76px"></div>
-              <div class="cs-ln" id="c6-new" style="left:12px;top:72px"><b>300</b> <span class="cs-m">ml</span> <span class="cs-sw">coconut cream</span></div>
-              <div class="cs-ln" style="left:12px;top:90px"><b>2</b> <span class="cs-m">tbsp</span> curry paste</div>
-              <div class="cs-chip" id="c6-chip" style="left:12px;top:114px"><svg viewBox="0 0 24 24"><path d="M4 20c0-9 6-15 16-16-1 10-7 16-16 16z"/></svg>Vegan</div>
+            <div class="cs-paper" style="left:10px;top:10px;width:158px;height:154px;transform:rotate(-1.5deg)">
+              <div class="cs-t" style="left:10px;top:9px">Green curry</div>
+              <div class="cs-sv" id="c6-sv" style="left:10px;top:28px"><span>Serves</span><span class="cs-roll"><span class="cs-col" id="c6-serves"><span>4</span><span>6</span></span></span><span class="cs-stp">−</span><span class="cs-stp" id="c6-plus">+</span></div>
+              <div class="cs-ln" style="left:10px;top:48px"><span class="cs-roll"><span class="cs-col" id="c6-r0"><span>500</span><span>750</span></span></span> <span class="cs-m">g</span> chicken</div>
+              <div class="cs-ln" id="c6-old" style="left:10px;top:66px"><span class="cs-roll"><span class="cs-col" id="c6-r1"><span>300</span><span>450</span><span>1 ¾</span></span></span> <span class="cs-roll"><span class="cs-col cs-m" id="c6-u1"><span>ml</span><span>ml</span><span>cups</span></span></span> cream</div>
+              <div class="cs-strike" id="c6-strike" style="left:10px;top:75px;width:74px"></div>
+              <div class="cs-ln" id="c6-new" style="left:10px;top:84px"><b>1 ¾</b> <span class="cs-m">cups</span> <span class="cs-sw">coconut cream</span></div>
+              <div class="cs-ln" style="left:10px;top:102px"><span class="cs-roll"><span class="cs-col" id="c6-r2"><span>2</span><span>3</span></span></span> <span class="cs-m">tbsp</span> curry paste</div>
+              <div class="cs-seg" style="left:10px;top:124px;width:138px">
+                <div class="cs-th" id="c6-th" style="left:2px;width:58px"></div>
+                <div class="cs-sl" style="left:2px;width:58px">Grams &amp; ml</div><div class="cs-sl cs-on" id="c6-sa" style="left:2px;width:58px">Grams &amp; ml</div>
+                <div class="cs-sl" style="left:60px;width:76px">Cups &amp; spoons</div><div class="cs-sl cs-on" id="c6-sb" style="left:60px;width:76px">Cups &amp; spoons</div>
+              </div>
             </div>
-            <div class="cs-mini-basket" id="c6-bskt" style="left:190px;top:86px;width:80px;height:68px"><svg viewBox="0 0 280 236">
-    <ellipse cx="140" cy="214" rx="122" ry="10" fill="#17251E" opacity=".14"/>
-    <ellipse cx="140" cy="84" rx="130" ry="22" fill="#5A4330"/>
-    <ellipse cx="140" cy="86" rx="118" ry="16" fill="#3B2B1F"/>
-    <g fill="none" stroke="#4A7556" stroke-width="3" stroke-linecap="round">
-    <path d="M150 110C172 62 206 26 258 4"/>
-    </g>
-    <g fill="#6E9A76" stroke="#4A7556" stroke-width="1.4" stroke-linejoin="round">
-    <path d="M0 0C8.5 -11.6 25.5 -10.4 34.0 0C25.5 10.4 8.5 11.6 0 0Z" transform="translate(163.7 78.8) rotate(-96.6)"/>
-    <path d="M0 0C8.5 -11.6 25.5 -10.4 34.0 0C25.5 10.4 8.5 11.6 0 0Z" transform="translate(163.7 78.8) rotate(-12.6)"/>
-    <path d="M0 0C7.7 -10.5 23.1 -9.4 30.8 0C23.1 9.4 7.7 10.5 0 0Z" transform="translate(174.4 64.9) rotate(-92.1)"/>
-    <path d="M0 0C7.7 -10.5 23.1 -9.4 30.8 0C23.1 9.4 7.7 10.5 0 0Z" transform="translate(174.4 64.9) rotate(-8.1)"/>
-    <path d="M0 0C6.9 -9.4 20.7 -8.4 27.6 0C20.7 8.4 6.9 9.4 0 0Z" transform="translate(186.2 51.9) rotate(-87.4)"/>
-    <path d="M0 0C6.9 -9.4 20.7 -8.4 27.6 0C20.7 8.4 6.9 9.4 0 0Z" transform="translate(186.2 51.9) rotate(-3.4)"/>
-    <path d="M0 0C6.1 -8.3 18.3 -7.5 24.4 0C18.3 7.5 6.1 8.3 0 0Z" transform="translate(199.1 39.8) rotate(-82.5)"/>
-    <path d="M0 0C6.1 -8.3 18.3 -7.5 24.4 0C18.3 7.5 6.1 8.3 0 0Z" transform="translate(199.1 39.8) rotate(1.5)"/>
-    <path d="M0 0C5.3 -7.2 15.9 -6.5 21.2 0C15.9 6.5 5.3 7.2 0 0Z" transform="translate(213.3 28.7) rotate(-77.5)"/>
-    <path d="M0 0C5.3 -7.2 15.9 -6.5 21.2 0C15.9 6.5 5.3 7.2 0 0Z" transform="translate(213.3 28.7) rotate(6.5)"/>
-    <path d="M0 0C4.5 -6.1 13.5 -5.5 18.0 0C13.5 5.5 4.5 6.1 0 0Z" transform="translate(228.9 18.6) rotate(-72.6)"/>
-    <path d="M0 0C4.5 -6.1 13.5 -5.5 18.0 0C13.5 5.5 4.5 6.1 0 0Z" transform="translate(228.9 18.6) rotate(11.4)"/>
-    <path d="M0 0C3.7 -5.0 11.1 -4.5 14.8 0C11.1 4.5 3.7 5.0 0 0Z" transform="translate(242.9 11.0) rotate(-68.7)"/>
-    <path d="M0 0C3.7 -5.0 11.1 -4.5 14.8 0C11.1 4.5 3.7 5.0 0 0Z" transform="translate(242.9 11.0) rotate(15.3)"/>
-    <path d="M0 0C4 -4 10 -5 16 0C10 5 4 4 0 0Z" transform="translate(258.0 4.0) rotate(-22.9)"/>
-    </g>
-    </svg>
-    <svg viewBox="0 0 280 236">
-    <defs>
-    <clipPath id="cs-body"><path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z"/></clipPath>
-    <linearGradient id="cs-round" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFF6DE" stop-opacity=".22"/><stop offset=".35" stop-color="#FFF6DE" stop-opacity="0"/><stop offset=".7" stop-color="#3A2614" stop-opacity="0"/><stop offset="1" stop-color="#3A2614" stop-opacity=".34"/></linearGradient>
-    <linearGradient id="cs-down" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#3A2614" stop-opacity="0"/><stop offset="1" stop-color="#3A2614" stop-opacity=".3"/></linearGradient>
-    </defs>
-    <path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z" fill="#C9A876"/>
-    <g clip-path="url(#cs-body)">
-    <path d="M60 40L-140 240M122 40L-78 240M184 40L-16 240M246 40L46 240M308 40L108 240M370 40L170 240M432 40L232 240M494 40L294 240" stroke="#7A5B3A" stroke-width="28" fill="none"/>
-    <path d="M60 40L-140 240M122 40L-78 240M184 40L-16 240M246 40L46 240M308 40L108 240M370 40L170 240M432 40L232 240M494 40L294 240" stroke="#CBAA78" stroke-width="22" fill="none"/>
-    <path d="M60 40L-140 240M122 40L-78 240M184 40L-16 240M246 40L46 240M308 40L108 240M370 40L170 240M432 40L232 240M494 40L294 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" transform="translate(-1.2 -1.2)"/>
-    <path d="M-160 40L40 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
-    <path d="M-160 40L40 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
-    <path d="M-160 40L40 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
-    <path d="M-98 40L102 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
-    <path d="M-98 40L102 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
-    <path d="M-98 40L102 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
-    <path d="M-36 40L164 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
-    <path d="M-36 40L164 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
-    <path d="M-36 40L164 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
-    <path d="M26 40L226 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
-    <path d="M26 40L226 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
-    <path d="M26 40L226 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
-    <path d="M88 40L288 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
-    <path d="M88 40L288 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
-    <path d="M88 40L288 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
-    <path d="M150 40L350 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
-    <path d="M150 40L350 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
-    <path d="M150 40L350 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
-    <path d="M212 40L412 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
-    <path d="M212 40L412 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
-    <path d="M212 40L412 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
-    <path d="M274 40L474 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
-    <path d="M274 40L474 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
-    <path d="M274 40L474 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
-    <path d="M336 40L536 240" stroke="#7A5B3A" stroke-width="28" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
-    <path d="M336 40L536 240" stroke="#CBAA78" stroke-width="22" fill="none" stroke-dasharray="59.68 28" stroke-dashoffset="49.64"/>
-    <path d="M336 40L536 240" stroke="#EBD3A3" stroke-width="4" fill="none" opacity=".7" stroke-dasharray="59.68 28" stroke-dashoffset="49.64" transform="translate(-1.2 -1.2)"/>
-    </g>
-    <path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z" fill="url(#cs-round)"/>
-    <path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z" fill="url(#cs-down)"/>
-    <path d="M10 82Q140 120 270 82L264 146Q252 202 140 208Q28 202 16 146Z" fill="none" stroke="#5E4632" stroke-width="1.5" opacity=".6"/>
-    <path d="M14 98Q140 136 266 98" stroke="#5E4632" stroke-width="2" fill="none" opacity=".45"/>
-    <path d="M10 82Q140 120 270 82" stroke="#7A5B3A" stroke-width="12" fill="none" stroke-linecap="round"/>
-    <path d="M10 82Q140 120 270 82" stroke="#D3B57E" stroke-width="7" fill="none" stroke-linecap="round"/>
-    <path d="M10 80Q140 118 270 80" stroke="#EBD3A3" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
-    <path d="M28 98C28 -8 252 -8 252 98" stroke="#7A5B3A" stroke-width="13" fill="none" stroke-linecap="round"/>
-    <path d="M28 98C28 -8 252 -8 252 98" stroke="#CBAA78" stroke-width="8" fill="none" stroke-linecap="round"/>
-    <path d="M28 96C28 -10 252 -10 252 96" stroke="#EBD3A3" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".8"/>
-    <path d="M21 78h14M21 84h14M21 90h14M245 78h14M245 84h14M245 90h14" stroke="#5E4632" stroke-width="2.5" stroke-linecap="round"/>
-    </svg></div>
-            <div class="cs-ico" id="c6-can" style="left:132px;top:66px"></div>
+            <div class="cs-mk" id="c6-mk" style="left:180px;top:12px">Make it your own</div>
+            <div class="cs-chip" id="c6-prem" style="left:180px;top:30px">Premium</div>
+            <div class="cs-opt" id="c6-o0" style="left:180px;top:52px">Healthier</div>
+            <div class="cs-opt" id="c6-o1" style="left:180px;top:71px">Lower calorie</div>
+            <div class="cs-opt" id="c6-o2" style="left:180px;top:90px">Vegetarian</div>
+            <div class="cs-opt" id="c6-o3" style="left:180px;top:109px">Vegan</div><div class="cs-opt cs-on" id="c6-o3on" style="left:180px;top:109px">Vegan</div>
+            <div class="cs-opt" id="c6-o4" style="left:180px;top:128px">Gluten-free</div>
+            <div class="cs-opt" id="c6-o5" style="left:180px;top:147px">Dairy-free</div>
           </div></div>
           <!-- cards:scene end -->
-          <h3>Adapt a recipe to how you eat</h3>
-          <p>Set dietary preferences once. Premium can rewrite a recipe as vegetarian, vegan,
-          gluten-free or dairy-free, or produce a healthier or lower-calorie version, showing what
-          changed and why. Where the recipe has cooking steps, they are rewritten to match your
-          swaps. Swapped ingredients go straight into your basket.</p>
+          <h3>Make it your own</h3>
+          <p>Change the serves and every amount follows. Show a recipe in grams and millilitres or
+          in cups and spoons, and tap any amount to correct it. With Premium, make a healthier,
+          lower-calorie, vegetarian, vegan, gluten-free or dairy-free version: ingredients swap one
+          at a time, the cooking steps are rewritten to match, swapped ingredients go straight into
+          your basket, and your original is kept.</p>
         </article>
       </div>
     </div>
@@ -1645,24 +1597,39 @@ Scene('s5', 7400, 5600, (A, $, root) => {
   A(4200, '#c5-cap', 'opacity', [0, 1], 360);
 });
 
-/* 6. Adapt a recipe ----------------------------------------------------- */
-Scene('s6', 8000, 6200, (A, $, root) => {
-  fadeLoop(A, root, 7500);
-  icon($('#c6-can'), 'can');
-  hide(A, ['#c6-prem', '#c6-new', '#c6-chip', '#c6-can']);
+/* 6. Make it your own ---------------------------------------------------- */
+Scene('s6', 9600, 7800, (A, $, root) => {
+  fadeLoop(A, root, 9100);
+  hide(A, ['#c6-prem', '#c6-new', '#c6-o3on', '#c6-sb']);
   A(0, '#c6-strike', 'transform', ['scaleX(0)', 'scaleX(0)'], 1);
+  ['#c6-serves', '#c6-r0', '#c6-r1', '#c6-u1', '#c6-r2'].forEach(r => A(0, r, 'transform', ['translateY(0)', 'translateY(0)'], 1));
   A(0, $('.cs-paper'), 'transform', ['translateY(-20px) rotate(-5deg)', 'translateY(0) rotate(-1.5deg)'], 800, E.back);
-  A(0, '#c6-bskt', 'transform', ['translateY(12px)', 'translateY(0)'], 700, E.out);
-  A(900, '#c6-prem', 'opacity', [0, 1], 200); A(900, '#c6-prem', 'transform', ['scale(.6)', 'scale(1)'], 380, E.back);
-  A(1700, '#c6-strike', 'transform', ['scaleX(0)', 'scaleX(1)'], 300);
-  A(1900, '#c6-old', 'opacity', [1, .35], 300);
-  A(2100, '#c6-new', 'opacity', [0, 1], 300); A(2100, '#c6-new', 'transform', ['translateY(5px)', 'translateY(0)'], 360);
-  A(2700, '#c6-chip', 'opacity', [0, 1], 250); A(2700, '#c6-chip', 'transform', ['translateX(-6px) scale(.8)', 'translateX(0) scale(1)'], 380, E.back);
-  // the swapped ingredient goes straight into the basket
-  A(3800, '#c6-can', 'opacity', [0, 1], 120); A(3800, '#c6-new', 'opacity', [1, .35], 240);
-  const land = arc(A, 3800, '#c6-can', [0, 0], [94, 36], 760, { lift: 54, rot: 22, scale: .85, settle: false });
-  A(land - 40, '#c6-can', 'opacity', [1, 0], 160);
-  A(land, '#c6-bskt', 'transform', ['translateY(0)', 'scale(1.06,.92)', 'scale(.99,1.02)', 'translateY(0)'], 380, E.out, [0, .3, .65, 1]);
+  A(200, '#c6-mk', 'opacity', [0, 1], 300); A(200, '#c6-mk', 'transform', ['translateX(8px)', 'translateX(0)'], 420);
+  ['#c6-o0', '#c6-o1', '#c6-o2', '#c6-o3', '#c6-o4', '#c6-o5'].forEach((o, i) => {
+    A(0, o, 'opacity', [0, 0], 1);
+    A(320 + i * 90, o, 'opacity', [0, 1], 260); A(320 + i * 90, o, 'transform', ['translateX(10px)', 'translateX(0)'], 420);
+  });
+  // 1. Serves 4 -> 6: a press on +, and every amount rolls with it
+  A(1300, '#c6-plus', 'transform', ['scale(1)', 'scale(1.5)', 'scale(1)'], 360, E.out, [0, .4, 1]);
+  A(1300, '#c6-sv', 'transform', ['scale(1)', 'scale(1.06)', 'scale(1)'], 360, E.out, [0, .4, 1]);
+  A(1420, '#c6-serves', 'transform', ['translateY(0)', 'translateY(-16px)'], 460, E.back);
+  A(1520, '#c6-r0', 'transform', ['translateY(0)', 'translateY(-18px)'], 460, E.back);
+  A(1620, '#c6-r1', 'transform', ['translateY(0)', 'translateY(-18px)'], 460, E.back);
+  A(1720, '#c6-r2', 'transform', ['translateY(0)', 'translateY(-18px)'], 460, E.back);
+  // 2. Grams & ml -> Cups & spoons: the thumb slides and widens; the cream becomes 1 3/4 cups (250 ml cups, the app's), the chicken stays in grams
+  A(3000, '#c6-th', 'transform', ['translateX(0) scaleX(1)', 'translateX(58px) scaleX(1.31)'], 520, E.inOut);
+  A(3000, '#c6-sa', 'opacity', [1, 0], 260); A(3160, '#c6-sb', 'opacity', [0, 1], 300);
+  A(3320, '#c6-r1', 'transform', ['translateY(-18px)', 'translateY(-36px)'], 460, E.back);
+  A(3320, '#c6-u1', 'transform', ['translateY(-18px)', 'translateY(-36px)'], 460, E.back);
+  // 3. Vegan: the chip is pressed and fills, Premium shows, cream is swapped for coconut cream
+  A(4700, '#c6-o3', 'transform', ['scale(1)', 'scale(.92)', 'scale(1)'], 360, E.out, [0, .4, 1]);
+  A(4700, '#c6-o3on', 'transform', ['scale(1)', 'scale(.92)', 'scale(1)'], 360, E.out, [0, .4, 1]);
+  A(4820, '#c6-o3on', 'opacity', [0, 1], 240);
+  A(4900, '#c6-prem', 'opacity', [0, 1], 200); A(4900, '#c6-prem', 'transform', ['scale(.6)', 'scale(1)'], 380, E.back);
+  A(5500, '#c6-strike', 'transform', ['scaleX(0)', 'scaleX(1)'], 300);
+  A(5700, '#c6-old', 'opacity', [1, .35], 300);
+  A(5900, '#c6-new', 'opacity', [0, 1], 300); A(5900, '#c6-new', 'transform', ['translateY(5px)', 'translateY(0)'], 360);
+  A(5900, $('.cs-paper'), 'transform', ['translateY(0) rotate(-1.5deg)', 'translateY(2px) rotate(-1.5deg) scale(1.02,.98)', 'translateY(0) rotate(-1.5deg)'], 360, E.out, [0, .4, 1]);
 });
 /* cards:js end */
 })();
