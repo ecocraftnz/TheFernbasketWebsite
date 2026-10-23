@@ -220,9 +220,8 @@ The homepage carries one note from the maker (`#who`, between the walkthrough
 and the FAQ), in the owner's own words, first name only, added 23 Oct 2026 at
 the owner's request. It is the one place on the site a person is named: the
 privacy policy and Terms still identify the operator only as a sole trader,
-and no surname or address appears anywhere. It gives `hello@thefernbasket.com`
-for ideas and bug reports; the footer and the legal pages keep
-`support@thefernbasket.com`.
+and no surname or address appears anywhere. It gives
+`support@thefernbasket.com`, the one address the whole site uses.
 
 ## Keeping copy in step with the app
 
