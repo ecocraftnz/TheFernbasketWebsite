@@ -515,6 +515,14 @@
     .step:not([aria-current="step"]) { display:none; }
   }
 
+  /* Who makes it: one plain note in the maker's own words, on the same surface
+     card as the feature cells, with the first line in the full text colour so
+     the introduction reads first. */
+  .maker { max-width:720px; background:var(--surface); border:1px solid var(--hair); border-radius:16px; padding:clamp(24px,3.2vw,40px); }
+  .maker h2 { margin-bottom:16px; }
+  .maker p + p { margin-top:16px; }
+  .maker .maker-intro { color:var(--text); font-weight:600; }
+  .maker .maker-sign { margin-top:24px; font-weight:800; letter-spacing:-.01em; color:var(--text); }
   .notes { margin-top:32px; display:flex; flex-direction:column; gap:8px; }
   .notes p { font-size:15px; line-height:24px; color:var(--muted); }
 
@@ -1002,6 +1010,24 @@
       <div class="notes">
         <p>Adding recipes and checking prices need a free account: just your email, no password.</p>
         <p>The screens show an example recipe.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="who">
+    <div class="inner">
+      <div class="maker">
+        <h2>Who makes The Fern Basket</h2>
+        <p class="maker-intro">I’m Oliver. I cooked professionally before moving into IT, and I now work as an
+        engineer in Auckland.</p>
+        <p>I built The Fern Basket because I kept saving recipes from books, websites and videos, then
+        standing in the supermarket trying to remember what I needed. I wanted one place that turns
+        any recipe into a proper NZ shopping list, in grams, and lets you change it to suit how you
+        eat.</p>
+        <p>It’s a small, independent app. No ads, no selling your data. If something’s broken or
+        you’ve got an idea, email me at <a href="mailto:support@thefernbasket.com">support@thefernbasket.com</a>
+        and you’ll get a reply from me.</p>
+        <p class="maker-sign">Cheers, Oliver</p>
       </div>
     </div>
   </section>
