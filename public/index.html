@@ -515,14 +515,26 @@
     .step:not([aria-current="step"]) { display:none; }
   }
 
-  /* Who makes it: one plain note in the maker's own words, on the same surface
-     card as the feature cells, with the first line in the full text colour so
-     the introduction reads first. */
-  .maker { max-width:720px; background:var(--surface); border:1px solid var(--hair); border-radius:16px; padding:clamp(24px,3.2vw,40px); }
-  .maker h2 { margin-bottom:16px; }
+  /* Who makes it: a letter from the maker on the hero's paper (the surface,
+     the ruled lines, the deep shadow), at a slight tilt, the logo mark as a
+     stamp in the corner. The first line is in the full text colour so the
+     introduction reads first. The owner chose this over a green band and the
+     app's green card (23 Oct 2026). */
+  .maker {
+    position:relative; max-width:720px; padding:clamp(24px,3.2vw,40px);
+    background:var(--surface); background-image:repeating-linear-gradient(transparent 0 31px, var(--rule) 31px 32px); background-position:0 22px;
+    border-radius:4px; box-shadow:var(--shadow-paper), inset 0 0 0 1px var(--rule);
+    transform:rotate(-.6deg);
+  }
+  .maker > * { transform:rotate(.6deg); }   /* the words stay level on the tilted sheet */
+  .maker .kicker { margin:0 0 8px; font:700 12px/16px var(--font-body); letter-spacing:.18em; text-transform:uppercase; color:var(--accent); }
+  .maker h2 { margin-bottom:24px; }
   .maker p + p { margin-top:16px; }
   .maker .maker-intro { color:var(--text); font-weight:600; }
-  .maker .maker-sign { margin-top:24px; font-weight:800; letter-spacing:-.01em; color:var(--text); }
+  .maker .maker-sign { margin-top:24px; font-size:clamp(20px,2vw,26px); font-weight:800; letter-spacing:-.01em; color:var(--text); }
+  .maker .maker-stamp { position:absolute; right:28px; top:24px; width:72px; height:auto; filter:var(--logo-filter); opacity:.9; transform:rotate(8deg); }
+  @media (max-width: 560px) { .maker .maker-stamp { width:56px; right:16px; top:16px; } }
+  @media (prefers-reduced-motion: reduce) { .maker, .maker > * { transform:none; } }
   .notes { margin-top:32px; display:flex; flex-direction:column; gap:8px; }
   .notes p { font-size:15px; line-height:24px; color:var(--muted); }
 
@@ -1017,6 +1029,8 @@
   <section class="band" id="who">
     <div class="inner">
       <div class="maker">
+        <img class="maker-stamp" src="/assets/logo-mark.png" alt="" width="450" height="434" loading="lazy" decoding="async">
+        <p class="kicker">A note from the maker</p>
         <h2>Who makes The Fern Basket</h2>
         <p class="maker-intro">I’m Oliver. I cooked professionally before moving into IT, and I now work as an
         engineer in Auckland.</p>
