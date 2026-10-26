@@ -108,7 +108,6 @@ html:not(.js) .controls { display: none; }
 .strike { position: absolute; left: -2px; right: -2px; height: 2px; top: 11px; background: var(--ink); transform: scaleX(0); transform-origin: left center; }
 .swapto { position: absolute; left: 84px; color: var(--accent); font: 700 13px/24px var(--font-body); opacity: 0; }
 .chip { position: absolute; left: 148px; top: 4px; height: 16px; padding: 0 6px; border-radius: 8px; font: 700 10px/16px var(--font-body); letter-spacing: .06em; text-transform: uppercase; box-shadow: inset 0 0 0 1px var(--accent); color: var(--accent); opacity: 0; }
-.gotit { position: absolute; left: 156px; font: 700 13px/24px var(--font-body); color: var(--muted); opacity: 0; transform: rotate(-4deg); }
 .tap { position: absolute; width: 36px; height: 36px; margin: -18px 0 0 -18px; border-radius: 50%; box-shadow: 0 0 0 2px var(--accent); opacity: 0; }
 
 .card2 { position: absolute; left: 76px; top: 64px; width: 208px; height: 136px; padding: 16px; border-radius: 6px; background: var(--surface);
@@ -175,7 +174,7 @@ html:not(.js) .controls { display: none; }
           <div class="ln" style="top:144px" id="l2"><span class="q"><span class="roll"><span class="col"><span>4</span><span>6</span></span></span></span><span class="u">cloves</span><span class="n">garlic</span></div>
           <div class="ln" style="top:168px" id="l3"><span class="q"><span class="roll"><span class="col"><span>2</span><span>3</span></span></span></span><span class="u"></span><span class="n">brown onions</span></div>
           <div class="ln" style="top:192px" id="l4"><span class="q"><span class="roll"><span class="col"><span>600</span><span>900</span></span></span></span><span class="u">g</span><span class="n" id="kumara">kūmara<i class="strike" id="s-kumara"></i></span><span class="swapto" id="pumpkin">pumpkin</span><span class="chip" id="chip">Premium</span></div>
-          <div class="ln" style="top:216px" id="l5"><span class="q"><span class="roll"><span class="col"><span>2</span><span>3</span></span></span></span><span class="u">tbsp</span><span class="n">olive oil<i class="strike" id="s-oil"></i></span><span class="gotit" id="gotit">got it</span></div>
+          <div class="ln" style="top:216px" id="l5"><span class="q"><span class="roll"><span class="col"><span>2</span><span>3</span></span></span></span><span class="u">tbsp</span><span class="n">olive oil<i class="strike" id="s-oil"></i></span></div>
           <i class="tap" id="tap1" style="left:76px;top:76px"></i>
           <i class="tap" id="tap2" style="left:112px;top:204px"></i>
           <i class="tap" id="tap3" style="left:116px;top:228px"></i>
@@ -411,8 +410,6 @@ A(4560, $('#chip'), 'transform', ['scale(.6)', 'scale(1)'], 340, E.back);
 tap(4800, $('#tap3'));
 A(4960, $('#s-oil'), 'transform', ['scaleX(0)', 'scaleX(1)'], 260);
 A(5060, lines[5], 'opacity', [1, .45], 300);
-A(5120, $('#gotit'), 'opacity', [0, 1], 300);
-A(5120, $('#gotit'), 'transform', ['rotate(-4deg) translateX(-6px)', 'rotate(-4deg) translateX(0)'], 320);
 
 /* ---- Beat 3: into your basket ----------------------------------------- */
 A(5600, card, 'transform', ['translateY(0) rotate(-2deg)', 'translateY(-6px) rotate(-2deg)'], 320);

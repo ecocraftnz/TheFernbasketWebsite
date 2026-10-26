@@ -204,15 +204,18 @@ first eight bytes will tell you.
 **The screens show an example recipe**, and the section says so under the
 walkthrough. Keep that line if the images are ever replaced.
 
-**The eight walkthrough screens are from a 1.3.0 build (19 October 2026). The three on `/delete-account/` are still from 27 September.**
-Since then the app changed its watermark (a tree fern, 8 and 11 Oct),
-redesigned Add a recipe (10 Oct), added "What did the shop cost?" to the Done
-screen (4 Oct), Home's heading became "What's for tea?" (13 Oct) and the
-Recipes screen gained crates in its title (17 Oct), so the screens are due a
-re-shoot from a current build. Same for the three on `/delete-account/`:
-Settings gained a Reminders section and a "Share shop totals" switch, its
-"Privacy & data" section is now "Privacy", and Data & privacy gained new
-cards.
+**The eight walkthrough screens are from a 1.3.0 build (19 October 2026)** and
+are current: they show Home's "What's for tea?", the redesigned Add a recipe
+and the Done screen's "What did the shop cost?" (checked 26 Oct 2026).
+
+**The three on `/delete-account/` are still from 27 September** and are due a
+re-shoot from a current build: Settings gained a Reminders section and a
+"Share shop totals" switch, its "Privacy & data" section is now "Privacy",
+and Data & privacy gained new cards. The step text is still right; the first
+image's alt text describes the old screen on purpose, because alt text must
+describe the image shown. When it is re-shot, change that alt to "The
+Settings screen. Under Privacy, the Data & privacy row is highlighted, above
+Export my data."
 
 ## Who makes it
 
@@ -230,9 +233,16 @@ so that the two never drift apart:
 
 - The tagline **"Every recipe, one shopping list."** is the app's welcome-screen
   subtitle (`src/app/onboarding.tsx`).
-- The store-comparison card borrows the app's own framing from
-  `src/components/SavingsCTA.tsx`: "Find the cheapest store", and the caveat
-  that shelf prices may differ.
+- The store-comparison card and the prices FAQ carry the caveat the app's
+  Compare screen shows above every estimate (`src/app/compare.tsx`, the
+  `estimate-disclaimer` banner): AI estimates, not live store prices, and
+  what you pay can differ.
+- The free allowance in the "Is The Fern Basket free?" FAQ (20 recipe imports
+  and 2 video imports a month) is the server's default
+  (`DEFAULT_FREE_LIMITS` in `server/src/services/quotas.ts`). Render's
+  `FREE_RECIPE_IMPORTS` / `FREE_VIDEO_IMPORTS` can override it without a new
+  build (the app's Open decision #60), so change the FAQ, in both the markup
+  and the JSON-LD, the day those change.
 
 If either changes in the app, change it here too.
 
@@ -255,6 +265,12 @@ is added or renamed in the app, change the scene in
 Store names: the app spells it both `PAK'nSAVE` and `Pak'nSave`; this site
 uses `Pak'nSave` throughout. Pick one if that ever matters, and change every
 occurrence, including the FAQ, whose answers also feed the FAQPage JSON-LD.
+
+House style, settled in the 26 Oct 2026 copy review: the app's shopping
+screen is titled "Shopping", and in prose the site calls it **Shopping mode**
+(never "shop mode"). Apostrophes are straight (`'`), lists have no serial
+comma unless one is needed to avoid misreading, numbers are figures ("12
+sites"), and page titles separate with ` · `.
 
 One rule the app holds and the site inherits: **prices are estimates.** No NZ
 supermarket offers a public price feed, so the site never quotes a grocery
