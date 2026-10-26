@@ -10,8 +10,11 @@
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const root = new URL('../public/', import.meta.url).pathname;
+// Not `.pathname`: on Windows that keeps the leading slash before the drive
+// letter and the %20 of a space, so readdirSync found no such folder.
+const root = fileURLToPath(new URL('../public/', import.meta.url));
 
 function pages(dir) {
   const out = [];
